@@ -6,6 +6,10 @@ var speed := 90
 
 var motion := Vector2()
 
+var health := 5
+var stunned := false
+var iframes := false
+
 var demon_form := false
 
 onready var sprite := $Sprite as AnimatedSprite
@@ -19,12 +23,14 @@ func _ready():
 func _process(_delta):
 	set_z_index(get_position().y)
 	
-	var input_x := int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
-	var input_y := int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
-	
-	motion = Vector2(input_x, input_y)
-	
-	sprite_management()
+	if not stunned:
+		var input_x := int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
+		var input_y := int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
+		motion = Vector2(input_x, input_y)
+		
+		sprite_management()
+	else:
+		motion = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("attack"):
 		if not demon_form:
@@ -33,17 +39,30 @@ func _process(_delta):
 			
 	if Input.is_action_just_pressed("attack_2"):
 		if not demon_form:
-			var orb := orb_ref.instance()
+			var orb := orb_ref.instance() as KinematicBody2D
 			orb.set_position(get_position())
 			orb.motion = Vector2.RIGHT.rotated(get_position().direction_to(get_global_mouse_position()).angle())
 			get_tree().get_root().add_child(orb)
+			
+	if Input.is_action_just_pressed("sys_fullscreen"):
+		OS.set_window_fullscreen(not OS.is_window_fullscreen())
 	
 	if Input.is_action_just_pressed("debug_1"):
 		demon_form = not demon_form
 	
 	
 func _physics_process(_delta):
-	motion = move_and_slide(motion * speed)
+	move_and_slide(motion * speed)
+	
+	
+func hurt():
+	$SoundHurt.play()
+	sprite.play("ouch_human")
+	health -= 1
+	stunned = true
+	$TimerStun.start()
+	iframes = true
+	$AnimationPlayer.play("Iframes")
 
 
 func sprite_management():
@@ -60,3 +79,16 @@ func sprite_management():
 		
 func is_moving() -> bool:
 	return motion != Vector2.ZERO
+
+
+func _on_Hurtbox_body_entered(body):
+	if not iframes:
+		hurt()
+
+
+func _on_TimerStun_timeout():
+	stunned = false
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	iframes = false

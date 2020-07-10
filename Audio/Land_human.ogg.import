@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Land_human.ogg-9c57f521e1effd5efff5e76e7bddab6e.oggstr"
+
+[deps]
+
+source_file="res://Audio/Land_human.ogg"
+dest_files=[ "res://.import/Land_human.ogg-9c57f521e1effd5efff5e76e7bddab6e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
