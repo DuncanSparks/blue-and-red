@@ -1,0 +1,223 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Sprites/Characters/Demons/Demon_ouch.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Characters/Demons/Demon_pounce1.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/Healthbar2_empty.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Characters/Demons/Demon_pounce2.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Characters/Demons/Demon_idle.png" type="Texture" id=5]
+[ext_resource path="res://Audio/Ouch.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Sprites/Characters/Demons/Demon_run3.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Characters/Demons/Demon_run2.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Characters/Demons/Demon_run1a.png" type="Texture" id=9]
+[ext_resource path="res://Audio/Land_animal.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Sprites/Characters/Demons/Demon_run1.png" type="Texture" id=11]
+[ext_resource path="res://Audio/Flame.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Sprites/UI/Healthbar2_full.png" type="Texture" id=13]
+[ext_resource path="res://Scripts/EnemyDemon.gd" type="Script" id=14]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "ouch",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "flame_2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "land",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "flame",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "pounce",
+"speed": 12.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 9, 7 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 18, 6 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 9, 12 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 2
+emission_box_extents = Vector3( 15, 15, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 6.0
+scale_random = 1.0
+color = Color( 1, 0.494118, 0, 1 )
+
+[sub_resource type="Animation" id=6]
+length = 2.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false, true, false, true ]
+}
+
+[node name="Demon" type="KinematicBody2D"]
+position = Vector2( 216, 80 )
+collision_layer = 513
+collision_mask = 2147484160
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "pounce"
+frame = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 5, 5 )
+shape = SubResource( 2 )
+
+[node name="PounceBox" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PounceBox"]
+position = Vector2( 0, 3 )
+shape = SubResource( 3 )
+disabled = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( 5, 0 )
+shape = SubResource( 4 )
+
+[node name="ParticlesDeath" type="Particles2D" parent="."]
+position = Vector2( 5, 0 )
+emitting = false
+lifetime = 0.1
+explosiveness = 1.0
+process_material = SubResource( 5 )
+
+[node name="SoundLand" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -12.0
+
+[node name="SoundFlame" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -24.0
+
+[node name="SoundHurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -12.0
+pitch_scale = 0.44
+
+[node name="TweenFade" type="Tween" parent="."]
+
+[node name="TimerNav" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="TimerAttack" type="Timer" parent="."]
+wait_time = 1.1
+one_shot = true
+
+[node name="TimerStartPounce" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="TimerStartFlame" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="TimerPounce" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="TimerPounce2" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="TimerPounce3" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="TimerFlame" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="TimerFlame2" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
+[node name="TimerStun" type="Timer" parent="."]
+wait_time = 0.85
+one_shot = true
+
+[node name="TimerDeath" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
+anims/Iframes = SubResource( 6 )
+
+[node name="Healthbar" type="TextureProgress" parent="."]
+visible = false
+margin_left = -1.0
+margin_top = -13.0
+margin_right = 12.0
+margin_bottom = -8.0
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource( 3 )
+texture_progress = ExtResource( 13 )
+tint_progress = Color( 0.921569, 0, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
+[connection signal="tween_all_completed" from="TweenFade" to="ParticlesDeath" method="set_emitting" binds= [ false ]]
+[connection signal="timeout" from="TimerNav" to="." method="_on_TimerNav_timeout"]
+[connection signal="timeout" from="TimerAttack" to="." method="_on_TimerAttack_timeout"]
+[connection signal="timeout" from="TimerStartPounce" to="." method="_on_TimerStartPounce_timeout"]
+[connection signal="timeout" from="TimerStartFlame" to="." method="_on_TimerStartFlame_timeout"]
+[connection signal="timeout" from="TimerPounce" to="." method="_on_TimerPounce_timeout"]
+[connection signal="timeout" from="TimerPounce2" to="." method="_on_TimerPounce2_timeout"]
+[connection signal="timeout" from="TimerPounce3" to="." method="_on_TimerAttack_timeout"]
+[connection signal="timeout" from="TimerFlame" to="." method="_on_TimerFlame_timeout"]
+[connection signal="timeout" from="TimerFlame2" to="." method="_on_TimerAttack_timeout"]
+[connection signal="timeout" from="TimerStun" to="." method="_on_TimerStun_timeout"]
+[connection signal="timeout" from="TimerDeath" to="." method="queue_free"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

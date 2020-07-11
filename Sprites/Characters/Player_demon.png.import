@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Protag_human_ouch.png-757892aced14d0293606bede48525974.stex"
+path="res://.import/Player_demon.png-0691106e99d6752af7a565de34dbaa62.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Characters/Protag_human_ouch.png"
-dest_files=[ "res://.import/Protag_human_ouch.png-757892aced14d0293606bede48525974.stex" ]
+source_file="res://Sprites/Characters/Player_demon.png"
+dest_files=[ "res://.import/Player_demon.png-0691106e99d6752af7a565de34dbaa62.stex" ]
 
 [params]
 

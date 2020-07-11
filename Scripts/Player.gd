@@ -11,6 +11,7 @@ var stunned := false
 var iframes := false
 
 var shielding := false
+var transforming := false
 
 var cooldown_shield := false
 
@@ -28,7 +29,7 @@ func _ready():
 func _process(_delta):
 	set_z_index(get_position().y)
 	
-	if not stunned and not shielding:
+	if not stunned and not shielding and not transforming:
 		var input_x := int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 		var input_y := int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 		motion = Vector2(input_x, input_y)
@@ -37,19 +38,19 @@ func _process(_delta):
 	else:
 		motion = Vector2.ZERO
 	
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and not stunned and not shielding and not transforming:
 		if not demon_form:
 			sprite_sword.play("swing")
 			$AreaSword/CollisionPolygon2D.set_disabled(false)
 			
-	if Input.is_action_just_pressed("attack_2"):
+	if Input.is_action_just_pressed("attack_2") and not stunned and not shielding and not transforming:
 		if not demon_form:
 			var orb := orb_ref.instance() as KinematicBody2D
 			orb.set_position(get_position())
 			orb.motion = Vector2.RIGHT.rotated(get_position().direction_to(get_global_mouse_position()).angle())
 			get_tree().get_root().add_child(orb)
 			
-	if Input.is_action_just_pressed("action_shield") and not cooldown_shield:
+	if Input.is_action_just_pressed("action_shield") and not cooldown_shield and not stunned and not transforming:
 		shield()
 			
 	if Input.is_action_just_pressed("sys_fullscreen"):
@@ -91,6 +92,12 @@ func hurt():
 	$TimerStun.start()
 	iframes = true
 	$AnimationPlayer.play("Iframes")
+	
+	
+func transform(demon: bool):
+	transforming = true
+	sprite.play("ouch_human")
+	$AnimationPlayerTransform.play("Transform Human to Demon" if demon else "Transform Demon to Human")
 
 
 func sprite_management():
@@ -132,3 +139,8 @@ func _on_AnimationPlayer2_animation_finished(anim_name):
 
 func _on_TimerCooldownShield_timeout():
 	cooldown_shield = false
+	
+
+func finish_transformation():
+	demon_form = true
+	transforming = false
