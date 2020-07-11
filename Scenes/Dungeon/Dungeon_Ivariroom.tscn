@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/Characters/Friendly NPCs/Ivari_idle.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -12,6 +13,79 @@ outlines = [ PoolVector2Array( 24, 24, 24, 168, 136, 168, 136, 184, 184, 184, 18
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 8 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 5, 4 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Talk"
+length = 10.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2, 3, 7, 8.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ PoolStringArray( "Um... hello.", "You\'re a sprightly little demon, aren\'t you\?", "What do you want\?" ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "Hm... demons don\'t sit like that.", "And you\'re wagging your tail like it\'s your first time trying it.", "You must be that student who got assigned to seal away Osme again.", "Osme turned you into a demon, didn\'t he\? That\'s a new one.", "That\'s pretty rotten luck.", "Yep. That sucks.", "Really too bad." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "What\?", "Don\'t tell me you want me to help you, kid.", "You absolutely want me to help you.", "Well, lucky for you, I don\'t actually care about protecting Osme.", "I think watching him duel sorcerers is quite entertaining, actually.", "So I\'ll throw you a bone and nudge you out of your predicament." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "There. You\'re human again.", "Have fun fighting Osme." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "Oh... one thing I forgot to mention:", "[color=#ff0000]You\'ll turn back into a demon in 20 seconds.[/color]", "[color=#00c6ff]And then back into a human 20 seconds after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
+"method": "talk_dialogue"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../Player")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ false ],
+"method": "transform"
+} ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "If you\'re gonna go fight Osme, do it already.", "I\'m getting bored." ) ],
+"method": "talk_dialogue"
+} ]
+}
 
 [node name="Scene" type="Node2D"]
 __meta__ = {
@@ -49,6 +123,17 @@ position = Vector2( 160, 196 )
 shape = SubResource( 2 )
 
 [node name="NPCIvari" parent="." instance=ExtResource( 3 )]
+
+[node name="Sprite" parent="NPCIvari" index="1"]
+frames = SubResource( 5 )
+animation = "idle"
+
+[node name="CollisionShape2D" parent="NPCIvari" index="2"]
+shape = SubResource( 6 )
+
+[node name="AnimationPlayerTalk" parent="NPCIvari" index="4"]
+anims/Talk = SubResource( 3 )
+anims/Talk2 = SubResource( 4 )
 
 [editable path="LoadingZone"]
 
