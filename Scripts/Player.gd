@@ -4,6 +4,9 @@ const orb_ref := preload("res://Prefabs/Orb.tscn")
 
 export(float) var speed: float = 90.0
 
+export(AudioStream) var footstep_sound_human: AudioStream
+export(AudioStream) var footstep_sound_demon: AudioStream
+
 var motion := Vector2()
 
 var health := 5
@@ -24,6 +27,9 @@ var demon_run_target := Vector2()
 onready var sprite := $Sprite as AnimatedSprite
 onready var sprite_sword := $SpriteSword as AnimatedSprite
 onready var healthbar := $Healthbar as TextureProgress
+
+onready var timer_footsteps_human := $TimerFootstepsHuman as Timer
+onready var timer_footsteps_demon := $TimerFootstepsDemon as Timer
 
 
 func _ready():
@@ -48,6 +54,19 @@ func _process(_delta):
 		sprite_management()
 	elif not pouncing:
 		motion = Vector2.ZERO
+		
+#	if is_moving():
+#		if demon_form:
+#			if timer_footsteps_demon.is_stopped():
+#				timer_footsteps_demon.start()
+#		else:
+#			if timer_footsteps_human.is_stopped():
+#				timer_footsteps_human.start()
+#	else:
+#		if demon_form:
+#			timer_footsteps_demon.stop()
+#		else:
+#			timer_footsteps_human.stop()
 	
 	if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing:
 		if not demon_form:
@@ -60,11 +79,12 @@ func _process(_delta):
 			orb.set_position(get_position())
 			orb.motion = Vector2.RIGHT.rotated(get_position().direction_to(get_global_mouse_position()).angle())
 			get_tree().get_root().add_child(orb)
-		else:
-			pounce()
+		#else:
+		#	pounce()
 			
 	if Input.is_action_just_pressed("action_shield") and not stopped and not cooldown_shield and not stunned and not transforming:
-		shield()
+		if not demon_form:
+			shield()
 			
 	if Input.is_action_just_pressed("sys_fullscreen"):
 		OS.set_window_fullscreen(not OS.is_window_fullscreen())
@@ -92,6 +112,11 @@ func shield():
 	
 func shield_end():
 	shielding = false
+	var tween := $TweenShieldMeter as Tween
+	var meter := $CooldownShieldMeter as TextureProgress
+	meter.show()
+	tween.interpolate_property(meter, "value", 4.0, 0.0, 4.0)
+	tween.start()
 	$TimerCooldownShield.start()
 	
 	
@@ -99,7 +124,7 @@ func pounce():
 	$SoundPounce.play()
 	$AnimationPlayerSpeed.stop()
 	sprite.play("pounce_demon")
-	speed = 250.0
+	speed = 320.0
 	#motion = Vector2.RIGHT.rotated(get_global_position().direction_to(pounce_target).angle())
 	pouncing = true
 	$PounceBox/CollisionShape2D.set_disabled(false)
@@ -147,7 +172,7 @@ func is_moving() -> bool:
 
 
 func _on_Hurtbox_body_entered(body):
-	if not iframes:
+	if not iframes and not transforming:
 		if not shielding:
 			hurt()
 		else:
@@ -169,17 +194,42 @@ func _on_AnimationPlayer2_animation_finished(anim_name):
 
 func _on_TimerCooldownShield_timeout():
 	cooldown_shield = false
+	$CooldownShieldMeter.hide()
+	
+	
+func start_pounce_meter(start: bool):
+	if start:
+		$TimerCooldownPounce.start()
+		var tween := $TweenShieldMeter as Tween
+		var meter := $CooldownPounceMeter as TextureProgress
+		tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+		tween.start()
+		meter.show()
+	else:
+		
+		$CooldownPounceMeter.hide()
+		$TimerCooldownPounce.stop()
 	
 
 func finish_transformation(use_override: bool = false, override: bool = false):
 	demon_form = not demon_form if not use_override else override
 	if demon_form:
 		$AnimationPlayerSpeed.play("Speed Variance")
+		$CooldownShieldMeter.hide()
 		$CollisionHuman.set_disabled(true)
 		$CollisionDemon.set_disabled(false)
 		$Healthbar.set_tint_progress(Color(1, 0, 0, 1))
+		
+		if not stopped:
+			$TimerCooldownPounce.start()
+			var tween := $TweenShieldMeter as Tween
+			var meter := $CooldownPounceMeter as TextureProgress
+			tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+			tween.start()
+			meter.show()
 	else:
 		$AnimationPlayerSpeed.stop()
+		$CooldownPounceMeter.hide()
 		speed = 90.0
 		$CollisionDemon.set_disabled(true)
 		$CollisionHuman.set_disabled(false)
@@ -201,3 +251,22 @@ func _on_TimerPounce2_timeout():
 	pouncing = false
 	speed = 90.0
 	$AnimationPlayerSpeed.play("Speed Variance")
+	$TimerCooldownPounce.start()
+	var tween := $TweenShieldMeter as Tween
+	var meter := $CooldownPounceMeter as TextureProgress
+	tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+	tween.start()
+	meter.show()
+
+
+func _on_TimerCooldownPounce_timeout():
+	if not transforming and not stunned:
+		pounce()
+
+
+func _on_TimerFootstepsHuman_timeout():
+	Controller.play_sound_oneshot(footstep_sound_human, rand_range(0.95, 1.05), -24)
+
+
+func _on_TimerFootstepsDemon_timeout():
+	Controller.play_sound_oneshot(footstep_sound_demon, rand_range(0.95, 1.05), -24)

@@ -35,14 +35,14 @@ animations = [ {
 "name": "annoyed",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "talk",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "idle2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "talk",
 "speed": 5.0
 } ]
 
@@ -294,11 +294,14 @@ tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 8.2 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 8.2, 16 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ true ],
 "method": "transformation"
+}, {
+"args": [ true ],
+"method": "start_pounce_meter"
 } ]
 }
 tracks/11/type = "method"
@@ -512,7 +515,7 @@ centered = false
 
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
-volume_db = -8.0
+volume_db = -14.0
 
 [node name="SoundThunder" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

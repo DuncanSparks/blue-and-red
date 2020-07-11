@@ -5,3 +5,5 @@ func _ready():
 	if Controller.flag("game_start") == 0:
 		$AnimationPlayer.play("Start")
 		Controller.set_flag("game_start", 1)
+	else:
+		$CanvasLayer/Fade.queue_free()

@@ -28,10 +28,12 @@ func adjust_player():
 			spr.play("sit_demon")
 	
 	spr.set_flip_h(player_ref.get_global_position().x > get_global_position().x)
+	player_ref.start_pounce_meter(false)
 	
 	
 func unadjust_player():
 	player_ref.stop(false)
+	player_ref.start_pounce_meter(true)
 	
 	
 func talk_dialogue(text: PoolStringArray, show_name: bool = true):

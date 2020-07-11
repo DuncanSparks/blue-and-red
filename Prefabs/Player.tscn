@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Player_demon_run3.png" type="Texture" id=2]
@@ -43,6 +43,8 @@
 [ext_resource path="res://Sprites/Characters/Player_human_run2.png" type="Texture" id=41]
 [ext_resource path="res://Sprites/Characters/Player_human_run4.png" type="Texture" id=42]
 [ext_resource path="res://Sprites/Characters/Player_human_run3.png" type="Texture" id=43]
+[ext_resource path="res://Sprites/Effects/Orb2.png" type="Texture" id=44]
+[ext_resource path="res://Audio/Land_human.ogg" type="AudioStream" id=45]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -53,37 +55,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 16 ) ],
 "loop": true,
-"name": "idle_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "run_demon",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ) ],
-"loop": true,
-"name": "sit_demon",
-"speed": 6.0
-}, {
-"frames": [ ExtResource( 34 ) ],
-"loop": true,
-"name": "ouch_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "idle_human",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 16 ) ],
-"loop": true,
 "name": "start_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 12 ) ],
-"loop": true,
-"name": "ouch_human",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
@@ -106,9 +78,39 @@ animations = [ {
 "name": "pounce_demon",
 "speed": 15.0
 }, {
+"frames": [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ) ],
+"loop": true,
+"name": "sit_demon",
+"speed": 6.0
+}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "land_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ) ],
+"loop": true,
+"name": "idle_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "run_demon",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "ouch_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 34 ) ],
+"loop": true,
+"name": "ouch_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "idle_human",
 "speed": 5.0
 } ]
 
@@ -490,6 +492,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+footstep_sound_human = ExtResource( 45 )
+footstep_sound_demon = ExtResource( 29 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
@@ -602,6 +606,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CooldownShieldMeter" type="TextureProgress" parent="."]
+visible = false
+margin_left = -3.0
+margin_top = 16.0
+margin_right = 4.0
+margin_bottom = 23.0
+max_value = 4.0
+step = 0.01
+value = 4.0
+texture_progress = ExtResource( 44 )
+fill_mode = 5
+tint_progress = Color( 0, 0.941176, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CooldownPounceMeter" type="TextureProgress" parent="."]
+visible = false
+margin_left = -3.0
+margin_top = 16.0
+margin_right = 4.0
+margin_bottom = 23.0
+max_value = 3.0
+step = 0.01
+value = 3.0
+texture_progress = ExtResource( 44 )
+fill_mode = 5
+tint_progress = Color( 1, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TweenShieldMeter" type="Tween" parent="."]
+
 [node name="PartsTransform" type="Particles2D" parent="."]
 emitting = false
 amount = 16
@@ -626,7 +664,11 @@ process_material = SubResource( 21 )
 texture = ExtResource( 32 )
 
 [node name="TimerCooldownShield" type="Timer" parent="."]
-wait_time = 8.0
+wait_time = 4.0
+one_shot = true
+
+[node name="TimerCooldownPounce" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
 [node name="TimerStun" type="Timer" parent="."]
@@ -641,18 +683,27 @@ one_shot = true
 wait_time = 0.4
 one_shot = true
 
+[node name="TimerFootstepsHuman" type="Timer" parent="."]
+wait_time = 0.4
+
+[node name="TimerFootstepsDemon" type="Timer" parent="."]
+wait_time = 0.3
+
 [node name="Test" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 28 )
-[connection signal="animation_finished" from="SpriteSword" to="AreaSword/CollisionPolygon2D" method="set_disabled" binds= [ true ]]
 [connection signal="animation_finished" from="SpriteSword" to="SpriteSword" method="play" binds= [ "idle" ]]
+[connection signal="animation_finished" from="SpriteSword" to="AreaSword/CollisionPolygon2D" method="set_disabled" binds= [ true ]]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="animation_finished" from="Shield/AnimationPlayer2" to="." method="_on_AnimationPlayer2_animation_finished"]
-[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
+[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerCooldownShield" to="." method="_on_TimerCooldownShield_timeout"]
+[connection signal="timeout" from="TimerCooldownPounce" to="." method="_on_TimerCooldownPounce_timeout"]
 [connection signal="timeout" from="TimerStun" to="." method="_on_TimerStun_timeout"]
 [connection signal="timeout" from="TimerPounce" to="." method="_on_TimerPounce_timeout"]
 [connection signal="timeout" from="TimerPounce2" to="." method="_on_TimerPounce2_timeout"]
+[connection signal="timeout" from="TimerFootstepsHuman" to="." method="_on_TimerFootstepsHuman_timeout"]
+[connection signal="timeout" from="TimerFootstepsDemon" to="." method="_on_TimerFootstepsDemon_timeout"]

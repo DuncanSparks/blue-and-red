@@ -58,6 +58,16 @@ func stop_timer(stop: bool, change_mode: int = -1):
 	transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
 	
 	
+func play_sound_oneshot(sound: AudioStream, pitch: float = 1.0, volume: float = 0.0):
+	var player := AudioStreamPlayer.new()
+	player.connect("finished", player, "queue_free")
+	player.set_stream(sound)
+	player.set_pitch_scale(pitch)
+	player.set_volume_db(volume)
+	get_tree().get_root().add_child(player)
+	player.play()
+	
+	
 func dialogue(text: Array, name_: String, color: Color, show_name: bool = true):
 	var dlg := dialogue_ref.instance()
 	get_tree().get_root().add_child(dlg)
