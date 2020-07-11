@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="Blue and Red"
 run/main_scene="res://Scenes/Test.tscn"
-config/icon="res://icon.png"
+config/icon="res://Icon_BR.png"
 
 [autoload]
 

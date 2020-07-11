@@ -7,6 +7,8 @@ export(float) var speed: float = 90.0
 export(AudioStream) var footstep_sound_human: AudioStream
 export(AudioStream) var footstep_sound_demon: AudioStream
 
+export(bool) var can_control := true
+
 var motion := Vector2()
 
 var health := 5
@@ -36,10 +38,14 @@ onready var timer_footsteps_demon := $TimerFootstepsDemon as Timer
 
 
 func _ready():
-	pass # Replace with function body.
+	if not can_control:
+		hide()
 	
 
 func _process(_delta):
+	if not can_control:
+		return
+		
 	set_z_index(int(get_position().y))
 	
 	if not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
@@ -103,7 +109,8 @@ func _process(_delta):
 	
 	
 func _physics_process(_delta):
-	move_and_slide(motion * speed)
+	if can_control:
+		move_and_slide(motion * speed)
 	
 	
 func shield():

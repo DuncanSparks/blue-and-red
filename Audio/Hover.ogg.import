@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Hover.ogg-0ee135420d91dd324374127859362b7c.oggstr"
+
+[deps]
+
+source_file="res://Audio/Hover.ogg"
+dest_files=[ "res://.import/Hover.ogg-0ee135420d91dd324374127859362b7c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

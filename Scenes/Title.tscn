@@ -1,0 +1,212 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Sprites/UI/Logo.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/UI/Pentagram_full.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/ButtonUp.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/ButtonOver.png" type="Texture" id=4]
+[ext_resource path="res://Greenscr.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Scripts/Scenes/Title.gd" type="Script" id=6]
+[ext_resource path="res://Audio/Text.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Audio/Hover.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=9]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float sinConst = 0.2;
+uniform float timeConst = 2.0;
+uniform vec4 color : hint_color = vec4(1, 1, 1, 1);
+
+void fragment() {
+	vec2 uvOffset;
+	uvOffset.x = cos(TIME * timeConst + UV.x + UV.y) * sinConst;
+	uvOffset.y = sin(TIME * timeConst + UV.x * 10f + UV.y) * sinConst;
+	
+	COLOR = texture(TEXTURE, UV + uvOffset);
+	COLOR.rgb = color.rgb;
+}
+"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/sinConst = 0.015
+shader_param/timeConst = 2.0
+shader_param/color = Color( 0.415686, 0.176471, 0.482353, 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 12
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 12
+font_data = ExtResource( 5 )
+
+[node name="Scene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 160.0 ]
+}
+hover_sound = ExtResource( 8 )
+click_sound = ExtResource( 7 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pentagram" type="TextureRect" parent="."]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 91.0
+margin_top = 11.0
+margin_right = -92.0
+margin_bottom = -31.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 18.0
+margin_top = 136.0
+margin_right = 302.0
+margin_bottom = 159.0
+custom_constants/separation = 52
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="TextureButton" parent="HBoxContainer"]
+margin_right = 60.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 60, 20 )
+action_mode = 0
+texture_normal = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="HBoxContainer/Button"]
+margin_right = 60.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 3 )
+text = "Start"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="TextureButton" parent="HBoxContainer"]
+margin_left = 112.0
+margin_right = 172.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 60, 20 )
+action_mode = 0
+texture_normal = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+
+[node name="Label2" type="Label" parent="HBoxContainer/Button2"]
+margin_right = 62.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 3 )
+text = "Credits"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="TextureButton" parent="HBoxContainer"]
+margin_left = 224.0
+margin_right = 284.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 60, 20 )
+action_mode = 0
+texture_normal = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+
+[node name="Label3" type="Label" parent="HBoxContainer/Button3"]
+margin_right = 60.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 3 )
+text = "Exit"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 8
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Credits" type="Label" parent="CanvasLayer"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+custom_constants/line_spacing = 12
+text = "Blue and Red
+Developed by Duncan Sparks
+Music by [NAME HERE]
+
+Made for Game Maker's Toolkit Jam 2020
+Made in Godot 3.2.2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="SoundClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = 2.0
+bus = "Reverb"
+
+[node name="TweenStart" type="Tween" parent="."]
+
+[node name="TweenCredits" type="Tween" parent="."]
+
+[node name="TweenExit" type="Tween" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 9 )]
+position = Vector2( 280, 24 )
+can_control = false
+[connection signal="mouse_entered" from="HBoxContainer/Button" to="." method="hover"]
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/Button2" to="." method="hover"]
+[connection signal="pressed" from="HBoxContainer/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/Button3" to="." method="hover"]
+[connection signal="pressed" from="HBoxContainer/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="tween_all_completed" from="TweenCredits" to="." method="_on_TweenCredits_tween_all_completed"]
+[connection signal="tween_all_completed" from="TweenExit" to="." method="_on_TweenExit_tween_all_completed"]
