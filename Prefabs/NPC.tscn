@@ -1,0 +1,140 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Sprites/Speech_bubble.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Characters/Friendly NPCs/Ivari_idle.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/NPC.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5, 4 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 40.05
+
+[sub_resource type="Animation" id=4]
+resource_name = "Talk"
+length = 10.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2, 3, 7, 8.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ PoolStringArray( "Well, you\'re a sprightly little demon, aren\'t you\?", "What do you want\?" ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "Hm... demons don\'t sit like that.", "And you\'re wagging your tail like it\'s your first time trying it.", "You must be that student who got assigned to seal away Osme again.", "Osme turned you into a demon, didn\'t he\? That\'s a new one.", "That\'s pretty rotten luck.", "Yep. That sucks.", "Really too bad." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "What\?", "Don\'t tell me you want me to help you, kid.", "You absolutely want me to help you.", "Well, lucky for you, I don\'t actually care about protecting Osme.", "I think watching him duel sorcerers is quite entertaining, actually.", "So I\'ll throw you a bone and nudge you out of your predicament." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "There. You\'re human again.", "Have fun fighting Osme." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "Oh... one thing I forgot to mention:", "[color=#ff0000]You\'ll turn back into a demon in 20 seconds.[/color]", "[color=#00c6ff]And then back into a human 20 seconds after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
+"method": "talk_dialogue"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../Player")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ false ],
+"method": "transform"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "If you\'re gonna go fight Osme, do it already.", "I\'m getting bored." ) ],
+"method": "talk_dialogue"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Interact:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[node name="NPCIvari" type="StaticBody2D"]
+position = Vector2( 192, 56 )
+z_index = 56
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+npc_name = "Ivari"
+npc_color = Color( 0.513726, 1, 0.447059, 1 )
+max_talk_number = 1
+
+[node name="Interact" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -22 )
+texture = ExtResource( 1 )
+hframes = 4
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 14 )
+shape = SubResource( 2 )
+
+[node name="AreaInteract" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteract"]
+position = Vector2( 0, 2 )
+shape = SubResource( 3 )
+
+[node name="AnimationPlayerTalk" type="AnimationPlayer" parent="."]
+anims/Talk = SubResource( 4 )
+anims/Talk2 = SubResource( 5 )
+
+[node name="AnimationPlayerInteract" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+playback_speed = 0.5
+anims/Idle = SubResource( 6 )
+[connection signal="body_entered" from="AreaInteract" to="." method="_on_AreaInteract_body_entered"]
+[connection signal="body_exited" from="AreaInteract" to="." method="_on_AreaInteract_body_exited"]
+[connection signal="animation_finished" from="AnimationPlayerTalk" to="." method="_on_AnimationPlayerTalk_animation_finished"]

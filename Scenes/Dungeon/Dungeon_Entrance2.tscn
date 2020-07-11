@@ -1,36 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 24, 24, 296, 24, 296, 168, 184, 168, 184, 184, 136, 184, 136, 168, 24, 168 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 3, 4, 5, 6 ), PoolIntArray( 0, 3, 6 ), PoolIntArray( 0, 6, 7 ) ]
 outlines = [ PoolVector2Array( 24, 24, 24, 168, 136, 168, 136, 184, 184, 184, 184, 168, 296, 168, 296, 24 ) ]
-
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.586667, 1 )
-colors = PoolColorArray( 0.96582, 0.91197, 0.830002, 1, 0.994531, 0.985915, 0.9728, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-
-[sub_resource type="ParticlesMaterial" id=4]
-emission_shape = 2
-emission_box_extents = Vector3( 24, 1, 1 )
-flag_disable_z = true
-direction = Vector3( 0, -1, 0 )
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 5.0
-initial_velocity_random = 0.5
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-color_ramp = SubResource( 3 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 40, 10 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 32, 8 )
@@ -52,10 +29,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Pentagram" type="Sprite" parent="."]
-position = Vector2( 160, 96 )
-texture = ExtResource( 4 )
-
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
 
@@ -68,22 +41,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="PartsDoor" type="Particles2D" parent="."]
-position = Vector2( 160, 183 )
-lifetime = 5.0
-process_material = SubResource( 4 )
-
 [node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 160, 192 )
-shape = SubResource( 5 )
-
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
-position = Vector2( 160, 0 )
-target_scene = "res://Scenes/Dungeon/Dungeon_Entrance2.tscn"
+position = Vector2( 160, 192 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Entrance1.tscn"
+target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
 shape = SubResource( 6 )

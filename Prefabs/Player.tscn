@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Player_demon_run3.png" type="Texture" id=2]
@@ -39,6 +39,10 @@
 [ext_resource path="res://Sprites/Characters/Player_demon_sit1.png" type="Texture" id=37]
 [ext_resource path="res://Sprites/Characters/Player_demon_sit3.png" type="Texture" id=38]
 [ext_resource path="res://Sprites/Characters/Player_demon_sit4.png" type="Texture" id=39]
+[ext_resource path="res://Sprites/Characters/Player_human_run1.png" type="Texture" id=40]
+[ext_resource path="res://Sprites/Characters/Player_human_run2.png" type="Texture" id=41]
+[ext_resource path="res://Sprites/Characters/Player_human_run4.png" type="Texture" id=42]
+[ext_resource path="res://Sprites/Characters/Player_human_run3.png" type="Texture" id=43]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -82,9 +86,14 @@ animations = [ {
 "name": "ouch_human",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
 "loop": true,
 "name": "run_human",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "shield_human",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
@@ -92,20 +101,15 @@ animations = [ {
 "name": "human_to_demon",
 "speed": 7.0
 }, {
-"frames": [ ExtResource( 9 ) ],
-"loop": true,
-"name": "shield_human",
-"speed": 5.0
+"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
+"loop": false,
+"name": "pounce_demon",
+"speed": 15.0
 }, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "land_demon",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
-"loop": false,
-"name": "pounce_demon",
-"speed": 15.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -489,7 +493,7 @@ __meta__ = {
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle_human"
+animation = "run_human"
 
 [node name="CollisionHuman" type="CollisionShape2D" parent="."]
 position = Vector2( 1, 12 )
@@ -640,13 +644,13 @@ one_shot = true
 [node name="Test" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 28 )
-[connection signal="animation_finished" from="SpriteSword" to="SpriteSword" method="play" binds= [ "idle" ]]
 [connection signal="animation_finished" from="SpriteSword" to="AreaSword/CollisionPolygon2D" method="set_disabled" binds= [ true ]]
+[connection signal="animation_finished" from="SpriteSword" to="SpriteSword" method="play" binds= [ "idle" ]]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="animation_finished" from="Shield/AnimationPlayer2" to="." method="_on_AnimationPlayer2_animation_finished"]
-[connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
 [connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
+[connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerCooldownShield" to="." method="_on_TimerCooldownShield_timeout"]
 [connection signal="timeout" from="TimerStun" to="." method="_on_TimerStun_timeout"]

@@ -165,8 +165,8 @@ func _on_TimerCooldownShield_timeout():
 	cooldown_shield = false
 	
 
-func finish_transformation():
-	demon_form = not demon_form
+func finish_transformation(use_override: bool = false, override: bool = false):
+	demon_form = not demon_form if not use_override else override
 	if demon_form:
 		$AnimationPlayerSpeed.play("Speed Variance")
 		$CollisionHuman.set_disabled(true)

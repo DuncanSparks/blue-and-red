@@ -23,6 +23,18 @@ func _process(delta):
 		timer_transform.start()
 		
 		
+func move_player(position: Vector2):
+	player_ref.set_position(position)
+	
+	
+func goto_scene(scene: String, player_pos: Vector2):
+	get_tree().change_scene(scene)
+	yield(get_tree(), "idle_frame")
+	player_ref = get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
+	move_player(player_pos)
+	player_ref.finish_transformation(true, player_transformed)
+		
+		
 func stop_timer(stop: bool, change_mode: int = -1):
 	timer_transform.set_paused(stop)
 	match change_mode:
