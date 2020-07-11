@@ -4,7 +4,7 @@
 [ext_resource path="res://Prefabs/Enemies/Demon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=4]
 
-[sub_resource type="NavigationPolygon" id=13]
+[sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 296, 24, 296, 168, 24, 168, 24, 24 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 outlines = [ PoolVector2Array( 24, 24, 24, 168, 296, 168, 296, 24 ) ]
@@ -29,7 +29,7 @@ __meta__ = {
 visible = false
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
-navpoly = SubResource( 13 )
+navpoly = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }

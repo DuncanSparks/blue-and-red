@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Sprites/UI/Text_box.png" type="Texture" id=1]
+[ext_resource path="res://PIXEARG_.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://Scripts/Dialogue.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 2 )
+
+[node name="Dialogue" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 140.0 ],
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 160.0 ]
+}
+
+[node name="Box" type="TextureRect" parent="."]
+margin_left = 55.0
+margin_top = 95.0
+margin_right = 261.0
+margin_bottom = 187.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Box"]
+margin_left = 25.0
+margin_top = 6.0
+margin_right = 65.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="Box"]
+margin_left = 27.0
+margin_top = 25.0
+margin_right = 179.0
+margin_bottom = 67.0
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Hello there my name is Ivari"
+visible_characters = 0
+meta_underlined = false
+text = "Hello there my name is Ivari"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerText" type="Timer" parent="."]
+wait_time = 0.03
+[connection signal="timeout" from="TimerText" to="." method="_on_TimerText_timeout"]

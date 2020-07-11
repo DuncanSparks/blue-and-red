@@ -14,6 +14,8 @@ var shielding := false
 var transforming := false
 var pouncing := false
 
+var stopped := false
+
 var cooldown_shield := false
 
 var demon_form := false
@@ -31,7 +33,7 @@ func _ready():
 func _process(_delta):
 	set_z_index(get_position().y)
 	
-	if not stunned and not shielding and not transforming and not pouncing:
+	if not stopped and not stunned and not shielding and not transforming and not pouncing:
 		if not demon_form:
 			var input_x := int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 			var input_y := int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
@@ -47,12 +49,12 @@ func _process(_delta):
 	elif not pouncing:
 		motion = Vector2.ZERO
 	
-	if Input.is_action_just_pressed("attack") and not stunned and not shielding and not transforming and not pouncing:
+	if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing:
 		if not demon_form:
 			sprite_sword.play("swing")
 			$AreaSword/CollisionPolygon2D.set_disabled(false)
 			
-	if Input.is_action_just_pressed("attack_2") and not stunned and not shielding and not transforming and not pouncing:
+	if Input.is_action_just_pressed("attack_2") and not stopped and not stunned and not shielding and not transforming and not pouncing:
 		if not demon_form:
 			var orb := orb_ref.instance() as KinematicBody2D
 			orb.set_position(get_position())
@@ -61,7 +63,7 @@ func _process(_delta):
 		else:
 			pounce()
 			
-	if Input.is_action_just_pressed("action_shield") and not cooldown_shield and not stunned and not transforming:
+	if Input.is_action_just_pressed("action_shield") and not stopped and not cooldown_shield and not stunned and not transforming:
 		shield()
 			
 	if Input.is_action_just_pressed("sys_fullscreen"):

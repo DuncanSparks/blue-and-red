@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Player_demon_run3.png" type="Texture" id=2]
@@ -35,6 +35,10 @@
 [ext_resource path="res://Audio/Pounce.ogg" type="AudioStream" id=33]
 [ext_resource path="res://Sprites/Characters/Player_demon_ouch.png" type="Texture" id=34]
 [ext_resource path="res://Sprites/Characters/Protag_transform_7.png" type="Texture" id=35]
+[ext_resource path="res://Sprites/Characters/Player_demon_sit2.png" type="Texture" id=36]
+[ext_resource path="res://Sprites/Characters/Player_demon_sit1.png" type="Texture" id=37]
+[ext_resource path="res://Sprites/Characters/Player_demon_sit3.png" type="Texture" id=38]
+[ext_resource path="res://Sprites/Characters/Player_demon_sit4.png" type="Texture" id=39]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -43,49 +47,29 @@ animations = [ {
 "name": "demon_to_human",
 "speed": 7.0
 }, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "land_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 34 ) ],
-"loop": true,
-"name": "ouch_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
-"loop": false,
-"name": "pounce_demon",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 16 ) ],
 "loop": true,
 "name": "idle_demon",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "idle_human",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
-"loop": false,
-"name": "human_to_demon",
-"speed": 7.0
 }, {
 "frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "run_demon",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ) ],
 "loop": true,
-"name": "run_human",
+"name": "sit_demon",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 34 ) ],
+"loop": true,
+"name": "ouch_demon",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "shield_human",
+"name": "idle_human",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 16 ) ],
@@ -97,15 +81,40 @@ animations = [ {
 "loop": true,
 "name": "ouch_human",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "run_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
+"loop": false,
+"name": "human_to_demon",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "shield_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "land_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
+"loop": false,
+"name": "pounce_demon",
+"speed": 15.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 4, 3 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 14, 5 )
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [  ],
 "loop": true,
@@ -118,14 +127,13 @@ animations = [ {
 "speed": 24.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 5, 13 )
 
-[sub_resource type="RectangleShape2D" id=20]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 15, 7 )
 
-[sub_resource type="Animation" id=5]
-resource_name = "Spin"
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
 tracks/0/interp = 1
@@ -139,8 +147,7 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Fadeout"
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
@@ -166,7 +173,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 length = 2.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:visible")
@@ -181,8 +188,7 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false, true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Speed Variance"
+[sub_resource type="Animation" id=10]
 length = 5.0
 loop = true
 tracks/0/type = "value"
@@ -198,7 +204,7 @@ tracks/0/keys = {
 "values": [ 90.0, 200.0, 90.0 ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=11]
 resource_name = "Transform Demon to Human"
 length = 3.0
 tracks/0/type = "value"
@@ -304,7 +310,7 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=12]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:self_modulate")
@@ -409,14 +415,14 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=13]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=14]
+gradient = SubResource( 13 )
 
-[sub_resource type="ParticlesMaterial" id=12]
+[sub_resource type="ParticlesMaterial" id=15]
 emission_shape = 2
 emission_box_extents = Vector3( 15, 15, 15 )
 flag_disable_z = true
@@ -427,9 +433,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 radial_accel = -120.0
 scale = 2.0
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 14 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=16]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -438,22 +444,22 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 14 )
 
-[sub_resource type="Gradient" id=16]
+[sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.386667, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=17]
-gradient = SubResource( 16 )
+[sub_resource type="GradientTexture" id=18]
+gradient = SubResource( 17 )
 
-[sub_resource type="Curve" id=18]
+[sub_resource type="Curve" id=19]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.150289, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=19]
-curve = SubResource( 18 )
+[sub_resource type="CurveTexture" id=20]
+curve = SubResource( 19 )
 
-[sub_resource type="ParticlesMaterial" id=15]
+[sub_resource type="ParticlesMaterial" id=21]
 emission_shape = 2
 emission_box_extents = Vector3( 5, 0, 1 )
 flag_disable_z = true
@@ -467,8 +473,8 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 5.0
 scale_random = 0.5
-scale_curve = SubResource( 19 )
-color_ramp = SubResource( 17 )
+scale_curve = SubResource( 20 )
+color_ramp = SubResource( 18 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
@@ -483,7 +489,7 @@ __meta__ = {
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle_demon"
+animation = "idle_human"
 
 [node name="CollisionHuman" type="CollisionShape2D" parent="."]
 position = Vector2( 1, 12 )
@@ -491,12 +497,12 @@ shape = SubResource( 2 )
 
 [node name="CollisionDemon" type="CollisionShape2D" parent="."]
 position = Vector2( 1, 7 )
-shape = SubResource( 14 )
+shape = SubResource( 3 )
 disabled = true
 
 [node name="SpriteSword" type="AnimatedSprite" parent="."]
 position = Vector2( 18, 0 )
-frames = SubResource( 3 )
+frames = SubResource( 4 )
 animation = "idle"
 playing = true
 
@@ -514,7 +520,7 @@ collision_mask = 32768
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 1, 2 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="PounceBox" type="Area2D" parent="."]
 collision_layer = 32
@@ -522,7 +528,7 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PounceBox"]
 position = Vector2( 3, 7 )
-shape = SubResource( 20 )
+shape = SubResource( 6 )
 disabled = true
 
 [node name="Shield" type="Sprite" parent="."]
@@ -531,10 +537,10 @@ position = Vector2( 1, 2 )
 texture = ExtResource( 26 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Shield"]
-anims/Spin = SubResource( 5 )
+anims/Spin = SubResource( 7 )
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="Shield"]
-anims/Fadeout = SubResource( 6 )
+anims/Fadeout = SubResource( 8 )
 
 [node name="Timer" type="Timer" parent="Shield"]
 wait_time = 0.48
@@ -568,14 +574,14 @@ volume_db = -18.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-anims/Iframes = SubResource( 7 )
+anims/Iframes = SubResource( 9 )
 
 [node name="AnimationPlayerSpeed" type="AnimationPlayer" parent="."]
-"anims/Speed Variance" = SubResource( 8 )
+"anims/Speed Variance" = SubResource( 10 )
 
 [node name="AnimationPlayerTransform" type="AnimationPlayer" parent="."]
-"anims/Transform Demon to Human" = SubResource( 21 )
-"anims/Transform Human to Demon" = SubResource( 9 )
+"anims/Transform Demon to Human" = SubResource( 11 )
+"anims/Transform Human to Demon" = SubResource( 12 )
 
 [node name="Healthbar" type="TextureProgress" parent="."]
 visible = false
@@ -595,7 +601,7 @@ __meta__ = {
 [node name="PartsTransform" type="Particles2D" parent="."]
 emitting = false
 amount = 16
-process_material = SubResource( 12 )
+process_material = SubResource( 15 )
 
 [node name="PartsTransform2" type="Particles2D" parent="."]
 position = Vector2( 2, 8 )
@@ -603,7 +609,7 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 13 )
+process_material = SubResource( 16 )
 
 [node name="PartsLand" type="Particles2D" parent="."]
 position = Vector2( -2, 15 )
@@ -612,7 +618,7 @@ amount = 5
 one_shot = true
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 15 )
+process_material = SubResource( 21 )
 texture = ExtResource( 32 )
 
 [node name="TimerCooldownShield" type="Timer" parent="."]
@@ -639,8 +645,8 @@ texture = ExtResource( 28 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="animation_finished" from="Shield/AnimationPlayer2" to="." method="_on_AnimationPlayer2_animation_finished"]
-[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
+[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerCooldownShield" to="." method="_on_TimerCooldownShield_timeout"]
 [connection signal="timeout" from="TimerStun" to="." method="_on_TimerStun_timeout"]

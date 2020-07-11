@@ -1,14 +1,18 @@
 extends Node
 
+signal dialogue_finished
+
 export(Texture) var meter_texture_1: Texture
 export(Texture) var meter_texture_2: Texture
+
+const dialogue_ref := preload("res://Prefabs/Dialogue.tscn")
 
 var player_transformed := false
 
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 
 onready var transform_meter := $UI/CanvasLayer/Clock as TextureProgress
-onready var timer_transform := $TimerTransform
+onready var timer_transform := $TimerTransform as Timer
 
 
 func _process(delta):
@@ -17,6 +21,25 @@ func _process(delta):
 	if Input.is_action_just_pressed("debug_2"):
 		timer_transform.set_wait_time(0.1)
 		timer_transform.start()
+		
+		
+func stop_timer(stop: bool, change_mode: int = -1):
+	timer_transform.set_paused(stop)
+	match change_mode:
+		0:
+			player_transformed = false
+		1:
+			player_transformed = true
+			
+	transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
+	
+	
+func dialogue(text: Array, name_: String, color: Color):
+	var dlg := dialogue_ref.instance()
+	get_tree().get_root().add_child(dlg)
+	dlg.start_dialogue(text, name_, color)
+	yield(dlg, "dialogue_finished")
+	emit_signal("dialogue_finished")
 
 
 func _on_TimerTransform_timeout():
