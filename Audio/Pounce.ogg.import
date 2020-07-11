@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Pounce.ogg-6a97e8eabae569c6fce7c0e7ab5affc5.oggstr"
+
+[deps]
+
+source_file="res://Audio/Pounce.ogg"
+dest_files=[ "res://.import/Pounce.ogg-6a97e8eabae569c6fce7c0e7ab5affc5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/Controller.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/UI/Clock_red.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/Clock_blue.png" type="Texture" id=3]
+[ext_resource path="res://Audio/Bell.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Audio/Tick.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Audio/Transform3.ogg" type="AudioStream" id=6]
+
+[node name="Controller" type="Node"]
+script = ExtResource( 1 )
+meter_texture_1 = ExtResource( 2 )
+meter_texture_2 = ExtResource( 3 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="UI"]
+layer = 3
+
+[node name="ClockBack" type="TextureRect" parent="UI/CanvasLayer"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 275.0
+margin_top = 10.0
+margin_right = 306.0
+margin_bottom = 41.0
+rect_scale = Vector2( 1.15, 1.15 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clock" type="TextureProgress" parent="UI/CanvasLayer"]
+margin_left = 277.0
+margin_top = 12.0
+margin_right = 308.0
+margin_bottom = 43.0
+max_value = 20.0
+value = 20.0
+rounded = true
+texture_progress = ExtResource( 2 )
+fill_mode = 4
+radial_center_offset = Vector2( 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundTick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -12.0
+
+[node name="SoundBell" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "Reverb"
+
+[node name="SoundTransform" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -18.0
+
+[node name="TimerTransform" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
+[node name="TimerPostTransform" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+[connection signal="value_changed" from="UI/CanvasLayer/Clock" to="." method="_on_Clock_value_changed"]
+[connection signal="timeout" from="TimerTransform" to="." method="_on_TimerTransform_timeout"]
+[connection signal="timeout" from="TimerPostTransform" to="." method="_on_TimerPostTransform_timeout"]

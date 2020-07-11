@@ -156,6 +156,7 @@ func _on_TimerAttack_timeout():
 func _on_TimerPounce_timeout():
 	speed = 200
 	motion = Vector2.RIGHT.rotated(get_global_position().direction_to(pounce_target).angle())
+	$SoundPounce.play()
 	pouncing = true
 	$PounceBox/CollisionShape2D.set_disabled(false)
 	$TimerPounce2.start()
@@ -164,6 +165,7 @@ func _on_TimerPounce_timeout():
 func _on_TimerPounce2_timeout():
 	$SoundLand.play()
 	sprite.play("land")
+	$PartsLand.set_emitting(true)
 	motion = Vector2.ZERO
 	pouncing = false
 	speed = 70
