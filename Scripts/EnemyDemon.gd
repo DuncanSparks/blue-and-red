@@ -10,7 +10,9 @@ var speed := 70
 
 var health := 3
 var attacking := false
+var pouncing := false
 var stunned := false
+var iframes := false
 
 var can_flame := false
 var can_pounce := false
@@ -22,6 +24,7 @@ var player_ref: KinematicBody2D = null
 
 onready var sprite := $Sprite as AnimatedSprite
 onready var sound_hurt := $SoundHurt as AudioStreamPlayer
+onready var healthbar := $Healthbar as TextureProgress
 
 func _ready():
 	nav_node = get_node("../Navigation2D")
@@ -84,6 +87,8 @@ func hurt():
 	sound_hurt.play()
 	sprite.play("ouch")
 	health -= 1
+	healthbar.set_value(health)
+	healthbar.show()
 	stunned = true
 	motion = Vector2.ZERO
 	if health <= 0:
@@ -95,6 +100,7 @@ func hurt():
 		$TimerDeath.start()
 	else:
 		$TimerStun.start()
+		$AnimationPlayer.play("Iframes")
 
 
 func move_along_path(distance: float):
@@ -150,6 +156,8 @@ func _on_TimerAttack_timeout():
 func _on_TimerPounce_timeout():
 	speed = 200
 	motion = Vector2.RIGHT.rotated(get_global_position().direction_to(pounce_target).angle())
+	pouncing = true
+	$PounceBox/CollisionShape2D.set_disabled(false)
 	$TimerPounce2.start()
 
 
@@ -157,7 +165,9 @@ func _on_TimerPounce2_timeout():
 	$SoundLand.play()
 	sprite.play("land")
 	motion = Vector2.ZERO
+	pouncing = false
 	speed = 70
+	$PounceBox/CollisionShape2D.set_disabled(true)
 	$TimerPounce3.start()
 	$TimerStartPounce.set_wait_time(rand_range(2.5, 4))
 	$TimerStartPounce.start()
@@ -185,3 +195,8 @@ func _on_TimerFlame_timeout():
 
 func _on_TimerStartFlame_timeout():
 	can_flame = true
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	iframes = false
+	healthbar.hide()

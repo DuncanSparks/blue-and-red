@@ -10,10 +10,15 @@ var health := 5
 var stunned := false
 var iframes := false
 
+var shielding := false
+
+var cooldown_shield := false
+
 var demon_form := false
 
 onready var sprite := $Sprite as AnimatedSprite
 onready var sprite_sword := $SpriteSword as AnimatedSprite
+onready var healthbar := $Healthbar as TextureProgress
 
 
 func _ready():
@@ -23,7 +28,7 @@ func _ready():
 func _process(_delta):
 	set_z_index(get_position().y)
 	
-	if not stunned:
+	if not stunned and not shielding:
 		var input_x := int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 		var input_y := int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 		motion = Vector2(input_x, input_y)
@@ -44,6 +49,9 @@ func _process(_delta):
 			orb.motion = Vector2.RIGHT.rotated(get_position().direction_to(get_global_mouse_position()).angle())
 			get_tree().get_root().add_child(orb)
 			
+	if Input.is_action_just_pressed("action_shield") and not cooldown_shield:
+		shield()
+			
 	if Input.is_action_just_pressed("sys_fullscreen"):
 		OS.set_window_fullscreen(not OS.is_window_fullscreen())
 	
@@ -55,10 +63,30 @@ func _physics_process(_delta):
 	move_and_slide(motion * speed)
 	
 	
+func shield():
+	$SoundShield.play()
+	sprite.play("shield_human")
+	var spr := $Shield as Sprite
+	spr.set_self_modulate(Color(1, 1, 1, 1))
+	spr.set_scale(Vector2(1, 1))
+	$Shield.show()
+	$Shield/AnimationPlayer.play("Spin")
+	shielding = true
+	$Shield/Timer.start()
+	cooldown_shield = true
+	
+	
+func shield_end():
+	shielding = false
+	$TimerCooldownShield.start()
+	
+	
 func hurt():
 	$SoundHurt.play()
 	sprite.play("ouch_human")
 	health -= 1
+	healthbar.set_value(health)
+	healthbar.show()
 	stunned = true
 	$TimerStun.start()
 	iframes = true
@@ -83,7 +111,10 @@ func is_moving() -> bool:
 
 func _on_Hurtbox_body_entered(body):
 	if not iframes:
-		hurt()
+		if not shielding:
+			hurt()
+		else:
+			pass
 
 
 func _on_TimerStun_timeout():
@@ -92,3 +123,12 @@ func _on_TimerStun_timeout():
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	iframes = false
+	healthbar.hide()
+
+
+func _on_AnimationPlayer2_animation_finished(anim_name):
+	$Shield.hide()
+
+
+func _on_TimerCooldownShield_timeout():
+	cooldown_shield = false
