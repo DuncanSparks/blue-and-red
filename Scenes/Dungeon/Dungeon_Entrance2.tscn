@@ -9,7 +9,7 @@ vertices = PoolVector2Array( 24, 24, 296, 24, 296, 168, 184, 168, 184, 184, 136,
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 3, 4, 5, 6 ), PoolIntArray( 0, 3, 6 ), PoolIntArray( 0, 6, 7 ) ]
 outlines = [ PoolVector2Array( 24, 24, 24, 168, 136, 168, 136, 184, 184, 184, 184, 168, 296, 168, 296, 24 ) ]
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 8 )
 
 [node name="Scene" type="Node2D"]
@@ -51,6 +51,8 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance1.tscn"
 target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 6 )
+shape = SubResource( 2 )
+
+[node name="TimerSpawn" type="Timer" parent="."]
 
 [editable path="LoadingZone"]

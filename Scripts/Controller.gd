@@ -9,6 +9,10 @@ const dialogue_ref := preload("res://Prefabs/Dialogue.tscn")
 
 var player_transformed := false
 
+var flags := {
+	"game_start": 0,
+}
+
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 
 onready var transform_meter := $UI/CanvasLayer/Clock as TextureProgress
@@ -33,6 +37,14 @@ func goto_scene(scene: String, player_pos: Vector2):
 	player_ref = get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 	move_player(player_pos)
 	player_ref.finish_transformation(true, player_transformed)
+	
+	
+func flag(id: String) -> int:
+	return flags[id]
+	
+	
+func set_flag(id: String, value: int):
+	flags[id] = value
 		
 		
 func stop_timer(stop: bool, change_mode: int = -1):
