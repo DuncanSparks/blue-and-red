@@ -118,6 +118,12 @@ func hurt():
 	$AnimationPlayer.play("Iframes")
 	
 	
+func stop(value: bool):
+	stopped = value
+	if value:
+		sprite.play("idle_demon" if demon_form else "idle_human")
+	
+	
 func transform(demon: bool):
 	transforming = true
 	sprite.play("ouch_demon" if demon_form else "ouch_human")

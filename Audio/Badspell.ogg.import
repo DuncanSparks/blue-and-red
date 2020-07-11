@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Badspell.ogg-6a9d5647ed46f0e0d56c1c41f6d649ce.oggstr"
+
+[deps]
+
+source_file="res://Audio/Badspell.ogg"
+dest_files=[ "res://.import/Badspell.ogg-6a9d5647ed46f0e0d56c1c41f6d649ce.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

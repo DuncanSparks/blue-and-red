@@ -23,7 +23,7 @@ func _process(delta):
 
 func adjust_player():
 	var spr := player_ref.get_node("Sprite") as AnimatedSprite
-	player_ref.stopped = true
+	player_ref.stop(true)
 	if player_ref.demon_form:
 			spr.play("sit_demon")
 	
@@ -31,12 +31,12 @@ func adjust_player():
 	
 	
 func unadjust_player():
-	player_ref.stopped = false
+	player_ref.stop(false)
 	
 	
-func talk_dialogue(text: PoolStringArray):
+func talk_dialogue(text: PoolStringArray, show_name: bool = true):
 	anim_talk.stop(false)
-	Controller.dialogue(text, npc_name, npc_color)
+	Controller.dialogue(text, npc_name, npc_color, show_name)
 	yield(Controller, "dialogue_finished")
 	anim_talk.play()
 

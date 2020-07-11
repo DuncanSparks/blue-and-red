@@ -1,10 +1,22 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/Props/Column.png" type="Texture" id=6]
+[ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Audio/Thunder.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_annoyed.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_idle2.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_cast.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=12]
+[ext_resource path="res://Audio/Badspell.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Audio/Badspell2.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Sprites/UI/Tutorial_demon.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/Props/Stone.png" type="Texture" id=16]
+[ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -13,14 +25,62 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "annoyed",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "cast",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "talk",
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=2]
-resource_name = "Idle"
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
+max_value = 3.0
+_data = [ Vector2( 0, 0.910227 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+flag_disable_z = true
+gravity = Vector3( 0, 98, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 70.0
+gravity = Vector3( 0, 15, 0 )
+initial_velocity = 30.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 8.0
+scale_random = 0.5
+color_ramp = SubResource( 3 )
+
+[sub_resource type="Animation" id=8]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -36,8 +96,302 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.32549, 0.32549, 0.32549, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 5, 4 )
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 11, 6 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 6, 3 )
+
+[sub_resource type="Animation" id=12]
+length = 16.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5.5, 6, 6.5, 7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ PoolStringArray( "Obtained the red stone." ), false ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "[shake]Foolish mortal!![/shake]", "[shake]What business do you have here\? Do you not know that I am the...[/shake]", "..." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "You know what\? I\'ve given this patter twice this month already.", "Let\'s just skip this part and cut to it." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "Wait... You\'re a lot younger than the people they usually send.", "You\'re a student at the university, aren\'t you\?", "Well... this is going to be easier than usual.", "...", "Hm..." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "You know what\?", "I think I\'ll toy with you a bit first.", "How about you try fighting some demonic instincts for a while\?" ) ],
+"method": "talk_dialogue"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../SoundThunder")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 3, 4.5, 11.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../CanvasLayer/Flash:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 2, 3, 3.1, 4.5, 4.6, 11.2, 11.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../AnimationPlayerScreenshake")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 3, 4.5, 11.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ "Screenshake", -1, 1.0, false ],
+"method": "play"
+}, {
+"args": [ "Screenshake", -1, 1.0, false ],
+"method": "play"
+}, {
+"args": [ "Screenshake", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../Osme:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 2, 4.5, 11.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("../Osme")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 5.6, 6.2, 6.8, 7.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "annoyed", false ],
+"method": "play"
+}, {
+"args": [ "idle2", false ],
+"method": "play"
+}, {
+"args": [ "idle", false ],
+"method": "play"
+}, {
+"args": [ "cast", false ],
+"method": "play"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("../Osme/PartsCast")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 7.5, 11.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+}, {
+"args": [ "emitting", false ],
+"method": "set"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("../Osme/PartsCast2")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 7.5, 11.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+}, {
+"args": [ "emitting", false ],
+"method": "set"
+} ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath("../SoundSpell")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 7.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/9/type = "method"
+tracks/9/path = NodePath("../SoundSpell2")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 7.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/10/type = "method"
+tracks/10/path = NodePath("../Player")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 8.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ true ],
+"method": "transform"
+} ]
+}
+tracks/11/type = "method"
+tracks/11/path = NodePath("../AnimationPlayerTutorial")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 15.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Tutorial", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/12/type = "method"
+tracks/12/path = NodePath("../SoundCollect")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/13/type = "method"
+tracks/13/path = NodePath("Stone")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "The stone is gone." ), false ],
+"method": "talk_dialogue"
+} ]
+}
+
+[sub_resource type="Animation" id=14]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Tutorial"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Tutorial:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 4.5, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="Scene" type="Node2D"]
 
@@ -46,36 +400,159 @@ z_index = -1000
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 65536, 0, 0, 65537, 1, 0, 65538, 1, 0, 65539, 1, 0, 65540, 1, 0, 65541, 1, 0, 65542, 1, 0, 65543, 1, 0, 65544, 1, 0, 65545, 1, 0, 65546, 1, 0, 65547, 1, 0, 65548, 1, 0, 65549, 1, 0, 65550, 1, 0, 65551, 1, 0, 65552, 1, 0, 65553, 1, 0, 65554, 1, 0, 65555, 0, 0, 131072, 0, 0, 131073, 1, 0, 131074, 1, 0, 131075, 1, 0, 131076, 1, 0, 131077, 1, 0, 131078, 1, 0, 131079, 1, 0, 131080, 1, 0, 131081, 1, 0, 131082, 1, 0, 131083, 1, 0, 131084, 1, 0, 131085, 1, 0, 131086, 1, 0, 131087, 1, 0, 131088, 1, 0, 131089, 1, 0, 131090, 1, 0, 131091, 0, 0, 196608, 0, 0, 196609, 1, 0, 196610, 1, 0, 196611, 1, 0, 196612, 1, 0, 196613, 1, 0, 196614, 1, 0, 196615, 1, 0, 196616, 1, 0, 196617, 1, 0, 196618, 1, 0, 196619, 1, 0, 196620, 1, 0, 196621, 1, 0, 196622, 1, 0, 196623, 1, 0, 196624, 1, 0, 196625, 1, 0, 196626, 1, 0, 196627, 0, 0, 262144, 0, 0, 262145, 1, 0, 262146, 1, 0, 262147, 1, 0, 262148, 1, 0, 262149, 1, 0, 262150, 1, 0, 262151, 1, 0, 262152, 1, 0, 262153, 1, 0, 262154, 1, 0, 262155, 1, 0, 262156, 1, 0, 262157, 1, 0, 262158, 1, 0, 262159, 1, 0, 262160, 1, 0, 262161, 1, 0, 262162, 1, 0, 262163, 0, 0, 327680, 0, 0, 327681, 1, 0, 327682, 1, 0, 327683, 1, 0, 327684, 1, 0, 327685, 1, 0, 327686, 1, 0, 327687, 1, 0, 327688, 1, 0, 327689, 1, 0, 327690, 1, 0, 327691, 1, 0, 327692, 1, 0, 327693, 1, 0, 327694, 1, 0, 327695, 1, 0, 327696, 1, 0, 327697, 1, 0, 327698, 1, 0, 327699, 0, 0, 393216, 0, 0, 393217, 1, 0, 393218, 1, 0, 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 393222, 1, 0, 393223, 1, 0, 393224, 1, 0, 393225, 1, 0, 393226, 1, 0, 393227, 1, 0, 393228, 1, 0, 393229, 1, 0, 393230, 1, 0, 393231, 1, 0, 393232, 1, 0, 393233, 1, 0, 393234, 1, 0, 393235, 0, 0, 458752, 0, 0, 458753, 1, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0, 458758, 1, 0, 458759, 1, 0, 458760, 1, 0, 458761, 1, 0, 458762, 1, 0, 458763, 1, 0, 458764, 1, 0, 458765, 1, 0, 458766, 1, 0, 458767, 1, 0, 458768, 1, 0, 458769, 1, 0, 458770, 1, 0, 458771, 0, 0, 524288, 0, 0, 524289, 1, 0, 524290, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524294, 1, 0, 524295, 1, 0, 524296, 1, 0, 524297, 1, 0, 524298, 1, 0, 524299, 1, 0, 524300, 1, 0, 524301, 1, 0, 524302, 1, 0, 524303, 1, 0, 524304, 1, 0, 524305, 1, 0, 524306, 1, 0, 524307, 0, 0, 589824, 0, 0, 589825, 1, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589830, 1, 0, 589831, 1, 0, 589832, 1, 0, 589833, 1, 0, 589834, 1, 0, 589835, 1, 0, 589836, 1, 0, 589837, 1, 0, 589838, 1, 0, 589839, 1, 0, 589840, 1, 0, 589841, 1, 0, 589842, 1, 0, 589843, 0, 0, 655360, 0, 0, 655361, 1, 0, 655362, 1, 0, 655363, 1, 0, 655364, 1, 0, 655365, 1, 0, 655366, 1, 0, 655367, 1, 0, 655368, 1, 0, 655369, 1, 0, 655370, 1, 0, 655371, 1, 0, 655372, 1, 0, 655373, 1, 0, 655374, 1, 0, 655375, 1, 0, 655376, 1, 0, 655377, 1, 0, 655378, 1, 0, 655379, 0, 0, 720896, 0, 0, 720897, 0, 0, 720898, 1, 0, 720899, 1, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720911, 0, 0, 720912, 0, 0, 720913, 0, 0, 720914, 0, 0, 720915, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 65536, 0, 0, 65537, 15, 0, 65538, 15, 0, 65539, 15, 0, 65540, 15, 0, 65541, 15, 0, 65542, 15, 0, 65543, 15, 0, 65544, 15, 0, 65545, 15, 0, 65546, 15, 0, 65547, 15, 0, 65548, 15, 0, 65549, 15, 0, 65550, 15, 0, 65551, 15, 0, 65552, 15, 0, 65553, 15, 0, 65554, 15, 0, 65555, 0, 0, 131072, 0, 0, 131073, 15, 0, 131074, 15, 0, 131075, 15, 0, 131076, 15, 0, 131077, 15, 0, 131078, 15, 0, 131079, 15, 0, 131080, 15, 0, 131081, 15, 0, 131082, 15, 0, 131083, 15, 0, 131084, 15, 0, 131085, 15, 0, 131086, 15, 0, 131087, 15, 0, 131088, 15, 0, 131089, 15, 0, 131090, 15, 0, 131091, 0, 0, 196608, 0, 0, 196609, 6, 0, 196610, 6, 0, 196611, 5, 0, 196612, 6, 0, 196613, 6, 0, 196614, -1610612729, 0, 196615, 6, 0, 196616, 6, 0, 196617, 6, 0, 196618, 6, 0, 196619, 6, 0, 196620, 6, 0, 196621, 6, 0, 196622, 6, 0, 196623, 6, 0, 196624, 6, 0, 196625, 6, 0, 196626, 6, 0, 196627, 0, 0, 262144, 0, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 262151, 6, 0, 262152, 6, 0, 262153, 6, 0, 262154, 6, 0, 262155, 6, 0, 262156, 536870916, 0, 262157, 6, 0, 262158, 6, 0, 262159, 6, 0, 262160, 6, 0, 262161, 6, 0, 262162, 6, 0, 262163, 0, 0, 327680, 0, 0, 327681, 6, 0, 327682, 6, 0, 327683, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0, 327688, 6, 0, 327689, 6, 0, 327690, 6, 0, 327691, 6, 0, 327692, 6, 0, 327693, 6, 0, 327694, 6, 0, 327695, 6, 0, 327696, 1610612739, 0, 327697, 6, 0, 327698, 6, 0, 327699, 0, 0, 393216, 0, 0, 393217, 6, 0, 393218, 6, 0, 393219, 6, 0, 393220, -1610612734, 0, 393221, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 6, 0, 393225, 6, 0, 393226, 6, 0, 393227, 6, 0, 393228, 6, 0, 393229, 6, 0, 393230, 6, 0, 393231, 6, 0, 393232, -1073741822, 0, 393233, 6, 0, 393234, 6, 0, 393235, 0, 0, 458752, 0, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458757, 6, 0, 458758, -2147483646, 0, 458759, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 458766, 6, 0, 458767, -1610612735, 0, 458768, -1073741823, 0, 458769, 6, 0, 458770, 6, 0, 458771, 0, 0, 524288, 0, 0, 524289, 6, 0, 524290, 6, 0, 524291, 6, 0, 524292, -2147483644, 0, 524293, -536870910, 0, 524294, 536870914, 0, 524295, 6, 0, 524296, 6, 0, 524297, 6, 0, 524298, 6, 0, 524299, 6, 0, 524300, 6, 0, 524301, 6, 0, 524302, 6, 0, 524303, 6, 0, 524304, 6, 0, 524305, 6, 0, 524306, 6, 0, 524307, 0, 0, 589824, 0, 0, 589825, 6, 0, 589826, 6, 0, 589827, 6, 0, 589828, -1073741822, 0, 589829, -2147483647, 0, 589830, 6, 0, 589831, 6, 0, 589832, 6, 0, 589833, 6, 0, 589834, 6, 0, 589835, 3, 0, 589836, 6, 0, 589837, 6, 0, 589838, 2, 0, 589839, 6, 0, 589840, 6, 0, 589841, 6, 0, 589842, 6, 0, 589843, 0, 0, 655360, 0, 0, 655361, 6, 0, 655362, 6, 0, 655363, 6, 0, 655364, 13, 0, 655365, 6, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, -1610612728, 0, 655378, 6, 0, 655379, 0, 0, 720896, 0, 0, 720897, 0, 0, 720898, 6, 0, 720899, 6, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720911, 0, 0, 720912, 0, 0, 720913, 0, 0, 720914, 0, 0, 720915, 0, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Osme" type="AnimatedSprite" parent="."]
+visible = false
 position = Vector2( 160, 40 )
 frames = SubResource( 1 )
-animation = "talk"
+animation = "idle"
+
+[node name="PartsCast" type="Particles2D" parent="Osme"]
+position = Vector2( 17, -12 )
+emitting = false
+amount = 4
+process_material = SubResource( 6 )
+texture = ExtResource( 12 )
+
+[node name="PartsCast2" type="Particles2D" parent="Osme"]
+position = Vector2( 17, -12 )
+emitting = false
+process_material = SubResource( 7 )
 
 [node name="Pentagram" type="Sprite" parent="."]
-position = Vector2( 160, 104 )
+position = Vector2( 160, 105 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pentagram"]
 autoplay = "Idle"
-anims/Idle = SubResource( 2 )
+anims/Idle = SubResource( 8 )
 
-[node name="Pedestal" type="StaticBody2D" parent="."]
-position = Vector2( 160, 96 )
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 128, 134 )
+
+[node name="Column" type="StaticBody2D" parent="."]
+position = Vector2( 88, 48 )
+z_index = 50
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Pedestal"]
-texture = ExtResource( 3 )
+[node name="Sprite" type="Sprite" parent="Column"]
+texture = ExtResource( 6 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pedestal"]
-position = Vector2( 0, 8 )
-shape = SubResource( 3 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
+position = Vector2( 0, 23 )
+shape = SubResource( 9 )
 
-[node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 128, 134 )
+[node name="Column3" type="StaticBody2D" parent="."]
+position = Vector2( 48, 88 )
+z_index = 90
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Column3"]
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Column3"]
+position = Vector2( 0, 23 )
+shape = SubResource( 9 )
+
+[node name="Column2" type="StaticBody2D" parent="."]
+position = Vector2( 232, 48 )
+z_index = 50
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Column2"]
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
+position = Vector2( 0, 23 )
+shape = SubResource( 9 )
+
+[node name="Column4" type="StaticBody2D" parent="."]
+position = Vector2( 272, 88 )
+z_index = 90
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Column4"]
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Column4"]
+position = Vector2( 0, 23 )
+shape = SubResource( 9 )
+
+[node name="NPC" parent="." instance=ExtResource( 7 )]
+position = Vector2( 160, 96 )
+z_index = 98
+npc_name = "Osme"
+npc_color = Color( 0.8, 0, 0, 1 )
+
+[node name="Sprite" parent="NPC" index="1"]
+frames = SubResource( 10 )
+
+[node name="CollisionShape2D" parent="NPC" index="2"]
+position = Vector2( 1, 9 )
+shape = SubResource( 11 )
+
+[node name="AnimationPlayerTalk" parent="NPC" index="4"]
+anims/Talk = SubResource( 12 )
+anims/Talk2 = SubResource( 13 )
+
+[node name="Stone" type="Sprite" parent="NPC"]
+position = Vector2( -3, -17 )
+texture = ExtResource( 16 )
+centered = false
+
+[node name="SoundCollect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 17 )
+volume_db = -8.0
+
+[node name="SoundThunder" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -6.0
+bus = "Reverb"
+
+[node name="SoundSpell" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = -4.0
+
+[node name="SoundSpell2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+volume_db = -4.0
+
+[node name="AnimationPlayerScreenshake" type="AnimationPlayer" parent="."]
+playback_speed = 4.0
+anims/Screenshake = SubResource( 14 )
+
+[node name="AnimationPlayerTutorial" type="AnimationPlayer" parent="."]
+anims/Tutorial = SubResource( 15 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 4
+
+[node name="Flash" type="ColorRect" parent="CanvasLayer"]
+visible = false
+margin_right = 320.0
+margin_bottom = 192.0
+mouse_filter = 2
+color = Color( 1, 0.898039, 0.823529, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Tutorial" type="Sprite" parent="CanvasLayer"]
+self_modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 15 )
+centered = false
+
+[editable path="NPC"]

@@ -46,10 +46,10 @@ func stop_timer(stop: bool, change_mode: int = -1):
 	transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
 	
 	
-func dialogue(text: Array, name_: String, color: Color):
+func dialogue(text: Array, name_: String, color: Color, show_name: bool = true):
 	var dlg := dialogue_ref.instance()
 	get_tree().get_root().add_child(dlg)
-	dlg.start_dialogue(text, name_, color)
+	dlg.start_dialogue(text, name_, color, show_name)
 	yield(dlg, "dialogue_finished")
 	emit_signal("dialogue_finished")
 

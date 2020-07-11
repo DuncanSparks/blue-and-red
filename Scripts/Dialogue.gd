@@ -7,8 +7,8 @@ var dialogue_page := 0
 
 var allow_advance := false
 
-onready var name_label := $Box/Name as Label
-onready var text := $Box/Text as RichTextLabel
+onready var name_label := $CanvasLayer/Box/Name as Label
+onready var text := $CanvasLayer/Box/Text as RichTextLabel
 
 func _ready():
 	pass # Replace with function body.
@@ -27,12 +27,13 @@ func _process(delta):
 				queue_free()
 	
 	
-func start_dialogue(text_input: Array, name: String, name_color: Color):
+func start_dialogue(text_input: Array, name: String, name_color: Color, show_name: bool = true):
 	dialogue = text_input
 	name_label.set_text(name)
+	name_label.set_visible(show_name)
 	name_label.set_self_modulate(name_color)
 	text.set_bbcode(dialogue[0])
-	$Box.show()
+	$CanvasLayer/Box.show()
 	$TimerText.start()
 
 
