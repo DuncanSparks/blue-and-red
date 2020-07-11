@@ -23,6 +23,11 @@ config/icon="res://icon.png"
 
 Controller="*res://Prefabs/Globals/Controller.tscn"
 
+[debug]
+
+gdscript/warnings/unused_argument=false
+gdscript/warnings/return_value_discarded=false
+
 [display]
 
 window/size/width=320

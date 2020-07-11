@@ -18,7 +18,7 @@
 [ext_resource path="res://Sprites/Props/Stone.png" type="Texture" id=16]
 [ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=17]
 
-[sub_resource type="SpriteFrames" id=8]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
@@ -46,29 +46,29 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
 colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
 
-[sub_resource type="Curve" id=11]
+[sub_resource type="Curve" id=4]
 max_value = 3.0
 _data = [ Vector2( 0, 0.910227 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=12]
-curve = SubResource( 11 )
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 gravity = Vector3( 0, 98, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale_curve = SubResource( 12 )
-color_ramp = SubResource( 10 )
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=14]
+[sub_resource type="ParticlesMaterial" id=7]
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 70.0
@@ -78,9 +78,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 8.0
 scale_random = 0.5
-color_ramp = SubResource( 10 )
+color_ramp = SubResource( 3 )
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=8]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -96,10 +96,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.32549, 0.32549, 0.32549, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 11, 6 )
 
-[sub_resource type="SpriteFrames" id=16]
+[sub_resource type="SpriteFrames" id=10]
 animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
@@ -107,10 +107,10 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 6, 3 )
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=12]
 length = 16.0
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -298,7 +298,7 @@ tracks/10/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ true ],
-"method": "transform"
+"method": "transformation"
 } ]
 }
 tracks/11/type = "method"
@@ -344,7 +344,7 @@ tracks/13/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=13]
 length = 2.5
 tracks/0/type = "method"
 tracks/0/path = NodePath("../AnimationPlayerTutorial")
@@ -361,7 +361,7 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=14]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -376,7 +376,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=15]
 length = 6.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Tutorial:self_modulate")
@@ -406,20 +406,20 @@ __meta__ = {
 [node name="Osme" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 160, 40 )
-frames = SubResource( 8 )
+frames = SubResource( 1 )
 animation = "idle"
 
 [node name="PartsCast" type="Particles2D" parent="Osme"]
 position = Vector2( 17, -12 )
 emitting = false
 amount = 4
-process_material = SubResource( 13 )
+process_material = SubResource( 6 )
 texture = ExtResource( 12 )
 
 [node name="PartsCast2" type="Particles2D" parent="Osme"]
 position = Vector2( 17, -12 )
 emitting = false
-process_material = SubResource( 14 )
+process_material = SubResource( 7 )
 
 [node name="Pentagram" type="Sprite" parent="."]
 position = Vector2( 160, 105 )
@@ -427,7 +427,7 @@ texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pentagram"]
 autoplay = "Idle"
-anims/Idle = SubResource( 15 )
+anims/Idle = SubResource( 8 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
@@ -444,7 +444,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
 position = Vector2( 0, 23 )
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 
 [node name="Column3" type="StaticBody2D" parent="."]
 position = Vector2( 48, 88 )
@@ -458,7 +458,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column3"]
 position = Vector2( 0, 23 )
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 
 [node name="Column2" type="StaticBody2D" parent="."]
 position = Vector2( 232, 48 )
@@ -472,7 +472,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
 position = Vector2( 0, 23 )
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 
 [node name="Column4" type="StaticBody2D" parent="."]
 position = Vector2( 272, 88 )
@@ -486,7 +486,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column4"]
 position = Vector2( 0, 23 )
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 
 [node name="NPC" parent="." instance=ExtResource( 7 )]
 position = Vector2( 160, 96 )
@@ -495,15 +495,15 @@ npc_name = "Osme"
 npc_color = Color( 0.8, 0, 0, 1 )
 
 [node name="Sprite" parent="NPC" index="1"]
-frames = SubResource( 16 )
+frames = SubResource( 10 )
 
 [node name="CollisionShape2D" parent="NPC" index="2"]
 position = Vector2( 1, 9 )
-shape = SubResource( 17 )
+shape = SubResource( 11 )
 
 [node name="AnimationPlayerTalk" parent="NPC" index="4"]
-anims/Talk = SubResource( 18 )
-anims/Talk2 = SubResource( 19 )
+anims/Talk = SubResource( 12 )
+anims/Talk2 = SubResource( 13 )
 
 [node name="Stone" type="Sprite" parent="NPC"]
 position = Vector2( -3, -17 )
@@ -529,10 +529,10 @@ volume_db = -4.0
 
 [node name="AnimationPlayerScreenshake" type="AnimationPlayer" parent="."]
 playback_speed = 4.0
-anims/Screenshake = SubResource( 20 )
+anims/Screenshake = SubResource( 14 )
 
 [node name="AnimationPlayerTutorial" type="AnimationPlayer" parent="."]
-anims/Tutorial = SubResource( 21 )
+anims/Tutorial = SubResource( 15 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 4

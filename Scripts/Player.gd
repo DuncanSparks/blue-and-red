@@ -31,7 +31,7 @@ func _ready():
 	
 
 func _process(_delta):
-	set_z_index(get_position().y)
+	set_z_index(int(get_position().y))
 	
 	if not stopped and not stunned and not shielding and not transforming and not pouncing:
 		if not demon_form:
@@ -124,7 +124,7 @@ func stop(value: bool):
 		sprite.play("idle_demon" if demon_form else "idle_human")
 	
 	
-func transform(demon: bool):
+func transformation(demon: bool):
 	transforming = true
 	sprite.play("ouch_demon" if demon_form else "ouch_human")
 	$AnimationPlayerTransform.play("Transform Human to Demon" if demon else "Transform Demon to Human")

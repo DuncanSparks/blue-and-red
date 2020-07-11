@@ -40,7 +40,7 @@ func _ready():
 	
 		
 func _process(delta):
-	set_z_index(get_position().y)
+	set_z_index(int(get_position().y))
 	
 	if not stunned and not attacking:
 		if path_to_player:
@@ -105,7 +105,7 @@ func hurt():
 
 func move_along_path(distance: float):
 	var start_point := get_global_position()
-	for i in range(nav_path.size()):
+	for _i in range(nav_path.size()):
 		var dist := start_point.distance_to(nav_path[0])
 		if distance <= dist and dist >= 0:
 			var angle = get_angle_to(nav_path[0])

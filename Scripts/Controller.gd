@@ -73,7 +73,7 @@ func _on_TimerTransform_timeout():
 	$SoundTransform.play()
 	$SoundBell.play()
 	transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
-	player_ref.transform(player_transformed)
+	player_ref.transformation(player_transformed)
 	$TimerPostTransform.start()
 
 

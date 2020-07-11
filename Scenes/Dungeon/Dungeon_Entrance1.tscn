@@ -44,7 +44,7 @@ extents = Vector2( 32, 8 )
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 11, 6 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
@@ -52,10 +52,10 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 6, 3 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=10]
 resource_name = "Talk"
 tracks/0/type = "method"
 tracks/0/path = NodePath("../AnimationPlayerTutorial")
@@ -72,8 +72,7 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Start"
+[sub_resource type="Animation" id=11]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Fade:color")
@@ -102,8 +101,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "Tutorial"
+[sub_resource type="Animation" id=12]
 length = 6.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Tutorial:self_modulate")
@@ -234,14 +232,14 @@ position = Vector2( 256, 56 )
 max_talk_number = 0
 
 [node name="Sprite" parent="NPC" index="1"]
-frames = SubResource( 10 )
+frames = SubResource( 8 )
 
 [node name="CollisionShape2D" parent="NPC" index="2"]
 position = Vector2( 1, 9 )
-shape = SubResource( 11 )
+shape = SubResource( 9 )
 
 [node name="AnimationPlayerTalk" parent="NPC" index="4"]
-anims/Talk = SubResource( 12 )
+anims/Talk = SubResource( 10 )
 
 [node name="Stone" type="Sprite" parent="NPC"]
 position = Vector2( -3, -15 )
@@ -266,10 +264,10 @@ texture = ExtResource( 6 )
 centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Start = SubResource( 8 )
+anims/Start = SubResource( 11 )
 
 [node name="AnimationPlayerTutorial" type="AnimationPlayer" parent="."]
-anims/Tutorial = SubResource( 9 )
+anims/Tutorial = SubResource( 12 )
 
 [editable path="LoadingZone"]
 
