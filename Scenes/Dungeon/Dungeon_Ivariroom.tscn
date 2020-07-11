@@ -1,10 +1,14 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/Characters/Friendly NPCs/Ivari_idle.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/Characters/Friendly NPCs/Ivari_cast.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=7]
+[ext_resource path="res://Audio/Badspell2.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=9]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 24, 24, 296, 24, 296, 168, 184, 168, 184, 184, 136, 184, 136, 168, 24, 168 )
@@ -20,13 +24,18 @@ animations = [ {
 "loop": true,
 "name": "idle",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "cast",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 5, 4 )
 
 [sub_resource type="Animation" id=5]
-length = 10.0
+length = 12.0
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -34,13 +43,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.2, 3, 7, 8.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Um... hello.", "You\'re a sprightly little demon, aren\'t you\?", "What do you want\?" ) ],
 "method": "talk_dialogue"
 }, {
-"args": [ PoolStringArray( "Hm... demons don\'t sit like that.", "And you\'re wagging your tail like it\'s your first time trying it.", "You must be that student who got assigned to seal away Osme again.", "Osme turned you into a demon, didn\'t he\? That\'s a new one.", "That\'s pretty rotten luck.", "Yep. That sucks.", "Really too bad." ) ],
+"args": [ PoolStringArray( "Hm... demons don\'t sit like that.", "And you look a bit spooked, the way your tail\'s twitching.", "You must be that student who got assigned to seal away Osme again.", "Osme turned you into a demon, didn\'t he\? That\'s a new one.", "That\'s pretty rotten luck.", "Yep. That sucks.", "Really too bad." ) ],
 "method": "talk_dialogue"
 }, {
 "args": [ PoolStringArray( "What\?", "Don\'t tell me you want me to help you, kid.", "You absolutely want me to help you.", "Well, lucky for you, I don\'t actually care about protecting Osme.", "I think watching him duel sorcerers is quite entertaining, actually.", "So I\'ll throw you a bone and nudge you out of your predicament." ) ],
@@ -49,8 +58,17 @@ tracks/0/keys = {
 "args": [ PoolStringArray( "There. You\'re human again.", "Have fun fighting Osme." ) ],
 "method": "talk_dialogue"
 }, {
-"args": [ PoolStringArray( "Oh... one thing I forgot to mention:", "[color=#ff0000]You\'ll turn back into a demon in 20 seconds.[/color]", "[color=#00c6ff]And then back into a human 20 seconds after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
+"args": [ PoolStringArray( "Oh... there\'s one important detail I forgot to mention." ) ],
 "method": "talk_dialogue"
+}, {
+"args": [  ],
+"method": "talk_initialize_timer"
+}, {
+"args": [ PoolStringArray( "[color=#ff0000]You\'ll turn back into a demon in 20 seconds.[/color]", "[color=#00c6ff]And then back into a human 20 seconds after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [  ],
+"method": "talk_start_timer"
 } ]
 }
 tracks/1/type = "method"
@@ -60,15 +78,85 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 4 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 5, 12 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ false ],
 "method": "transformation"
+}, {
+"args": [ false ],
+"method": "start_pounce_meter"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Sprite")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 3.5, 7.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "cast", false ],
+"method": "play"
+}, {
+"args": [ "idle", false ],
+"method": "play"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../SoundSpell")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 3.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("PartsCast")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 3.5, 7.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+}, {
+"args": [ "emitting", false ],
+"method": "set"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "You\'re not used to being a demon, so it\'ll be hard to control yourself.", "For one thing, you\'ll be running a lot more erratically.", "You\'ll also leap in the direction you\'re facing every few seconds.", "But, hey, look on the bright side: At least you\'re a killing machine now.", "Defeating Osme should be no problem for you." ), true ],
+"method": "talk_dialogue"
 } ]
 }
 
 [sub_resource type="Animation" id=6]
+resource_name = "Talk3"
 length = 0.1
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -84,6 +172,29 @@ tracks/0/keys = {
 "method": "talk_dialogue"
 } ]
 }
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
+colors = PoolColorArray( 0, 1, 0.141176, 0, 0, 1, 0.141176, 1, 0, 1, 0.141176, 1, 0, 1, 0.141176, 0 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="Curve" id=10]
+max_value = 3.0
+_data = [ Vector2( 0, 0.910227 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+flag_disable_z = true
+gravity = Vector3( -10, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.2
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
 
 [node name="Scene" type="Node2D"]
 __meta__ = {
@@ -121,6 +232,7 @@ position = Vector2( 160, 196 )
 shape = SubResource( 2 )
 
 [node name="NPCIvari" parent="." instance=ExtResource( 3 )]
+max_talk_number = 2
 
 [node name="Sprite" parent="NPCIvari" index="1"]
 frames = SubResource( 3 )
@@ -131,7 +243,22 @@ shape = SubResource( 4 )
 
 [node name="AnimationPlayerTalk" parent="NPCIvari" index="4"]
 anims/Talk = SubResource( 5 )
-anims/Talk2 = SubResource( 6 )
+anims/Talk2 = SubResource( 7 )
+anims/Talk3 = SubResource( 6 )
+
+[node name="PartsCast" type="Particles2D" parent="NPCIvari"]
+position = Vector2( -10, 2 )
+emitting = false
+amount = 4
+process_material = SubResource( 12 )
+texture = ExtResource( 7 )
+
+[node name="SoundSpell" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -4.0
+
+[node name="Heart" parent="." instance=ExtResource( 9 )]
+position = Vector2( 48, 80 )
 
 [editable path="LoadingZone"]
 

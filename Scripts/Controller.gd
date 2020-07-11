@@ -1,12 +1,15 @@
-extends Node
+extends Node2D
 
 signal dialogue_finished
 
 export(Texture) var meter_texture_1: Texture
 export(Texture) var meter_texture_2: Texture
 
+export(bool) var start_with_timer := false
+
 const dialogue_ref := preload("res://Prefabs/Dialogue.tscn")
 
+var timer_active := false
 var player_transformed := false
 
 var flags := {
@@ -19,8 +22,22 @@ onready var transform_meter := $UI/CanvasLayer/Clock as TextureProgress
 onready var timer_transform := $TimerTransform as Timer
 
 
+func _ready():
+	randomize()
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+	if start_with_timer:
+		transform_meter.show()
+		$UI/CanvasLayer/ClockBack.show()
+		timer_transform.start()
+		timer_active = true
+
+
 func _process(delta):
-	transform_meter.set_value(ceil(timer_transform.get_time_left()))
+	Cursor.set_cursor_position(get_global_mouse_position())
+	
+	if timer_active:
+		transform_meter.set_value(ceil(timer_transform.get_time_left()))
 	
 	if Input.is_action_just_pressed("debug_2"):
 		timer_transform.set_wait_time(0.1)
@@ -29,6 +46,12 @@ func _process(delta):
 		
 func move_player(position: Vector2):
 	player_ref.set_position(position)
+	
+	
+func fadeout():
+	var tween := $CanvasLayer/Tween as Tween
+	tween.interpolate_property($CanvasLayer/Fade, "color", Color(0, 0, 0, 0), Color(0, 0, 0, 1), 1.0)
+	tween.start()
 	
 	
 func goto_scene(scene: String, player_pos: Vector2):
@@ -45,7 +68,23 @@ func flag(id: String) -> int:
 	
 func set_flag(id: String, value: int):
 	flags[id] = value
-		
+	
+	
+func initialize_timer():
+	player_transformed = false
+	transform_meter.set_progress_texture(meter_texture_1)
+	var tween := $Tween as Tween
+	$UI/CanvasLayer.set_offset(Vector2(0, -50))
+	transform_meter.show()
+	$UI/CanvasLayer/ClockBack.show()
+	tween.interpolate_property($UI/CanvasLayer, "offset", Vector2(0, -50), Vector2(0, 0), 4, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
+	tween.start()
+	
+	
+func start_timer():
+	timer_active = true
+	timer_transform.start()
+	
 		
 func stop_timer(stop: bool, change_mode: int = -1):
 	timer_transform.set_paused(stop)
@@ -95,3 +134,7 @@ func _on_Clock_value_changed(value):
 func _on_TimerPostTransform_timeout():
 	$TimerTransform.set_wait_time(20)
 	$TimerTransform.start()
+
+
+func _on_Tween_tween_all_completed():
+	pass # Replace with function body.

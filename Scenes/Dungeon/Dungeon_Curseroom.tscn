@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle.png" type="Texture" id=2]
@@ -46,27 +46,34 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=20]
 offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
 colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=21]
+gradient = SubResource( 20 )
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=10]
 max_value = 3.0
 _data = [ Vector2( 0, 0.910227 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
 
 [sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 gravity = Vector3( 0, 98, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 21 )
+
+[sub_resource type="Gradient" id=22]
+offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=23]
+gradient = SubResource( 22 )
 
 [sub_resource type="ParticlesMaterial" id=7]
 flag_disable_z = true
@@ -78,9 +85,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 8.0
 scale_random = 0.5
-color_ramp = SubResource( 3 )
+color_ramp = SubResource( 23 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=16]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -96,10 +103,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.32549, 0.32549, 0.32549, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 11, 6 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="SpriteFrames" id=18]
 animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
@@ -107,7 +114,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 6, 3 )
 
 [sub_resource type="Animation" id=12]
@@ -430,7 +437,7 @@ texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pentagram"]
 autoplay = "Idle"
-anims/Idle = SubResource( 8 )
+anims/Idle = SubResource( 16 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
@@ -447,7 +454,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
 position = Vector2( 0, 23 )
-shape = SubResource( 9 )
+shape = SubResource( 17 )
 
 [node name="Column3" type="StaticBody2D" parent="."]
 position = Vector2( 48, 88 )
@@ -461,7 +468,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column3"]
 position = Vector2( 0, 23 )
-shape = SubResource( 9 )
+shape = SubResource( 17 )
 
 [node name="Column2" type="StaticBody2D" parent="."]
 position = Vector2( 232, 48 )
@@ -475,7 +482,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
 position = Vector2( 0, 23 )
-shape = SubResource( 9 )
+shape = SubResource( 17 )
 
 [node name="Column4" type="StaticBody2D" parent="."]
 position = Vector2( 272, 88 )
@@ -489,7 +496,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column4"]
 position = Vector2( 0, 23 )
-shape = SubResource( 9 )
+shape = SubResource( 17 )
 
 [node name="NPC" parent="." instance=ExtResource( 7 )]
 position = Vector2( 160, 96 )
@@ -498,11 +505,11 @@ npc_name = "Osme"
 npc_color = Color( 0.8, 0, 0, 1 )
 
 [node name="Sprite" parent="NPC" index="1"]
-frames = SubResource( 10 )
+frames = SubResource( 18 )
 
 [node name="CollisionShape2D" parent="NPC" index="2"]
 position = Vector2( 1, 9 )
-shape = SubResource( 11 )
+shape = SubResource( 19 )
 
 [node name="AnimationPlayerTalk" parent="NPC" index="4"]
 anims/Talk = SubResource( 12 )

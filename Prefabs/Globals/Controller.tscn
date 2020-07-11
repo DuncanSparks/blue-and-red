@@ -7,7 +7,7 @@
 [ext_resource path="res://Audio/Tick.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Audio/Transform3.ogg" type="AudioStream" id=6]
 
-[node name="Controller" type="Node"]
+[node name="Controller" type="Node2D"]
 script = ExtResource( 1 )
 meter_texture_1 = ExtResource( 2 )
 meter_texture_2 = ExtResource( 3 )
@@ -23,6 +23,7 @@ __meta__ = {
 layer = 3
 
 [node name="ClockBack" type="TextureRect" parent="UI/CanvasLayer"]
+visible = false
 modulate = Color( 0, 0, 0, 1 )
 margin_left = 275.0
 margin_top = 10.0
@@ -35,6 +36,7 @@ __meta__ = {
 }
 
 [node name="Clock" type="TextureProgress" parent="UI/CanvasLayer"]
+visible = false
 margin_left = 277.0
 margin_top = 12.0
 margin_right = 308.0
@@ -63,11 +65,28 @@ volume_db = -18.0
 
 [node name="TimerTransform" type="Timer" parent="."]
 wait_time = 20.0
-autostart = true
 
 [node name="TimerPostTransform" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 6
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer"]
+margin_right = 320.0
+margin_bottom = 184.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="CanvasLayer"]
 [connection signal="value_changed" from="UI/CanvasLayer/Clock" to="." method="_on_Clock_value_changed"]
 [connection signal="timeout" from="TimerTransform" to="." method="_on_TimerTransform_timeout"]
 [connection signal="timeout" from="TimerPostTransform" to="." method="_on_TimerPostTransform_timeout"]
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]

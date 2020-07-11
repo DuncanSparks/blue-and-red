@@ -4,26 +4,26 @@
 [ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=2]
 [ext_resource path="res://Audio/Transform2.ogg" type="AudioStream" id=3]
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.109375, 0.723958, 1 )
 colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 0.518182 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticlesMaterial" id=5]
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
 
 [sub_resource type="Gradient" id=6]
 offsets = PoolRealArray( 0, 0.506667, 1 )
@@ -52,7 +52,7 @@ scale = Vector2( 2, 0.8 )
 emitting = false
 amount = 4
 one_shot = true
-process_material = SubResource( 1 )
+process_material = SubResource( 5 )
 texture = ExtResource( 2 )
 
 [node name="PartsSpawn2" type="Particles2D" parent="."]

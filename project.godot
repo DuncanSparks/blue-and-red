@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Controller="*res://Prefabs/Globals/Controller.tscn"
+Cursor="*res://Prefabs/Globals/Cursor.tscn"
 
 [debug]
 

@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const orb_ref := preload("res://Prefabs/Orb.tscn")
+const blast_ref := preload("res://Prefabs/Blast.tscn")
 
 export(float) var speed: float = 90.0
 
@@ -13,8 +13,11 @@ var health := 5
 var stunned := false
 var iframes := false
 
+var can_shoot := true
+var shooting := false
 var shielding := false
 var transforming := false
+var pending_transformation := false
 var pouncing := false
 
 var stopped := false
@@ -39,7 +42,7 @@ func _ready():
 func _process(_delta):
 	set_z_index(int(get_position().y))
 	
-	if not stopped and not stunned and not shielding and not transforming and not pouncing:
+	if not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
 		if not demon_form:
 			var input_x := int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 			var input_y := int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
@@ -68,21 +71,27 @@ func _process(_delta):
 #		else:
 #			timer_footsteps_human.stop()
 	
-	if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing:
+	if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
 		if not demon_form:
 			sprite_sword.play("swing")
 			$AreaSword/CollisionPolygon2D.set_disabled(false)
 			
-	if Input.is_action_just_pressed("attack_2") and not stopped and not stunned and not shielding and not transforming and not pouncing:
-		if not demon_form:
-			var orb := orb_ref.instance() as KinematicBody2D
-			orb.set_position(get_position())
-			orb.motion = Vector2.RIGHT.rotated(get_position().direction_to(get_global_mouse_position()).angle())
-			get_tree().get_root().add_child(orb)
+	if Input.is_action_just_pressed("attack_2") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
+		if not demon_form and can_shoot:
+			$SoundBlast.play()
+			var blast := blast_ref.instance() as KinematicBody2D
+			blast.set_position(get_position())
+			var angle := get_position().direction_to(get_global_mouse_position()).angle()
+			blast.motion = Vector2.RIGHT.rotated(angle)
+			blast.get_node("Sprite").set_rotation(angle)
+			blast.get_node("CollisionShape2D").set_rotation(angle)
+			get_tree().get_root().add_child(blast)
+			can_shoot = false
+			$TimerCooldownShoot.start()
 		#else:
 		#	pounce()
 			
-	if Input.is_action_just_pressed("action_shield") and not stopped and not cooldown_shield and not stunned and not transforming:
+	if Input.is_action_just_pressed("action_shield") and not stopped and not cooldown_shield and not stunned and not transforming and not shooting:
 		if not demon_form:
 			shield()
 			
@@ -131,16 +140,27 @@ func pounce():
 	$TimerPounce.start()
 	
 	
-func hurt():
+func heal(amount: int):
+	$SoundHeal.play()
+	health = min(health + amount, 5)
+	healthbar.set_value(health)
+	healthbar.show()
+	$TimerHeal.start()
+	
+	
+func hurt(amount: int = 1):
 	$SoundHurt.play()
 	sprite.play("ouch_demon" if demon_form else "ouch_human")
-	health -= 1
+	health -= amount
 	healthbar.set_value(health)
 	healthbar.show()
 	stunned = true
-	$TimerStun.start()
-	iframes = true
-	$AnimationPlayer.play("Iframes")
+	if health > 0:
+		$TimerStun.start()
+		iframes = true
+		$AnimationPlayer.play("Iframes")
+	else:
+		Controller.goto_scene("res://Scenes/Gameover.tscn", get_global_position())
 	
 	
 func stop(value: bool):
@@ -150,9 +170,13 @@ func stop(value: bool):
 	
 	
 func transformation(demon: bool):
-	transforming = true
-	sprite.play("ouch_demon" if demon_form else "ouch_human")
-	$AnimationPlayerTransform.play("Transform Human to Demon" if demon else "Transform Demon to Human")
+	if not pouncing:
+		transforming = true
+		sprite.play("ouch_demon" if demon_form else "ouch_human")
+		$AnimationPlayerTransform.play("Transform Human to Demon" if demon else "Transform Demon to Human")
+		Cursor.change_mode(demon)
+	else:
+		pending_transformation = true
 
 
 func sprite_management():
@@ -172,7 +196,7 @@ func is_moving() -> bool:
 
 
 func _on_Hurtbox_body_entered(body):
-	if not iframes and not transforming:
+	if not iframes and not transforming and not pouncing:
 		if not shielding:
 			hurt()
 		else:
@@ -257,6 +281,9 @@ func _on_TimerPounce2_timeout():
 	tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
 	tween.start()
 	meter.show()
+	if pending_transformation:
+		pending_transformation = false
+		transformation(false)
 
 
 func _on_TimerCooldownPounce_timeout():
@@ -270,3 +297,15 @@ func _on_TimerFootstepsHuman_timeout():
 
 func _on_TimerFootstepsDemon_timeout():
 	Controller.play_sound_oneshot(footstep_sound_demon, rand_range(0.95, 1.05), -24)
+
+
+func _on_TimerDie_timeout():
+	$SoundDie.play()
+
+
+func _on_TimerHeal_timeout():
+	healthbar.hide()
+
+
+func _on_TimerCooldownShoot_timeout():
+	can_shoot = true

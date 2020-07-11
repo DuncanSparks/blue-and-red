@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/FloorSwitch.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Props/Pentagram2.png" type="Texture" id=2]
+[ext_resource path="res://Audio/Activate.ogg" type="AudioStream" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 10 )
+
+[node name="FloorSwitch" type="Area2D"]
+z_index = -350
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="SoundActivated" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -4.0
+[connection signal="body_entered" from="." to="." method="_on_FloorSwitch_body_entered"]
