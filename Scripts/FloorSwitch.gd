@@ -12,6 +12,19 @@ func _ready():
 			$Sprite.set_modulate(Color("#002061"))
 		1:
 			$Sprite.set_modulate(Color("#770000"))
+			
+			
+func activate(sound: bool = true):
+	match type:
+		0:
+			$Sprite.set_modulate(Color("#008aff"))
+		1:
+			$Sprite.set_modulate(Color("#ff0000"))
+	
+	if sound:
+		$SoundActivated.play()
+	activated = true
+	emit_signal("activated")
 
 
 func _on_FloorSwitch_body_entered(body):
@@ -20,14 +33,8 @@ func _on_FloorSwitch_body_entered(body):
 			0:
 				if body.demon_form:
 					return
-					
-				$Sprite.set_modulate(Color("#008aff"))
 			1:
 				if not body.demon_form:
 					return
-					
-				$Sprite.set_modulate(Color("#ff0000"))
-		
-		$SoundActivated.play()
-		activated = true
-		emit_signal("activated")
+				
+		activate(true)

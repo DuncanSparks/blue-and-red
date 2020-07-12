@@ -12,4 +12,3 @@ func _process(delta):
 	
 func _physics_process(delta):
 	move_and_collide(motion * speed * delta)
-	

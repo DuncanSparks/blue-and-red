@@ -2,6 +2,7 @@ extends Node2D
 
 
 func _ready():
+	Controller.can_pause = false
 	var player := get_node("Player") as KinematicBody2D
 	player.stunned = true
 	player.get_node("Healthbar").hide()

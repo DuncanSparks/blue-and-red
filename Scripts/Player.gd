@@ -154,7 +154,7 @@ func pounce():
 		$TimerCooldownPounce.start()
 		var tween := $TweenShieldMeter as Tween
 		var meter := $CooldownPounceMeter as TextureProgress
-		tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+		tween.interpolate_property(meter, "value", 1.5, 0.0, 1.5)
 		tween.start()
 		meter.show()
 	
@@ -248,7 +248,7 @@ func start_pounce_meter(start: bool):
 		$TimerCooldownPounce.start()
 		var tween := $TweenShieldMeter as Tween
 		var meter := $CooldownPounceMeter as TextureProgress
-		tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+		tween.interpolate_property(meter, "value", 1.5, 0.0, 1.5)
 		tween.start()
 		meter.show()
 	else:
@@ -270,7 +270,7 @@ func finish_transformation(use_override: bool = false, override: bool = false):
 			$TimerCooldownPounce.start()
 			var tween := $TweenShieldMeter as Tween
 			var meter := $CooldownPounceMeter as TextureProgress
-			tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+			tween.interpolate_property(meter, "value", 1.5, 0.0, 1.5)
 			tween.start()
 			meter.show()
 	else:
@@ -300,7 +300,7 @@ func _on_TimerPounce2_timeout():
 	$TimerCooldownPounce.start()
 	var tween := $TweenShieldMeter as Tween
 	var meter := $CooldownPounceMeter as TextureProgress
-	tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+	tween.interpolate_property(meter, "value", 1.5, 0.0, 1.5)
 	tween.start()
 	meter.show()
 	if pending_transformation:

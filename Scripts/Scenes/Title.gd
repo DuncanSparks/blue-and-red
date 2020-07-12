@@ -14,6 +14,8 @@ onready var but3 := $HBoxContainer/Button3 as TextureButton
 func _ready():
 	if Cursor.is_red:
 		Cursor.change_mode(false)
+		
+	Controller.can_pause = false
 
 
 func _process(delta):
@@ -76,7 +78,8 @@ func _on_TweenStart_tween_all_completed():
 	get_node("Player").health = 5
 	Controller.player_health = 5
 	Controller.player_transformed = false
-	Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))
+	Controller.goto_scene("res://Scenes/Intro.tscn", Vector2())
+	#Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))
 	
 	
 func _on_TweenCredits_tween_all_completed():

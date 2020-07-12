@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/FloorSwitch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Scenes/Dungeon_Entrance3.gd" type="Script" id=6]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 216, 72, 216, 8, 248, 8, 248, 56, 296, 56, 296, 168, 184, 168, 24, 72, 136, 168, 72, 152, 40, 136, 184, 184, 136, 184, 72, 168, 40, 152, 24, 136 )
@@ -20,7 +21,11 @@ extents = Vector2( 8, 32 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 8, 40 )
 
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 32, 8 )
+
 [node name="Scene" type="Node2D"]
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -74,7 +79,7 @@ target_direction = 1
 shape = SubResource( 2 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
-position = Vector2( 192, 72 )
+position = Vector2( 112, 72 )
 enemy_type = 1
 
 [node name="TimerSpawn" type="Timer" parent="."]
@@ -101,7 +106,15 @@ target_direction = 3
 
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
 shape = SubResource( 4 )
+
+[node name="LoadingZone4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 232, 8 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Entrance3A.tscn"
+
+[node name="CollisionShape2D" parent="LoadingZone4" index="0"]
+shape = SubResource( 5 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
+[connection signal="activated" from="FloorSwitch" to="." method="set_flag"]
 [connection signal="activated" from="FloorSwitch" to="TileMap2" method="queue_free"]
 
 [editable path="LoadingZone"]
@@ -109,3 +122,5 @@ shape = SubResource( 4 )
 [editable path="LoadingZone2"]
 
 [editable path="LoadingZone3"]
+
+[editable path="LoadingZone4"]

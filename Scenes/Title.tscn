@@ -205,14 +205,14 @@ custom_fonts/font = SubResource( 5 )
 custom_constants/line_spacing = 12
 text = "Blue + Red
 Developed by Duncan Sparks
-Music by [NAME HERE]
+Music by Michorvath and Dneproman
+on freesound.org
 
 Made for Game Maker's Toolkit Jam 2020
 Made in Godot 3.2.2"
 align = 1
 valign = 1
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Controller.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/UI/Clock_red.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Audio/Bell.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Audio/Tick.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Audio/Transform3.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Audio/Music/Music_demon.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Audio/Music/Music_human.ogg" type="AudioStream" id=8]
 
 [node name="Controller" type="Node2D"]
 pause_mode = 2
@@ -87,6 +89,14 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="CanvasLayer"]
+
+[node name="MusicHuman" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -10.0
+
+[node name="MusicDemon" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -16.0
 [connection signal="value_changed" from="UI/CanvasLayer/Clock" to="." method="_on_Clock_value_changed"]
 [connection signal="timeout" from="TimerTransform" to="." method="_on_TimerTransform_timeout"]
 [connection signal="timeout" from="TimerPostTransform" to="." method="_on_TimerPostTransform_timeout"]

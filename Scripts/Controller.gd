@@ -16,6 +16,7 @@ var player_transformed := false
 var player_health: int = 5
 
 var menu_open := false
+var can_pause := false
 
 const flags_initial := {
 	"game_start": 0,
@@ -25,6 +26,9 @@ const flags_initial := {
 	"meet_ivari": 0,
 	"demon_door_3": 0,
 	"demon_door_4": 0,
+	
+	"floorswitch_1": 0,
+	"floorswitch_2": 0,
 }
 
 var flags := flags_initial.duplicate(true)
@@ -52,7 +56,7 @@ func _process(delta):
 	if timer_active:
 		transform_meter.set_value(ceil(timer_transform.get_time_left()))
 		
-	if Input.is_action_just_pressed("sys_pause") and not menu_open and not player_ref.stopped and not player_ref.transforming:
+	if Input.is_action_just_pressed("sys_pause") and not menu_open and can_pause and not player_ref.stopped and not player_ref.transforming:
 		var pause := pause_ref.instance()
 		get_tree().get_root().add_child(pause)
 		stop_timer(true)

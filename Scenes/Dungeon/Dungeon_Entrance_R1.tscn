@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/FloorSwitch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Scenes/Dungeon_Entrance_R1.gd" type="Script" id=6]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 136, 56, 136, 8, 184, 8, 184, 56, 296, 56, 296, 168, 72, 168, 72, 152, 24, 56, 40, 136, 40, 152, 24, 136 )
@@ -21,6 +22,7 @@ extents = Vector2( 8, 32 )
 extents = Vector2( 8, 56 )
 
 [node name="Scene" type="Node2D"]
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -66,7 +68,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
-position = Vector2( 192, 72 )
+position = Vector2( 248, 64 )
 enemy_type = 1
 
 [node name="TimerSpawn" type="Timer" parent="."]
@@ -100,6 +102,7 @@ target_direction = 3
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
 shape = SubResource( 4 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
+[connection signal="activated" from="FloorSwitch" to="." method="set_flag"]
 [connection signal="activated" from="FloorSwitch" to="TileMap2" method="queue_free"]
 
 [editable path="LoadingZone"]
