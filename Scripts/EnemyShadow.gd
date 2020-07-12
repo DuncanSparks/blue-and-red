@@ -74,6 +74,7 @@ func hurt(amount: int):
 		$Healthbar.show()
 		#$AnimationPlayer.play("Iframes")
 		$TimerHurt.start()
+		iframes = true
 	else:
 		$SoundDie.play()
 		$ParticlesDeath.set_emitting(true)
@@ -104,6 +105,7 @@ func _on_TimerTeleport2_timeout():
 	$Hurtbox/CollisionShape2D.set_disabled(false)
 	$ParticlesTeleport2.set_emitting(true)
 	sprite.show()
+	iframes = false
 	$TimerAttack.set_wait_time(rand_range(0.78, 1.5))
 	$TimerAttack.start()
 

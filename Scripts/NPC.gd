@@ -29,7 +29,8 @@ func adjust_player():
 			spr.play("sit_demon")
 	
 	spr.set_flip_h(player_ref.get_global_position().x > get_global_position().x)
-	$Sprite.set_flip_h(player_ref.get_global_position().x > get_global_position().x)
+	if turn_to_face:
+		$Sprite.set_flip_h(player_ref.get_global_position().x > get_global_position().x)
 	player_ref.start_pounce_meter(false)
 	
 	

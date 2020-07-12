@@ -26,12 +26,20 @@ const flags_initial := {
 	"meet_ivari": 0,
 	"demon_door_3": 0,
 	"demon_door_4": 0,
+	"demon_door_5": 0,
 	
 	"floorswitch_1": 0,
 	"floorswitch_2": 0,
+	"floorswitch_3": 0,
+	
+	"stone_blue": 0,
 }
 
 var flags := flags_initial.duplicate(true)
+
+var collected_hearts := {
+	
+}
 
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 

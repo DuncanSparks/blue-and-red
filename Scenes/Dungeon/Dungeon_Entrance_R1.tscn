@@ -79,6 +79,9 @@ autostart = true
 [node name="FloorSwitch" parent="." instance=ExtResource( 4 )]
 position = Vector2( 284, 141 )
 
+[node name="Sprite" parent="FloorSwitch" index="0"]
+flip_v = true
+
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
 position = Vector2( 160, 0 )
 target_scene = "res://Scenes/Dungeon/Dungeon_Ivariroom.tscn"
@@ -102,8 +105,10 @@ target_direction = 3
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
 shape = SubResource( 4 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
-[connection signal="activated" from="FloorSwitch" to="." method="set_flag"]
 [connection signal="activated" from="FloorSwitch" to="TileMap2" method="queue_free"]
+[connection signal="activated" from="FloorSwitch" to="." method="set_flag"]
+
+[editable path="FloorSwitch"]
 
 [editable path="LoadingZone"]
 

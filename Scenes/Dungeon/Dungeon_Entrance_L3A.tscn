@@ -1,130 +1,24 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
-[ext_resource path="res://Sprites/Characters/Osme/Osme_idle.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Audio/Thunder.ogg" type="AudioStream" id=8]
-[ext_resource path="res://Sprites/Characters/Osme/Osme_annoyed.png" type="Texture" id=9]
-[ext_resource path="res://Sprites/Characters/Osme/Osme_idle2.png" type="Texture" id=10]
-[ext_resource path="res://Sprites/Characters/Osme/Osme_cast.png" type="Texture" id=11]
-[ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=12]
-[ext_resource path="res://Audio/Badspell.ogg" type="AudioStream" id=13]
-[ext_resource path="res://Audio/Badspell2.ogg" type="AudioStream" id=14]
-[ext_resource path="res://Sprites/UI/Tutorial_demon.png" type="Texture" id=15]
-[ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=17]
 
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "cast",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 9 ) ],
-"loop": true,
-"name": "annoyed",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "idle2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "talk",
-"speed": 5.0
-} ]
-
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
-colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-
-[sub_resource type="Curve" id=4]
-max_value = 3.0
-_data = [ Vector2( 0, 0.910227 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-flag_disable_z = true
-gravity = Vector3( 0, 98, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
-
-[sub_resource type="Gradient" id=7]
-offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
-colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
-
-[sub_resource type="GradientTexture" id=8]
-gradient = SubResource( 7 )
-
-[sub_resource type="ParticlesMaterial" id=9]
-flag_disable_z = true
-direction = Vector3( 0, 1, 0 )
-spread = 70.0
-gravity = Vector3( 0, 15, 0 )
-initial_velocity = 30.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 8.0
-scale_random = 0.5
-color_ramp = SubResource( 8 )
-
-[sub_resource type="NavigationPolygon" id=10]
+[sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 72, 56, 200, 56, 200, 120, 24, 168, 24, 128, 296, 120, 296, 168, 24, 56 )
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 2, 5, 6, 3 ), PoolIntArray( 7, 0, 4 ) ]
 outlines = [ PoolVector2Array( 24, 56, 24, 128, 24, 168, 296, 168, 296, 120, 200, 120, 200, 56, 72, 56 ) ]
 
-[sub_resource type="Animation" id=11]
-length = 2.0
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ) ]
-}
-
-[sub_resource type="Animation" id=12]
-length = 6.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("CanvasLayer/Tutorial:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5, 4.5, 6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 24, 8 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 8, 32 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 24, 8 )
 
 [node name="Scene" type="Node2D"]
 
@@ -138,77 +32,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Osme" type="AnimatedSprite" parent="."]
-visible = false
-position = Vector2( 160, 40 )
-frames = SubResource( 1 )
-animation = "idle"
-
-[node name="PartsCast" type="Particles2D" parent="Osme"]
-position = Vector2( 17, -12 )
-emitting = false
-amount = 4
-process_material = SubResource( 6 )
-texture = ExtResource( 12 )
-
-[node name="PartsCast2" type="Particles2D" parent="Osme"]
-position = Vector2( 17, -12 )
-emitting = false
-process_material = SubResource( 9 )
-
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
-navpoly = SubResource( 10 )
+navpoly = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="SoundCollect" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 17 )
-volume_db = -14.0
-
-[node name="SoundThunder" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
-volume_db = -6.0
-bus = "Reverb"
-
-[node name="SoundSpell" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 13 )
-volume_db = -4.0
-
-[node name="SoundSpell2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 14 )
-volume_db = -4.0
-
-[node name="AnimationPlayerScreenshake" type="AnimationPlayer" parent="."]
-playback_speed = 4.0
-anims/Screenshake = SubResource( 11 )
-
-[node name="AnimationPlayerTutorial" type="AnimationPlayer" parent="."]
-anims/Tutorial = SubResource( 12 )
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 4
-
-[node name="Flash" type="ColorRect" parent="CanvasLayer"]
-visible = false
-margin_right = 320.0
-margin_bottom = 192.0
-mouse_filter = 2
-color = Color( 1, 0.898039, 0.823529, 1 )
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="Tutorial" type="Sprite" parent="CanvasLayer"]
-self_modulate = Color( 1, 1, 1, 0 )
-texture = ExtResource( 15 )
-centered = false
 
 [node name="LoadingZone2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 152, 192 )
@@ -216,7 +49,7 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L1.tscn"
 target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
-shape = SubResource( 13 )
+shape = SubResource( 2 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 4 )]
 position = Vector2( 184, 64 )
@@ -233,12 +66,21 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L3.tscn"
 target_direction = 2
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 14 )
+shape = SubResource( 3 )
 
 [node name="Heart" parent="." instance=ExtResource( 6 )]
 position = Vector2( 272, 128 )
+
+[node name="LoadingZone3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 96, 0 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L3B.tscn"
+
+[node name="CollisionShape2D" parent="LoadingZone3" index="0"]
+shape = SubResource( 4 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 
 [editable path="LoadingZone2"]
 
 [editable path="LoadingZone"]
+
+[editable path="LoadingZone3"]
