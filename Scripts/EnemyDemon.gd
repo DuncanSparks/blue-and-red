@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal dead
+
 export(bool) var path_to_player := true
 export(Texture) var flame_texture: Texture
 
@@ -60,7 +62,7 @@ func _process(delta):
 		
 func _physics_process(delta):
 	move_and_slide(motion * speed)
-	
+
 	
 func swipe():
 	attacking = true
@@ -101,6 +103,7 @@ func hurt(amount: int):
 		tween.start()
 		dead = true
 		$TimerDeath.start()
+		emit_signal("dead")
 	else:
 		healthbar.show()
 		iframes = true
@@ -139,12 +142,12 @@ func _on_TimerNav_timeout():
 
 
 func _on_Hurtbox_body_entered(body):
-	if body.is_in_group("Blast") and not iframes:
+	if body.is_in_group("Blast") and not iframes and not dead:
 		hurt(1)
 
 
 func _on_Hurtbox_area_entered(area):
-	if not iframes:
+	if area.is_in_group("PlayerPounce") and not iframes and not dead:
 		hurt(3)
 	
 	
@@ -193,10 +196,10 @@ func _on_TimerFlame_timeout():
 		flame_inst.motion = Vector2.RIGHT.rotated(get_position().direction_to(player_ref.get_global_position()).angle())
 		flame_inst.get_node("AnimatedSprite").play("idle_flame")
 		flame_inst.set_scale(Vector2(1.5, 1.5))
-		flame_inst.set_collision_layer_bit(15, true)
-		flame_inst.set_collision_mask_bit(15, true)
-		flame_inst.set_collision_layer_bit(5, false)
-		flame_inst.set_collision_mask_bit(5, false)
+		#$flame_inst.set_collision_layer_bit(15, true)
+		#$flame_inst.set_collision_mask_bit(15, true)
+		#flame_inst.set_collision_layer_bit(5, false)
+		#flame_inst.set_collision_mask_bit(5, false)
 		flame_inst.grow()
 		flame_inst.speed = 200
 		get_tree().get_root().add_child(flame_inst)

@@ -13,8 +13,13 @@ const pause_ref := preload("res://Prefabs/PauseMenu.tscn")
 var timer_active := false
 var player_transformed := false
 
+var player_health: int = 5
+
+var menu_open := false
+
 var flags := {
 	"game_start": 0,
+	"meet_ivari": 0,
 }
 
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
@@ -40,9 +45,10 @@ func _process(delta):
 	if timer_active:
 		transform_meter.set_value(ceil(timer_transform.get_time_left()))
 		
-	if Input.is_action_just_pressed("sys_pause"):
+	if Input.is_action_just_pressed("sys_pause") and not menu_open and not player_ref.stopped and not player_ref.transforming:
 		var pause := pause_ref.instance()
 		get_tree().get_root().add_child(pause)
+		menu_open = true
 	
 	if Input.is_action_just_pressed("debug_2"):
 		timer_transform.set_wait_time(0.1)
@@ -69,6 +75,7 @@ func goto_scene(scene: String, player_pos: Vector2):
 	player_ref = get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 	move_player(player_pos)
 	player_ref.finish_transformation(true, player_transformed)
+	player_ref.health = player_health
 	
 	
 func flag(id: String) -> int:

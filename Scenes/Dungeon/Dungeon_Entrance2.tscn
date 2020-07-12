@@ -5,7 +5,7 @@
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
-[sub_resource type="NavigationPolygon" id=3]
+[sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 136, 56, 136, 8, 184, 8, 184, 56, 296, 56, 296, 168, 184, 168, 136, 168, 184, 184, 136, 184, 24, 56, 24, 168 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 3, 4, 5, 6 ), PoolIntArray( 0, 3, 6, 7 ), PoolIntArray( 6, 8, 9, 7 ), PoolIntArray( 10, 0, 7, 11 ) ]
 outlines = [ PoolVector2Array( 24, 56, 24, 168, 136, 168, 136, 184, 184, 184, 184, 168, 296, 168, 296, 56, 184, 56, 184, 8, 136, 8, 136, 56 ) ]
@@ -30,6 +30,18 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="TileMap2" type="TileMap" parent="."]
+z_index = -1000
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 512
+collision_mask = 512
+format = 1
+tile_data = PoolIntArray( 8, 18, 0, 9, 18, 0, 10, 18, 0, 11, 18, 0, 65544, 19, 0, 65545, 19, 0, 65546, 19, 0, 65547, 19, 0, 131080, 19, 0, 131081, 19, 0, 131082, 19, 0, 131083, 19, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
 
@@ -37,7 +49,7 @@ position = Vector2( 128, 134 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
 visible = false
-navpoly = SubResource( 3 )
+navpoly = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -68,6 +80,7 @@ enemy_type = 1
 [node name="TimerSpawn" type="Timer" parent="."]
 one_shot = true
 autostart = true
+[connection signal="enemy_dead" from="EnemySpawn" to="TileMap2" method="queue_free"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 
 [editable path="LoadingZone"]

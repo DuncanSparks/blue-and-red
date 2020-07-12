@@ -161,6 +161,7 @@ func hurt(amount: int = 1):
 	sprite.play("ouch_demon" if demon_form else "ouch_human")
 	health -= amount
 	healthbar.set_value(health)
+	Controller.player_health = health
 	healthbar.show()
 	stunned = true
 	if health > 0:
@@ -191,7 +192,7 @@ func sprite_management():
 	if demon_form:
 		sprite.play("run_demon" if is_moving() else "idle_demon")
 	else:
-		sprite.play("run_human" if is_moving() else "idle_human")
+		sprite.play(("run_cast_human" if not can_shoot else "run_human") if is_moving() else ("idle_cast_human" if not can_shoot else "idle_human"))
 		
 	if motion.x < 0:
 		sprite.set_flip_h(true)

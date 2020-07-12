@@ -70,11 +70,13 @@ func _on_Tween2_tween_all_completed():
 
 func _on_Tween3_tween_all_completed():
 	get_tree().set_pause(false)
+	Controller.menu_open = false
 	queue_free()
 
 
 func _on_Tween4_tween_all_completed():
 	get_tree().set_pause(false)
+	Controller.menu_open = false
 	Controller.goto_scene("res://Scenes/Title.tscn", Vector2())
 	queue_free()
 

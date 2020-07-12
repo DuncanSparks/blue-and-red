@@ -6,7 +6,7 @@ export(int, "Up,Down,Left,Right") var target_direction: int
 
 func _on_LoadingZone_body_entered(body):
 	var player := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
-	if not player.transforming and not player.stopped:
+	if not player.transforming and not player.stopped and not player.transforming:
 		match target_direction:
 			0:
 				Controller.goto_scene(target_scene, Vector2(player.get_position().x, 160))

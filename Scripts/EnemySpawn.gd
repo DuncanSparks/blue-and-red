@@ -1,5 +1,7 @@
 extends Position2D
 
+signal enemy_dead
+
 export(int, "Shadow,Demon,Other") var enemy_type: int
 
 const path_demon := "res://Prefabs/Enemies/Demon.tscn"
@@ -19,6 +21,9 @@ func spawn_enemy():
 		1:
 			var demon: KinematicBody2D = (load(path_demon) as PackedScene).instance() as KinematicBody2D
 			demon.set_global_position(get_global_position())
+			
 			get_parent().add_child(demon)
+			for con in get_signal_connection_list("enemy_dead"):
+				demon.connect("dead", con["target"], con["method"], con["binds"])
 		2:
 			pass

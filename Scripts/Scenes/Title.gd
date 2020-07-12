@@ -11,6 +11,11 @@ onready var but2 := $HBoxContainer/Button2 as TextureButton
 onready var but3 := $HBoxContainer/Button3 as TextureButton
 
 
+func _ready():
+	if Cursor.is_red:
+		Cursor.change_mode(false)
+
+
 func _process(delta):
 	if in_credits and not exited_credits and Input.is_action_just_pressed("attack"):
 		var tween := $TweenCredits as Tween

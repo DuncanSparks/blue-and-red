@@ -43,6 +43,10 @@ func talk_dialogue(text: PoolStringArray, show_name: bool = true):
 	anim_talk.play()
 	
 	
+func talk_set_flag(flag: String, value: int):
+	Controller.set_flag(flag, value)
+	
+	
 func talk_initialize_timer():
 	Controller.initialize_timer()
 	

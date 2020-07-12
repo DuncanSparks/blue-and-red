@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Audio/Thunder.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_annoyed.png" type="Texture" id=9]
@@ -21,11 +22,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "cast",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "annoyed",
@@ -39,6 +35,11 @@ animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "talk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "cast",
 "speed": 5.0
 } ]
 
@@ -83,7 +84,12 @@ scale = 8.0
 scale_random = 0.5
 color_ramp = SubResource( 8 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="NavigationPolygon" id=10]
+vertices = PoolVector2Array( 24, 56, 72, 56, 72, 152, 24, 128, 24, 168, 296, 168, 120, 152, 120, 56, 216, 56, 216, 152, 264, 152, 296, 56, 264, 56 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 3, 2 ), PoolIntArray( 5, 4, 2, 6 ), PoolIntArray( 6, 7, 8, 9 ), PoolIntArray( 5, 6, 9 ), PoolIntArray( 5, 9, 10 ), PoolIntArray( 11, 5, 10, 12 ) ]
+outlines = [ PoolVector2Array( 24, 56, 24, 128, 24, 168, 296, 168, 296, 56, 264, 56, 264, 152, 216, 152, 216, 56, 120, 56, 120, 152, 72, 152, 72, 56 ) ]
+
+[sub_resource type="Animation" id=11]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -98,7 +104,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 6.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Tutorial:self_modulate")
@@ -113,10 +119,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 24, 8 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 24, 8 )
 
 [node name="Scene" type="Node2D"]
@@ -152,6 +158,14 @@ process_material = SubResource( 9 )
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
 
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 10 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
 volume_db = -14.0
@@ -171,10 +185,10 @@ volume_db = -4.0
 
 [node name="AnimationPlayerScreenshake" type="AnimationPlayer" parent="."]
 playback_speed = 4.0
-anims/Screenshake = SubResource( 10 )
+anims/Screenshake = SubResource( 11 )
 
 [node name="AnimationPlayerTutorial" type="AnimationPlayer" parent="."]
-anims/Tutorial = SubResource( 11 )
+anims/Tutorial = SubResource( 12 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 4
@@ -200,7 +214,7 @@ position = Vector2( 144, 0 )
 target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L4.tscn"
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="LoadingZone2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 248, 192 )
@@ -208,7 +222,26 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L2.tscn"
 target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
-shape = SubResource( 13 )
+shape = SubResource( 14 )
+
+[node name="EnemySpawn" parent="." instance=ExtResource( 4 )]
+position = Vector2( 144, 80 )
+enemy_type = 1
+
+[node name="EnemySpawn2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 280, 72 )
+enemy_type = 1
+
+[node name="TimerSpawn" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="TimerSpawn2" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+[connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn2" to="EnemySpawn2" method="spawn_enemy"]
 
 [editable path="LoadingZone"]
 

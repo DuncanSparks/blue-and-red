@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=7]
 [ext_resource path="res://Audio/Badspell2.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/Scenes/Dungeon_Ivariroom.gd" type="Script" id=10]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 24, 24, 296, 24, 296, 168, 184, 168, 184, 184, 136, 184, 136, 168, 24, 168 )
@@ -43,8 +44,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 12 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 11.9, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Um... hello.", "You\'re a sprightly little demon, aren\'t you\?", "What do you want\?" ) ],
 "method": "talk_dialogue"
@@ -66,6 +67,9 @@ tracks/0/keys = {
 }, {
 "args": [ PoolStringArray( "[color=#ff0000]You\'ll turn back into a demon in 20 seconds.[/color]", "[color=#00c6ff]And then back into a human 20 seconds after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
 "method": "talk_dialogue"
+}, {
+"args": [ "meet_ivari", 1 ],
+"method": "talk_set_flag"
 }, {
 "args": [  ],
 "method": "talk_start_timer"
@@ -137,7 +141,7 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "Talk2"
 length = 0.1
 tracks/0/type = "method"
@@ -155,8 +159,7 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Talk3"
+[sub_resource type="Animation" id=7]
 length = 0.1
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -197,6 +200,7 @@ scale_curve = SubResource( 11 )
 color_ramp = SubResource( 9 )
 
 [node name="Scene" type="Node2D"]
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -227,6 +231,8 @@ __meta__ = {
 
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
 position = Vector2( 160, 196 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_R1.tscn"
+target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
 shape = SubResource( 2 )
@@ -243,8 +249,8 @@ shape = SubResource( 4 )
 
 [node name="AnimationPlayerTalk" parent="NPCIvari" index="4"]
 anims/Talk = SubResource( 5 )
-anims/Talk2 = SubResource( 7 )
-anims/Talk3 = SubResource( 6 )
+anims/Talk2 = SubResource( 6 )
+anims/Talk3 = SubResource( 7 )
 
 [node name="PartsCast" type="Particles2D" parent="NPCIvari"]
 position = Vector2( -10, 2 )

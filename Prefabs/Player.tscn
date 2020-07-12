@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Player_demon_run3.png" type="Texture" id=2]
@@ -48,6 +48,11 @@
 [ext_resource path="res://Audio/Heal.ogg" type="AudioStream" id=46]
 [ext_resource path="res://Audio/Blast.ogg" type="AudioStream" id=47]
 [ext_resource path="res://Audio/Hit.ogg" type="AudioStream" id=48]
+[ext_resource path="res://Sprites/Characters/Player_human_cast.png" type="Texture" id=49]
+[ext_resource path="res://Sprites/Characters/Player_human_run3_cast.png" type="Texture" id=50]
+[ext_resource path="res://Sprites/Characters/Player_human_run1_cast.png" type="Texture" id=51]
+[ext_resource path="res://Sprites/Characters/Player_human_run4_cast.png" type="Texture" id=52]
+[ext_resource path="res://Sprites/Characters/Player_human_run2_cast.png" type="Texture" id=53]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -56,50 +61,15 @@ animations = [ {
 "name": "demon_to_human",
 "speed": 7.0
 }, {
-"frames": [ ExtResource( 34 ) ],
-"loop": true,
-"name": "ouch_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "idle_human",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ) ],
-"loop": true,
-"name": "sit_demon",
-"speed": 6.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "run_human",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "run_demon",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 16 ) ],
 "loop": true,
 "name": "idle_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "land_demon",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "shield_human",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
-"loop": false,
-"name": "human_to_demon",
-"speed": 7.0
 }, {
 "frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
 "loop": false,
@@ -115,6 +85,51 @@ animations = [ {
 "loop": true,
 "name": "start_demon",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "idle_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "land_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
+"loop": false,
+"name": "human_to_demon",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "run_demon",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 34 ) ],
+"loop": true,
+"name": "ouch_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "run_human",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ) ],
+"loop": true,
+"name": "sit_demon",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 49 ) ],
+"loop": true,
+"name": "idle_cast_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 51 ), ExtResource( 53 ), ExtResource( 51 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 50 ), ExtResource( 49 ) ],
+"loop": true,
+"name": "run_cast_human",
+"speed": 10.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -500,7 +515,7 @@ footstep_sound_demon = ExtResource( 29 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "run_human"
+animation = "run_cast_human"
 
 [node name="CollisionHuman" type="CollisionShape2D" parent="."]
 position = Vector2( 1, 12 )
@@ -533,7 +548,9 @@ collision_mask = 32768
 position = Vector2( 1, 2 )
 shape = SubResource( 5 )
 
-[node name="PounceBox" type="Area2D" parent="."]
+[node name="PounceBox" type="Area2D" parent="." groups=[
+"PlayerPounce",
+]]
 collision_layer = 32
 collision_mask = 32
 
@@ -727,8 +744,8 @@ texture = ExtResource( 28 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="animation_finished" from="Shield/AnimationPlayer2" to="." method="_on_AnimationPlayer2_animation_finished"]
-[connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
 [connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
+[connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerCooldownShoot" to="." method="_on_TimerCooldownShoot_timeout"]
 [connection signal="timeout" from="TimerCooldownShield" to="." method="_on_TimerCooldownShield_timeout"]

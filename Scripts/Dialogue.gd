@@ -11,7 +11,7 @@ var dialogue := []
 var dialogue_page := 0
 var page_length := 0
 
-var allow_advance := false
+var allow_advance := true
 
 onready var name_label := $CanvasLayer/Box/Name as Label
 onready var text := $CanvasLayer/Box/Text as RichTextLabel
