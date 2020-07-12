@@ -1,0 +1,136 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/PauseMenu.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/UI/ButtonUp.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/ButtonOver.png" type="Texture" id=3]
+[ext_resource path="res://Greenscr.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Audio/Text.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Audio/Hover.ogg" type="AudioStream" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+font_data = ExtResource( 4 )
+
+[node name="PauseMenu" type="Control"]
+pause_mode = 2
+margin_right = 320.0
+margin_bottom = 192.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+hover_sound = ExtResource( 6 )
+click_sound = ExtResource( 5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 8
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+margin_right = 320.0
+margin_bottom = 192.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+margin_left = 130.0
+margin_top = -120.0
+margin_right = 190.0
+margin_bottom = -19.0
+custom_constants/separation = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+margin_right = 60.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 60, 20 )
+disabled = true
+action_mode = 0
+texture_normal = ExtResource( 2 )
+texture_hover = ExtResource( 3 )
+texture_disabled = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Button"]
+margin_right = 60.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "Resume"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+margin_top = 39.0
+margin_right = 60.0
+margin_bottom = 62.0
+rect_min_size = Vector2( 60, 20 )
+disabled = true
+action_mode = 0
+texture_normal = ExtResource( 2 )
+texture_hover = ExtResource( 3 )
+texture_disabled = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Button2"]
+margin_right = 60.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "Title"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 60.0
+margin_bottom = 101.0
+rect_min_size = Vector2( 60, 20 )
+disabled = true
+action_mode = 0
+texture_normal = ExtResource( 2 )
+texture_hover = ExtResource( 3 )
+texture_disabled = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Button3"]
+margin_right = 60.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "Exit"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 2.0
+bus = "Reverb"
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Tween2" type="Tween" parent="."]
+
+[node name="Tween3" type="Tween" parent="."]
+
+[node name="Tween4" type="Tween" parent="."]
+
+[node name="Tween5" type="Tween" parent="."]
+[connection signal="mouse_entered" from="CanvasLayer/VBoxContainer/Button" to="." method="hover"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/VBoxContainer/Button2" to="." method="hover"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/VBoxContainer/Button3" to="." method="hover"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="tween_all_completed" from="Tween2" to="." method="_on_Tween2_tween_all_completed"]
+[connection signal="tween_all_completed" from="Tween3" to="." method="_on_Tween3_tween_all_completed"]
+[connection signal="tween_all_completed" from="Tween4" to="." method="_on_Tween4_tween_all_completed"]
+[connection signal="tween_all_completed" from="Tween5" to="." method="_on_Tween5_tween_all_completed"]

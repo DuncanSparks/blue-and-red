@@ -8,6 +8,7 @@ export(Texture) var meter_texture_2: Texture
 export(bool) var start_with_timer := false
 
 const dialogue_ref := preload("res://Prefabs/Dialogue.tscn")
+const pause_ref := preload("res://Prefabs/PauseMenu.tscn")
 
 var timer_active := false
 var player_transformed := false
@@ -38,6 +39,10 @@ func _process(delta):
 	
 	if timer_active:
 		transform_meter.set_value(ceil(timer_transform.get_time_left()))
+		
+	if Input.is_action_just_pressed("sys_pause"):
+		var pause := pause_ref.instance()
+		get_tree().get_root().add_child(pause)
 	
 	if Input.is_action_just_pressed("debug_2"):
 		timer_transform.set_wait_time(0.1)
@@ -46,6 +51,10 @@ func _process(delta):
 		
 func move_player(position: Vector2):
 	player_ref.set_position(position)
+	
+	
+func set_player_transformed(value: bool):
+	player_transformed = value
 	
 	
 func fadeout():

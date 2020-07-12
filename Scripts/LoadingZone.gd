@@ -13,6 +13,6 @@ func _on_LoadingZone_body_entered(body):
 			1:
 				Controller.goto_scene(target_scene, Vector2(player.get_position().x, 20))
 			2:
-				Controller.goto_scene(target_scene, Vector2(300, player.get_position().y))
+				Controller.goto_scene(target_scene, Vector2(280, player.get_position().y))
 			3:
-				Controller.goto_scene(target_scene, Vector2(20, player.get_position().y))
+				Controller.goto_scene(target_scene, Vector2(40, player.get_position().y))

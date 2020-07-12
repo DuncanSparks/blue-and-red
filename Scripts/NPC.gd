@@ -49,6 +49,10 @@ func talk_initialize_timer():
 	
 func talk_start_timer():
 	Controller.start_timer()
+	
+	
+func talk_set_player_transformed(value: bool):
+	Controller.set_player_transformed(value)
 
 
 func _on_AreaInteract_body_entered(body):
