@@ -92,6 +92,10 @@ func talk_set_stone(id: int):
 	
 func talk_set_player_transformed(value: bool):
 	Controller.set_player_transformed(value)
+	
+	
+func talk_checkpoint():
+	Controller.checkpoint()
 
 
 func _on_AreaInteract_body_entered(body):

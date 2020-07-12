@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/EnemySpawn.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=2]
 [ext_resource path="res://Audio/Transform2.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Transform1.ogg" type="AudioStream" id=4]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.109375, 0.723958, 1 )
@@ -63,5 +64,15 @@ explosiveness = 1.0
 process_material = SubResource( 8 )
 
 [node name="SoundSpawn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -18.0
+pitch_scale = 0.42
+
+[node name="SoundSpawn2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = -18.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+[connection signal="timeout" from="Timer" to="." method="spawn_enemy_2"]

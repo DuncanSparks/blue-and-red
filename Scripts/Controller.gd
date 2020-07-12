@@ -50,6 +50,19 @@ var collected_hearts := {
 	
 }
 
+var checkpoint_music := "MusicHuman"
+var checkpoint_scene: String
+var checkpoint_pos: Vector2
+var checkpoint_form: bool
+
+var checkpoint_flags := {
+	
+}
+
+var checkpoint_collected_hearts := {
+	
+}
+
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 
 onready var transform_meter := $UI/CanvasLayer/Clock as TextureProgress
@@ -86,6 +99,29 @@ func _process(delta):
 		
 func move_player(position: Vector2):
 	player_ref.set_position(position)
+	
+	
+func checkpoint():
+	checkpoint_music = "MusicDemon" if $MusicDemon.is_playing() else "MusicHuman"
+	checkpoint_scene = get_tree().get_root().get_node("Scene").filename
+	checkpoint_pos = get_tree().get_root().get_node("Scene/Player").get_global_position()
+	checkpoint_form = player_transformed
+	checkpoint_flags = flags.duplicate(true)
+	checkpoint_collected_hearts = collected_hearts.duplicate(true)
+	
+	
+func restore_checkpoint():
+	player_transformed = checkpoint_form
+	player_health = 5
+	flags = checkpoint_flags.duplicate(true)
+	collected_hearts = checkpoint_collected_hearts.duplicate(true)
+	goto_scene(checkpoint_scene, checkpoint_pos)
+	$MusicHuman.set_volume_db(-14)
+	$MusicDemon.set_volume_db(-14)
+	get_node(checkpoint_music).play()
+	Cursor.change_mode(player_transformed)
+	stop_timer(false)
+	
 	
 	
 func set_player_transformed(value: bool):
@@ -162,6 +198,14 @@ func stop_timer(stop: bool, change_mode: int = -1):
 			player_transformed = true
 			
 	transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
+	
+	if not stop and flags["meet_ivari"] == 1:
+		$UI/CanvasLayer.offset = Vector2(0, 0)
+		transform_meter.show()
+		$UI/CanvasLayer/ClockBack.show()
+	
+	if flags["meet_ivari"] == 1:
+		timer_active = not stop
 	
 	
 func play_sound_oneshot(sound: AudioStream, pitch: float = 1.0, volume: float = 0.0):

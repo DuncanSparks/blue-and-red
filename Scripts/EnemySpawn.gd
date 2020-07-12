@@ -9,6 +9,7 @@ const path_demon := "res://Prefabs/Enemies/Demon.tscn"
 const path_shadow := "res://Prefabs/Enemies/Shadow.tscn"
 
 onready var sound := $SoundSpawn as AudioStreamPlayer
+onready var sound2 := $SoundSpawn2 as AudioStreamPlayer
 onready var parts1 := $PartsSpawn as Particles2D
 onready var parts2 := $PartsSpawn2 as Particles2D
 
@@ -16,6 +17,11 @@ onready var parts2 := $PartsSpawn2 as Particles2D
 func spawn_enemy():
 	sound.play()
 	parts1.set_emitting(true)
+	$Timer.start()
+	
+
+func spawn_enemy_2():
+	sound2.play()
 	parts2.set_emitting(true)
 	match enemy_type:
 		0:

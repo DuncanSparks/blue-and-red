@@ -122,7 +122,7 @@ animations = [ {
 extents = Vector2( 6, 3 )
 
 [sub_resource type="Animation" id=14]
-length = 16.0
+length = 16.1
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -130,8 +130,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 5.5, 6, 6.5, 7, 12, 15.9, 16 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.5, 5.5, 6, 6.5, 7, 12, 15.9, 16, 16.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Obtained the red stone." ), false ],
 "method": "talk_dialogue"
@@ -142,7 +142,7 @@ tracks/0/keys = {
 "args": [ PoolStringArray( "[shake]Foolish mortal!![/shake]", "[shake]What business do you have here\? Do you not know that I am the...[/shake]", "..." ) ],
 "method": "talk_dialogue"
 }, {
-"args": [ PoolStringArray( "You know what\? I\'ve given this patter twice this month already.", "Let\'s just skip this part and cut to it." ) ],
+"args": [ PoolStringArray( "You know what\? I\'ve given this spiel twice this month already.", "Let\'s just skip this part and cut to it." ) ],
 "method": "talk_dialogue"
 }, {
 "args": [ PoolStringArray( "Wait... You\'re a lot younger than the people they usually send.", "You\'re a student at the university, aren\'t you\?", "Well... this is going to be easier than usual.", "...", "Hm..." ) ],
@@ -159,6 +159,9 @@ tracks/0/keys = {
 }, {
 "args": [ true ],
 "method": "talk_set_player_transformed"
+}, {
+"args": [  ],
+"method": "talk_checkpoint"
 } ]
 }
 tracks/1/type = "method"

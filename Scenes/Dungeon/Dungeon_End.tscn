@@ -20,14 +20,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "cast",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "talk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -35,9 +35,9 @@ animations = [ {
 "name": "annoyed",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "idle2",
+"name": "talk",
 "speed": 5.0
 } ]
 

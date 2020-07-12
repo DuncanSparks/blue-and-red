@@ -31,7 +31,7 @@ animations = [ {
 extents = Vector2( 5, 4 )
 
 [sub_resource type="Animation" id=4]
-length = 12.0
+length = 12.1
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -39,8 +39,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 11.9, 12 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 11.9, 12, 12.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Um... hello.", "You\'re a sprightly little demon, aren\'t you\?", "What do you want\?" ) ],
 "method": "talk_dialogue"
@@ -68,6 +68,9 @@ tracks/0/keys = {
 }, {
 "args": [  ],
 "method": "talk_start_timer"
+}, {
+"args": [  ],
+"method": "talk_checkpoint"
 } ]
 }
 tracks/1/type = "method"
