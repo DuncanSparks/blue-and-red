@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -73,6 +74,8 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L3A.tscn"
 
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
 shape = SubResource( 4 )
+
+[node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
 
 [editable path="LoadingZone"]
 

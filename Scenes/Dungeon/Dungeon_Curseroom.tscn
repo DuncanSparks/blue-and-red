@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle.png" type="Texture" id=2]
@@ -21,12 +21,13 @@
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Sprites/UI/Question_mark.png" type="Texture" id=20]
 [ext_resource path="res://Scripts/Scenes/Dungeon_Curseroom.gd" type="Script" id=21]
+[ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=22]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "idle",
+"name": "cast",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
@@ -34,9 +35,9 @@ animations = [ {
 "name": "idle2",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "cast",
+"name": "talk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
@@ -46,7 +47,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "talk",
+"name": "idle",
 "speed": 5.0
 } ]
 
@@ -620,6 +621,8 @@ shape = SubResource( 18 )
 
 [node name="Heart" parent="." instance=ExtResource( 19 )]
 position = Vector2( 240, 56 )
+
+[node name="EnemySpawn" parent="." instance=ExtResource( 22 )]
 
 [editable path="NPC"]
 

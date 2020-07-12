@@ -11,16 +11,16 @@
 [ext_resource path="res://Audio/Hit.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Audio/Transform2.ogg" type="AudioStream" id=10]
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 5 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "cast",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "idle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
@@ -29,20 +29,20 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5, 3 )
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 5, 10 )
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=11]
+[sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -51,9 +51,9 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 10 )
+color_ramp = SubResource( 5 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:visible")
@@ -68,7 +68,9 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true ]
 }
 
-[node name="Shadow" type="KinematicBody2D"]
+[node name="Shadow" type="KinematicBody2D" groups=[
+"Enemy",
+]]
 position = Vector2( 112, 80 )
 collision_layer = 513
 collision_mask = 512
@@ -78,12 +80,12 @@ __meta__ = {
 }
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 5 )
+frames = SubResource( 1 )
 animation = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 1, 9 )
-shape = SubResource( 6 )
+shape = SubResource( 2 )
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 32
@@ -91,7 +93,7 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 1, 2 )
-shape = SubResource( 7 )
+shape = SubResource( 3 )
 
 [node name="Healthbar" type="TextureProgress" parent="."]
 visible = false
@@ -131,7 +133,7 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 11 )
+process_material = SubResource( 6 )
 
 [node name="ParticlesTeleport" type="Particles2D" parent="."]
 position = Vector2( 2, 8 )
@@ -141,7 +143,7 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 11 )
+process_material = SubResource( 6 )
 
 [node name="ParticlesTeleport2" type="Particles2D" parent="."]
 position = Vector2( 2, 8 )
@@ -151,11 +153,11 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 11 )
+process_material = SubResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-anims/Iframes = SubResource( 8 )
+anims/Iframes = SubResource( 7 )
 
 [node name="TweenFade" type="Tween" parent="."]
 

@@ -7,3 +7,8 @@ func _ready():
 		
 func set_flag():
 	Controller.set_flag("demon_door_7", 1)
+
+
+func checkpoint():
+	pass
+	#Controller.checkpoint()

@@ -14,6 +14,16 @@ onready var parts1 := $PartsSpawn as Particles2D
 onready var parts2 := $PartsSpawn2 as Particles2D
 
 
+func _process(delta):
+	var pause := true
+	for node in get_node("..").get_children():
+		if node.is_in_group("Enemy"):
+			pause = false
+			break
+			
+	Controller.timer_transform.set_paused(pause)
+		
+
 func spawn_enemy():
 	sound.play()
 	parts1.set_emitting(true)

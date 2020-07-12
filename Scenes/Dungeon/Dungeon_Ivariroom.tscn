@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
@@ -10,20 +10,21 @@
 [ext_resource path="res://Audio/Badspell2.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/Scenes/Dungeon_Ivariroom.gd" type="Script" id=10]
+[ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 8 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "cast",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
 "speed": 5.0
 } ]
 
@@ -60,7 +61,7 @@ tracks/0/keys = {
 "args": [  ],
 "method": "talk_initialize_timer"
 }, {
-"args": [ PoolStringArray( "[color=#ff0000]You\'ll turn back into a demon in 20 seconds.[/color]", "[color=#00c6ff]And then back into a human 20 seconds after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
+"args": [ PoolStringArray( "[color=#ff0000]You\'ll turn back into a demon when that timer runs out.[/color]", "[color=#00c6ff]And then back into a human when it runs out after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
 "method": "talk_dialogue"
 }, {
 "args": [ "meet_ivari", 1 ],
@@ -152,7 +153,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ PoolStringArray( "You\'re not used to being a demon, so it\'ll be hard to control yourself.", "For one thing, you\'ll be running a lot more erratically.", "You\'ll also leap in the direction you\'re facing every few seconds.", "But, hey, look on the bright side: At least you\'re a killing machine now.", "Defeating Osme should be no problem for you." ), true ],
+"args": [ PoolStringArray( "You\'re not used to being a demon, so it\'ll be hard to control yourself.", "For one thing, you\'ll be running a lot more erratically.", "You\'ll also leap in the direction you\'re facing every few seconds.", "But, hey, look on the bright side: At least you\'re a killing machine now.", "Defeating Osme should be no problem for you.", "Just remember that the timer won\'t run if there are no enemies in the room.", "Don\'t say Osme doesn\'t have a sense of humor." ), true ],
 "method": "talk_dialogue"
 } ]
 }
@@ -256,6 +257,10 @@ volume_db = -4.0
 
 [node name="Heart" parent="." instance=ExtResource( 9 )]
 position = Vector2( 48, 80 )
+
+[node name="EnemySpawn" parent="." instance=ExtResource( 11 )]
+position = Vector2( 288, 160 )
+enemy_type = 1
 
 [editable path="LoadingZone"]
 

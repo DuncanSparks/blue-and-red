@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
+[ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
@@ -39,6 +40,8 @@ target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
 shape = SubResource( 2 )
+
+[node name="EnemySpawn" parent="." instance=ExtResource( 2 )]
 
 [editable path="LoadingZone"]
 

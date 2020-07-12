@@ -184,6 +184,12 @@ shape = SubResource( 2 )
 [node name="Heart" parent="." instance=ExtResource( 6 )]
 position = Vector2( 280, 64 )
 
+[node name="Heart3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 288, 144 )
+
+[node name="Heart4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 64, 80 )
+
 [node name="Heart2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 40, 160 )
 
@@ -204,14 +210,17 @@ shape = SubResource( 4 )
 [connection signal="enemy_dead" from="EnemySpawn2" to="TimerSpawn2" method="start"]
 [connection signal="enemy_dead" from="EnemySpawn4" to="TimerSpawn3" method="start"]
 [connection signal="enemy_dead" from="EnemySpawn6" to="TimerSpawn4" method="start"]
-[connection signal="enemy_dead" from="EnemySpawn9" to="TileMap2" method="queue_free"]
 [connection signal="enemy_dead" from="EnemySpawn9" to="." method="set_flag"]
+[connection signal="enemy_dead" from="EnemySpawn9" to="TileMap2" method="queue_free"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn2" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn4" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn3" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn3" to="EnemySpawn5" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn3" to="EnemySpawn6" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn9" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn7" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn8" method="spawn_enemy"]
 
 [editable path="LoadingZone"]
 

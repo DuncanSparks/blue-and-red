@@ -18,6 +18,8 @@ var player_health: int = 5
 var menu_open := false
 var can_pause := false
 
+var run_speedrun_stats := false
+
 const flags_initial := {
 	"game_start": 0,
 	"demon_door_1": 0,
@@ -63,10 +65,15 @@ var checkpoint_collected_hearts := {
 	
 }
 
+var kills := 0
+var deaths := 0
+var time: float = 0.0
+
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 
 onready var transform_meter := $UI/CanvasLayer/Clock as TextureProgress
 onready var timer_transform := $TimerTransform as Timer
+onready var speedrun_timer := $CanvasLayer2/Time as Label
 
 
 func _ready():
@@ -82,6 +89,9 @@ func _ready():
 
 func _process(delta):
 	Cursor.set_cursor_position(get_global_mouse_position())
+	if run_speedrun_stats:
+		time += delta
+		speedrun_timer.set_text(get_time_string())
 	
 	if timer_active:
 		transform_meter.set_value(ceil(timer_transform.get_time_left()))
@@ -91,10 +101,13 @@ func _process(delta):
 		get_tree().get_root().add_child(pause)
 		stop_timer(true)
 		menu_open = true
+		run_speedrun_stats = false
 	
 	if Input.is_action_just_pressed("debug_2"):
-		timer_transform.set_wait_time(0.1)
-		timer_transform.start()
+		goto_scene("res://Scenes/Dungeon/Dungeon_End.tscn", Vector2(160, 90))
+	#	timer_transform.set_wait_time(0.1)
+	#	timer_transform.start()
+	
 		
 		
 func move_player(position: Vector2):
@@ -120,10 +133,11 @@ func restore_checkpoint():
 	$MusicDemon.set_volume_db(-14)
 	get_node(checkpoint_music).play()
 	Cursor.change_mode(player_transformed)
+	can_pause = true
 	if flags["meet_ivari"] == 1:
 		initialize_timer()
 		timer_active = true
-		timer_transform.set_wait_time(20)
+		timer_transform.set_wait_time(12)
 		timer_transform.start()
 		timer_transform.set_paused(false)
 	
@@ -140,6 +154,10 @@ func fadeout():
 	
 func undo_fadeout():
 	$CanvasLayer/Fade.color = Color(0, 0, 0, 0)
+	
+	
+func get_time_string() -> String:
+	return str(floor(time / 60)).pad_zeros(2) + ":" + str(stepify(fmod(time, 60.0), 0.01)).pad_zeros(2)
 	
 	
 func reset_flags():
@@ -247,7 +265,7 @@ func _on_Clock_value_changed(value):
 
 
 func _on_TimerPostTransform_timeout():
-	$TimerTransform.set_wait_time(20)
+	$TimerTransform.set_wait_time(12)
 	$TimerTransform.start()
 
 

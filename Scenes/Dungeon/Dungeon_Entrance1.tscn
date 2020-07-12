@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/UI/Question_mark.png" type="Texture" id=10]
+[ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=11]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 24, 24, 296, 24, 296, 168, 184, 168, 184, 184, 136, 184, 136, 168, 24, 168 )
@@ -275,6 +276,8 @@ anims/Start = SubResource( 11 )
 
 [node name="AnimationPlayerTutorial" type="AnimationPlayer" parent="."]
 anims/Tutorial = SubResource( 12 )
+
+[node name="EnemySpawn" parent="." instance=ExtResource( 11 )]
 
 [editable path="LoadingZone"]
 

@@ -16,6 +16,8 @@ func _ready():
 		Cursor.change_mode(false)
 		
 	Controller.can_pause = false
+	Controller.run_speedrun_stats = false
+	Controller.get_node("CanvasLayer2/Time").hide()
 
 
 func _process(delta):
@@ -82,6 +84,9 @@ func _on_TweenStart_tween_all_completed():
 	Controller.goto_scene("res://Scenes/Intro.tscn", Vector2())
 	Controller.get_node("MusicHuman").set_volume_db(-14)
 	Controller.get_node("MusicDemon").set_volume_db(-14)
+	Controller.time = 0.0
+	Controller.kills = 0
+	Controller.deaths = 0
 	#Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))
 	
 	

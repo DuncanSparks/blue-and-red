@@ -100,8 +100,8 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Grey_5.tscn"
 shape = SubResource( 3 )
 [connection signal="enemy_dead" from="EnemySpawn3" to="TileMap2" method="queue_free"]
 [connection signal="enemy_dead" from="EnemySpawn3" to="." method="set_flag"]
-[connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn2" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn3" method="spawn_enemy"]
 
 [editable path="LoadingZone"]

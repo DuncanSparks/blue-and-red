@@ -2,6 +2,7 @@ extends Node2D
 
 
 func _ready():
+	Controller.deaths += 1
 	Controller.can_pause = false
 	Controller.get_node("MusicHuman").stop()
 	Controller.get_node("MusicDemon").stop()

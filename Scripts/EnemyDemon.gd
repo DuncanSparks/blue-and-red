@@ -116,6 +116,7 @@ func hurt(amount: int):
 		tween.start()
 		dead = true
 		$TimerDeath.start()
+		Controller.kills += 1
 		emit_signal("dead")
 	else:
 		healthbar.show()
