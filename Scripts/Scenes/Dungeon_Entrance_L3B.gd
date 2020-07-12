@@ -5,7 +5,7 @@ func _ready():
 		$TileMap2.queue_free()
 		
 	if Controller.flag("floorswitch_3") == 1:
-		$TileMap3.queue_free()
+		$FloorSwitch.activate(false)
 		
 		
 func set_flag():
