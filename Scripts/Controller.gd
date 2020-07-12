@@ -27,6 +27,9 @@ const flags_initial := {
 	"demon_door_3": 0,
 	"demon_door_4": 0,
 	"demon_door_5": 0,
+	"demon_door_6": 0,
+	"demon_door_7": 0,
+	"demon_door_8": 0,
 	
 	"floorswitch_1": 0,
 	"floorswitch_2": 0,

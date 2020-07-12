@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 32 )
 
 [node name="Scene" type="Node2D"]
@@ -39,4 +42,14 @@ target_direction = 2
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
 shape = SubResource( 1 )
 
+[node name="LoadingZone" parent="." instance=ExtResource( 2 )]
+position = Vector2( 320, 136 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Grey_1.tscn"
+target_direction = 3
+
+[node name="CollisionShape2D" parent="LoadingZone" index="0"]
+shape = SubResource( 2 )
+
 [editable path="LoadingZone2"]
+
+[editable path="LoadingZone"]

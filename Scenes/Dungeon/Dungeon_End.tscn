@@ -1,0 +1,177 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
+[ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_idle2.png" type="Texture" id=4]
+[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_annoyed.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_idle.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_cast.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Props/Column.png" type="Texture" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 32 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "talk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "annoyed",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+} ]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+max_value = 3.0
+_data = [ Vector2( 0, 0.910227 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+gravity = Vector3( 0, 98, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.171875, 0.682292, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 70.0
+gravity = Vector3( 0, 15, 0 )
+initial_velocity = 30.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 8.0
+scale_random = 0.5
+color_ramp = SubResource( 9 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 11, 6 )
+
+[node name="Scene" type="Node2D"]
+__meta__ = {
+"_edit_vertical_guides_": [ 160.0 ]
+}
+
+[node name="TileMap" type="TileMap" parent="."]
+z_index = -1000
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 512
+collision_mask = 512
+format = 1
+tile_data = PoolIntArray( 0, 20, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 21, 0, 6, 21, 0, 7, 21, 0, 8, 21, 0, 9, 21, 0, 10, 21, 0, 11, 21, 0, 12, 21, 0, 13, 21, 0, 14, 21, 0, 15, 21, 0, 16, 21, 0, 17, 21, 0, 18, 21, 0, 19, 20, 0, 65536, 20, 0, 65537, 21, 0, 65538, 21, 0, 65539, 21, 0, 65540, 21, 0, 65541, 21, 0, 65542, 21, 0, 65543, 21, 0, 65544, 21, 0, 65545, 21, 0, 65546, 21, 0, 65547, 21, 0, 65548, 21, 0, 65549, 21, 0, 65550, 21, 0, 65551, 21, 0, 65552, 21, 0, 65553, 21, 0, 65554, 21, 0, 65555, 20, 0, 131072, 20, 0, 131073, 21, 0, 131074, 21, 0, 131075, 6, 0, 131076, 6, 0, 131077, 6, 0, 131078, 6, 0, 131079, 6, 0, 131080, 6, 0, 131081, 6, 0, 131082, 6, 0, 131083, 6, 0, 131084, 6, 0, 131085, 6, 0, 131086, 6, 0, 131087, 6, 0, 131088, 6, 0, 131089, 21, 0, 131090, 21, 0, 131091, 20, 0, 196608, 20, 0, 196609, 24, 0, 196610, 24, 0, 196611, 6, 0, 196612, 6, 0, 196613, 6, 0, 196614, 6, 0, 196615, 6, 0, 196616, 6, 0, 196617, 6, 0, 196618, 6, 0, 196619, 6, 0, 196620, 6, 0, 196621, 6, 0, 196622, 6, 0, 196623, 6, 0, 196624, 6, 0, 196625, 24, 0, 196626, 24, 0, 196627, 20, 0, 262144, 20, 0, 262145, 24, 0, 262146, 24, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 262151, 6, 0, 262152, 6, 0, 262153, 6, 0, 262154, 6, 0, 262155, 6, 0, 262156, 6, 0, 262157, 6, 0, 262158, 6, 0, 262159, 6, 0, 262160, 6, 0, 262161, 24, 0, 262162, 24, 0, 262163, 20, 0, 327680, 20, 0, 327681, 24, 0, 327682, 24, 0, 327683, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0, 327688, 6, 0, 327689, 6, 0, 327690, 6, 0, 327691, 6, 0, 327692, 6, 0, 327693, 6, 0, 327694, 6, 0, 327695, 6, 0, 327696, 6, 0, 327697, 24, 0, 327698, 24, 0, 327699, 20, 0, 393216, 20, 0, 393217, 24, 0, 393218, 24, 0, 393219, 6, 0, 393220, 6, 0, 393221, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 6, 0, 393225, 6, 0, 393226, 6, 0, 393227, 6, 0, 393228, 6, 0, 393229, 6, 0, 393230, 6, 0, 393231, 6, 0, 393232, 6, 0, 393233, 24, 0, 393234, 24, 0, 393235, 20, 0, 458752, 20, 0, 458753, 24, 0, 458754, 24, 0, 458755, 6, 0, 458756, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 458766, 6, 0, 458767, 6, 0, 458768, 6, 0, 458769, 24, 0, 458770, 24, 0, 458771, 20, 0, 524288, 20, 0, 524289, 24, 0, 524290, 24, 0, 524291, 6, 0, 524292, 6, 0, 524293, 6, 0, 524294, 6, 0, 524295, 6, 0, 524296, 6, 0, 524297, 6, 0, 524298, 6, 0, 524299, 6, 0, 524300, 6, 0, 524301, 6, 0, 524302, 6, 0, 524303, 6, 0, 524304, 6, 0, 524305, 24, 0, 524306, 24, 0, 524307, 20, 0, 589824, 20, 0, 589825, 24, 0, 589826, 24, 0, 589827, 6, 0, 589828, 6, 0, 589829, 6, 0, 589830, 6, 0, 589831, 6, 0, 589832, 6, 0, 589833, 6, 0, 589834, 6, 0, 589835, 6, 0, 589836, 6, 0, 589837, 6, 0, 589838, 6, 0, 589839, 6, 0, 589840, 6, 0, 589841, 24, 0, 589842, 24, 0, 589843, 20, 0, 655360, 20, 0, 655361, 24, 0, 655362, 24, 0, 655363, 6, 0, 655364, 6, 0, 655365, 6, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, 24, 0, 655378, 24, 0, 655379, 20, 0, 720896, 20, 0, 720897, 20, 0, 720898, 20, 0, 720899, 20, 0, 720900, 20, 0, 720901, 20, 0, 720902, 20, 0, 720903, 20, 0, 720904, 6, 0, 720905, 6, 0, 720906, 6, 0, 720907, 6, 0, 720908, 20, 0, 720909, 20, 0, 720910, 20, 0, 720911, 20, 0, 720912, 20, 0, 720913, 20, 0, 720914, 20, 0, 720915, 20, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TileMap2" type="TileMap" parent="."]
+z_index = -1000
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 512
+collision_mask = 512
+format = 1
+tile_data = PoolIntArray( 196611, 25, 0, 196624, 536870937, 0, 262147, 25, 0, 262160, 536870937, 0, 327683, 25, 0, 327696, 536870937, 0, 393219, 25, 0, 393232, 536870937, 0, 458755, 25, 0, 458768, 536870937, 0, 524291, 25, 0, 524304, 536870937, 0, 589827, 25, 0, 589840, 536870937, 0, 655363, 25, 0, 655376, 536870937, 0, 720904, 18, 0, 720905, 18, 0, 720906, 18, 0, 720907, 18, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 128, 134 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="LoadingZone2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 136 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_R2.tscn"
+target_direction = 2
+
+[node name="CollisionShape2D" parent="LoadingZone2" index="0"]
+shape = SubResource( 1 )
+
+[node name="Osme" type="AnimatedSprite" parent="."]
+position = Vector2( 160, 32 )
+frames = SubResource( 2 )
+animation = "idle"
+
+[node name="PartsCast" type="Particles2D" parent="Osme"]
+position = Vector2( 17, -12 )
+emitting = false
+amount = 4
+process_material = SubResource( 7 )
+texture = ExtResource( 3 )
+
+[node name="PartsCast2" type="Particles2D" parent="Osme"]
+position = Vector2( 17, -12 )
+emitting = false
+process_material = SubResource( 10 )
+
+[node name="Column" type="StaticBody2D" parent="."]
+position = Vector2( 72, 32 )
+z_index = 52
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Column"]
+texture = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
+position = Vector2( 0, 23 )
+shape = SubResource( 11 )
+
+[node name="Column2" type="StaticBody2D" parent="."]
+position = Vector2( 256, 32 )
+z_index = 52
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Column2"]
+texture = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
+position = Vector2( 0, 23 )
+shape = SubResource( 11 )
+
+[editable path="LoadingZone2"]

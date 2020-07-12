@@ -49,12 +49,12 @@ shader_param/sinConst = 0.015
 shader_param/timeConst = 2.0
 shader_param/color = Color( 0.415686, 0.176471, 0.482353, 1 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=4]
 size = 8
 extra_spacing_char = 1
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=5]
 size = 8
 font_data = ExtResource( 10 )
 
@@ -130,7 +130,7 @@ texture_disabled = ExtResource( 3 )
 [node name="Label" type="Label" parent="HBoxContainer/Button"]
 margin_right = 60.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 4 )
 text = "Start"
 align = 1
 valign = 1
@@ -152,7 +152,7 @@ texture_disabled = ExtResource( 3 )
 [node name="Label2" type="Label" parent="HBoxContainer/Button2"]
 margin_right = 62.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 4 )
 text = "Credits"
 align = 1
 valign = 1
@@ -174,7 +174,7 @@ texture_disabled = ExtResource( 3 )
 [node name="Label3" type="Label" parent="HBoxContainer/Button3"]
 margin_right = 60.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 4 )
 text = "Exit"
 align = 1
 valign = 1
@@ -198,7 +198,7 @@ __meta__ = {
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 5 )
 custom_constants/line_spacing = 12
 text = "Blue + Red
 Developed by Duncan Sparks
@@ -241,7 +241,7 @@ margin_left = 228.0
 margin_top = 8.0
 margin_right = 340.0
 margin_bottom = 22.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.313726, 0.313726, 0.313726, 1 )
 text = "F4: Fullscreen"
 __meta__ = {

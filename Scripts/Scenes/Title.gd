@@ -74,6 +74,7 @@ func _on_TweenIntro_tween_all_completed():
 	
 func _on_TweenStart_tween_all_completed():
 	Controller.reset_flags()
+	Controller.collected_hearts.clear()
 	get_node("Player").demon_form = false
 	get_node("Player").health = 5
 	Controller.player_health = 5

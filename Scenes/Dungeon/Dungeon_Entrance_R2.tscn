@@ -129,8 +129,8 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_R2A.tscn"
 
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
 shape = SubResource( 4 )
-[connection signal="enemy_dead" from="EnemySpawn" to="." method="set_flag"]
 [connection signal="enemy_dead" from="EnemySpawn" to="TileMap2" method="queue_free"]
+[connection signal="enemy_dead" from="EnemySpawn" to="." method="set_flag"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn2" method="spawn_enemy"]
 
