@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
@@ -6,16 +6,30 @@
 [ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/NPC.gd" type="Script" id=7]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Sprites/Speech_bubble.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=10]
 [ext_resource path="res://Scripts/Scenes/Dungeon_Grey_5.gd" type="Script" id=11]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 8 )
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="Animation" id=2]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.32549, 0.32549, 0.32549, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
@@ -23,33 +37,19 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=5]
-radius = 40.05
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 6, 3 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 resource_name = "Talk"
 length = 0.3
 tracks/0/type = "method"
-tracks/0/path = NodePath("../SoundCollect")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ 0.0 ],
-"method": "play"
-} ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
@@ -58,6 +58,20 @@ tracks/1/keys = {
 }, {
 "args": [ "stone_purple", 1 ],
 "method": "talk_set_flag"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../SoundCollect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
 } ]
 }
 tracks/2/type = "method"
@@ -75,7 +89,7 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "Talk2"
 length = 0.1
 tracks/0/type = "method"
@@ -91,38 +105,6 @@ tracks/0/keys = {
 "args": [ PoolStringArray( "You already have the stone." ), false ],
 "method": "talk_dialogue"
 } ]
-}
-
-[sub_resource type="Animation" id=6]
-length = 0.8
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Interact:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3 ]
-}
-
-[sub_resource type="Animation" id=3]
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0.32549, 0.32549, 0.32549, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="Scene" type="Node2D"]
@@ -156,48 +138,7 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Grey_4.tscn"
 target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 2 )
-
-[node name="NPC" type="StaticBody2D" parent="." instance=ExtResource( 8 )]
-position = Vector2( 256, 80 )
-z_index = 56
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_group_": true
-}
-npc_name = "Ivari"
-npc_color = Color( 0.513726, 1, 0.447059, 1 )
-max_talk_number = 1
-
-[node name="Sprite" type="AnimatedSprite" parent="NPC" index="0"]
-frames = SubResource( 4 )
-
-[node name="Interact" type="Sprite" parent="NPC" index="1"]
-visible = false
-position = Vector2( 0, -22 )
-texture = ExtResource( 9 )
-hframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC" index="2"]
-position = Vector2( -1, 14 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC/AreaInteract" index="0"]
-position = Vector2( 0, 2 )
-shape = SubResource( 5 )
-
-[node name="AnimationPlayerTalk" type="AnimationPlayer" parent="NPC" index="4"]
-anims/Talk = SubResource( 8 )
-anims/Talk2 = SubResource( 7 )
-
-[node name="AnimationPlayerInteract" type="AnimationPlayer" parent="NPC" index="5"]
-autoplay = "Idle"
-playback_speed = 0.5
-anims/Idle = SubResource( 6 )
-
-[node name="Stone" type="Sprite" parent="NPC"]
-position = Vector2( -3, -17 )
-texture = ExtResource( 3 )
-centered = false
+shape = SubResource( 1 )
 
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
@@ -209,10 +150,26 @@ texture = ExtResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pentagram"]
 autoplay = "Idle"
-anims/Idle = SubResource( 3 )
-[connection signal="body_entered" from="NPC/AreaInteract" to="NPC" method="_on_AreaInteract_body_entered"]
-[connection signal="body_exited" from="NPC/AreaInteract" to="NPC" method="_on_AreaInteract_body_exited"]
-[connection signal="animation_finished" from="NPC/AnimationPlayerTalk" to="NPC" method="_on_AnimationPlayerTalk_animation_finished"]
+anims/Idle = SubResource( 2 )
+
+[node name="NPC" parent="." instance=ExtResource( 8 )]
+position = Vector2( 256, 80 )
+
+[node name="Sprite" parent="NPC" index="0"]
+frames = SubResource( 3 )
+
+[node name="CollisionShape2D" parent="NPC" index="2"]
+position = Vector2( 1, 9 )
+shape = SubResource( 4 )
+
+[node name="AnimationPlayerTalk" parent="NPC" index="4"]
+anims/Talk = SubResource( 5 )
+anims/Talk2 = SubResource( 6 )
+
+[node name="Stone" type="Sprite" parent="NPC"]
+position = Vector2( -3, -17 )
+texture = ExtResource( 3 )
+centered = false
 
 [editable path="LoadingZone"]
 

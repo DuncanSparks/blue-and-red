@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Scenes/Dungeon_Grey_7.gd" type="Script" id=2]
@@ -18,6 +18,9 @@ extents = Vector2( 11, 6 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 24, 8 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 40, 8 )
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 2 )
@@ -191,16 +194,25 @@ target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
 shape = SubResource( 3 )
+
+[node name="LoadingZone2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 160, 0 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Grey_8.tscn"
+
+[node name="CollisionShape2D" parent="LoadingZone2" index="0"]
+shape = SubResource( 4 )
 [connection signal="enemy_dead" from="EnemySpawn2" to="TimerSpawn2" method="start"]
 [connection signal="enemy_dead" from="EnemySpawn4" to="TimerSpawn3" method="start"]
 [connection signal="enemy_dead" from="EnemySpawn6" to="TimerSpawn4" method="start"]
-[connection signal="enemy_dead" from="EnemySpawn9" to="." method="set_flag"]
 [connection signal="enemy_dead" from="EnemySpawn9" to="TileMap2" method="queue_free"]
+[connection signal="enemy_dead" from="EnemySpawn9" to="." method="set_flag"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn2" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn3" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn4" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn3" to="EnemySpawn6" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn3" to="EnemySpawn5" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn3" to="EnemySpawn6" method="spawn_enemy"]
 
 [editable path="LoadingZone"]
+
+[editable path="LoadingZone2"]
