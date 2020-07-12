@@ -245,6 +245,7 @@ shape = SubResource( 9 )
 anims/Talk = SubResource( 10 )
 
 [node name="Tutorial" type="Sprite" parent="NPC"]
+self_modulate = Color( 0.635294, 0.635294, 0.635294, 1 )
 position = Vector2( -4, -29 )
 texture = ExtResource( 10 )
 centered = false

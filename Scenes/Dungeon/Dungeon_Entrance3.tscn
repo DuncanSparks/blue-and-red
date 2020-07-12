@@ -79,7 +79,7 @@ target_direction = 1
 shape = SubResource( 2 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
-position = Vector2( 112, 72 )
+position = Vector2( 136, 72 )
 enemy_type = 1
 
 [node name="TimerSpawn" type="Timer" parent="."]
@@ -114,8 +114,8 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance3A.tscn"
 [node name="CollisionShape2D" parent="LoadingZone4" index="0"]
 shape = SubResource( 5 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
-[connection signal="activated" from="FloorSwitch" to="." method="set_flag"]
 [connection signal="activated" from="FloorSwitch" to="TileMap2" method="queue_free"]
+[connection signal="activated" from="FloorSwitch" to="." method="set_flag"]
 
 [editable path="LoadingZone"]
 

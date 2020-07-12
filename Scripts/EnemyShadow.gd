@@ -45,7 +45,7 @@ func attack():
 	blast.set_collision_layer_bit(5, false)
 	blast.set_collision_mask_bit(5, false)
 	blast.set_collision_layer_bit(15, true)
-	blast.set_collision_mask_bit(15, true)
+	#blast.set_collision_mask_bit(15, true)
 	get_node("..").add_child(blast)
 	
 	$TimerTeleport.start()

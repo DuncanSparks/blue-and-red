@@ -106,6 +106,13 @@ func set_flag(id: String, value: int):
 	flags[id] = value
 	
 	
+func fadeout_music(music: NodePath, time: float):
+	var mus := get_node(music) as AudioStreamPlayer
+	var tween := $TweenMusic as Tween
+	tween.interpolate_property(mus, "volume_db", mus.get_volume_db(), -60, time)
+	tween.start()
+	
+	
 func initialize_timer():
 	player_transformed = false
 	transform_meter.set_progress_texture(meter_texture_1)

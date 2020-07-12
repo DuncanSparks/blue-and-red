@@ -3,6 +3,8 @@ extends Node2D
 
 func _ready():
 	Controller.can_pause = false
+	Controller.get_node("MusicHuman").stop()
+	Controller.get_node("MusicDemon").stop()
 	var player := get_node("Player") as KinematicBody2D
 	player.stunned = true
 	player.get_node("Healthbar").hide()

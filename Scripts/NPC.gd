@@ -49,6 +49,14 @@ func talk_set_flag(flag: String, value: int):
 	Controller.set_flag(flag, value)
 	
 	
+func talk_fadeout_music(music: String, time: float):
+	Controller.fadeout_music(music, time)
+	
+	
+func talk_play_music(music: String):
+	Controller.get_node(music).play()
+	
+	
 func talk_initialize_timer():
 	Controller.initialize_timer()
 	
