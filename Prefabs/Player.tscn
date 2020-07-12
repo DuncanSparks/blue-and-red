@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Player_demon_run3.png" type="Texture" id=2]
@@ -47,6 +47,7 @@
 [ext_resource path="res://Audio/Land_human.ogg" type="AudioStream" id=45]
 [ext_resource path="res://Audio/Heal.ogg" type="AudioStream" id=46]
 [ext_resource path="res://Audio/Blast.ogg" type="AudioStream" id=47]
+[ext_resource path="res://Audio/Hit.ogg" type="AudioStream" id=48]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -55,20 +56,10 @@ animations = [ {
 "name": "demon_to_human",
 "speed": 7.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
+"frames": [ ExtResource( 34 ) ],
 "loop": true,
-"name": "run_demon",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 12 ) ],
-"loop": true,
-"name": "ouch_human",
+"name": "ouch_demon",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "run_human",
-"speed": 10.0
 }, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
@@ -80,20 +71,20 @@ animations = [ {
 "name": "sit_demon",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 16 ) ],
+"frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
 "loop": true,
-"name": "start_demon",
-"speed": 5.0
+"name": "run_human",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "run_demon",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 16 ) ],
 "loop": true,
 "name": "idle_demon",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
-"loop": false,
-"name": "pounce_demon",
-"speed": 15.0
 }, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
@@ -105,15 +96,25 @@ animations = [ {
 "name": "shield_human",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 34 ) ],
-"loop": true,
-"name": "ouch_demon",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
 "loop": false,
 "name": "human_to_demon",
 "speed": 7.0
+}, {
+"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
+"loop": false,
+"name": "pounce_demon",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "ouch_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ) ],
+"loop": true,
+"name": "start_demon",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -580,6 +581,11 @@ volume_db = -18.0
 [node name="SoundHurt" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = -12.0
+
+[node name="SoundHurt2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 48 )
+volume_db = -12.0
+pitch_scale = 1.5
 
 [node name="SoundTransform" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 23 )

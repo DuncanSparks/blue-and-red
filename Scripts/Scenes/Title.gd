@@ -57,6 +57,16 @@ func _on_Button3_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
+		
+		
+func _on_TweenIntro_tween_all_completed():
+	but1.set_disabled(false)
+	but2.set_disabled(false)
+	but3.set_disabled(false)
+	
+	
+func _on_TweenStart_tween_all_completed():
+	Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))
 	
 	
 func _on_TweenCredits_tween_all_completed():
@@ -74,4 +84,7 @@ func _on_TweenExit_tween_all_completed():
 	get_tree().quit()
 
 
-
+func _on_TimerIntro_timeout():
+	var tween := $TweenIntro as Tween
+	tween.interpolate_property($CanvasLayer/Fade, "color", Color(0, 0, 0, 1), Color(0, 0, 0, 0), 2)
+	tween.start()

@@ -43,6 +43,9 @@ func _ready():
 	
 
 func _process(_delta):
+	if Input.is_action_just_pressed("sys_fullscreen"):
+		OS.set_window_fullscreen(not OS.is_window_fullscreen())
+		
 	if not can_control:
 		return
 		
@@ -77,12 +80,12 @@ func _process(_delta):
 #		else:
 #			timer_footsteps_human.stop()
 	
-	if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
-		if not demon_form:
-			sprite_sword.play("swing")
-			$AreaSword/CollisionPolygon2D.set_disabled(false)
+	#if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
+	#	if not demon_form:
+	#		sprite_sword.play("swing")
+	#		$AreaSword/CollisionPolygon2D.set_disabled(false)
 			
-	if Input.is_action_just_pressed("attack_2") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
+	if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
 		if not demon_form and can_shoot:
 			$SoundBlast.play()
 			var blast := blast_ref.instance() as KinematicBody2D
@@ -97,15 +100,12 @@ func _process(_delta):
 		#else:
 		#	pounce()
 			
-	if Input.is_action_just_pressed("action_shield") and not stopped and not cooldown_shield and not stunned and not transforming and not shooting:
-		if not demon_form:
-			shield()
-			
-	if Input.is_action_just_pressed("sys_fullscreen"):
-		OS.set_window_fullscreen(not OS.is_window_fullscreen())
+	#if Input.is_action_just_pressed("action_shield") and not stopped and not cooldown_shield and not stunned and not transforming and not shooting:
+	#	if not demon_form:
+	#		shield()
 	
-	if Input.is_action_just_pressed("debug_1"):
-		demon_form = not demon_form
+	#if Input.is_action_just_pressed("debug_1"):
+	#	demon_form = not demon_form
 	
 	
 func _physics_process(_delta):
@@ -157,6 +157,7 @@ func heal(amount: int):
 	
 func hurt(amount: int = 1):
 	$SoundHurt.play()
+	$SoundHurt2.play()
 	sprite.play("ouch_demon" if demon_form else "ouch_human")
 	health -= amount
 	healthbar.set_value(health)

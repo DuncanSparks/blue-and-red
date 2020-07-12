@@ -86,6 +86,7 @@ func flame():
 	
 func hurt(amount: int):
 	sound_hurt.play()
+	$SoundHurt2.play()
 	sprite.play("ouch")
 	health -= amount
 	healthbar.set_value(health)
@@ -102,6 +103,7 @@ func hurt(amount: int):
 		$TimerDeath.start()
 	else:
 		healthbar.show()
+		iframes = true
 		$TimerStun.start()
 		$AnimationPlayer.play("Iframes")
 
@@ -137,12 +139,13 @@ func _on_TimerNav_timeout():
 
 
 func _on_Hurtbox_body_entered(body):
-	if body.is_in_group("Blast"):
+	if body.is_in_group("Blast") and not iframes:
 		hurt(1)
 
 
 func _on_Hurtbox_area_entered(area):
-	hurt(3)
+	if not iframes:
+		hurt(3)
 	
 	
 func _on_TimerStartPounce_timeout():
