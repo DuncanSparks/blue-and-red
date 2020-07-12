@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Sprites/Props/Stone2.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Scenes/Dungeon_Entrance_L3C.gd" type="Script" id=7]
 [ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 8 )
@@ -87,6 +88,22 @@ tracks/0/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=5]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.32549, 0.32549, 0.32549, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [node name="Scene" type="Node2D"]
 script = ExtResource( 7 )
 
@@ -112,7 +129,7 @@ target_direction = 1
 shape = SubResource( 1 )
 
 [node name="NPC" parent="." instance=ExtResource( 2 )]
-position = Vector2( 160, 64 )
+position = Vector2( 160, 76 )
 
 [node name="Sprite" parent="NPC" index="0"]
 frames = SubResource( 2 )
@@ -129,6 +146,14 @@ centered = false
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 volume_db = -14.0
+
+[node name="Pentagram" type="Sprite" parent="."]
+position = Vector2( 160, 85 )
+texture = ExtResource( 9 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pentagram"]
+autoplay = "Idle"
+anims/Idle = SubResource( 5 )
 
 [editable path="LoadingZone"]
 

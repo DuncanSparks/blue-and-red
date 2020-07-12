@@ -6,7 +6,7 @@
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
-[sub_resource type="NavigationPolygon" id=3]
+[sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 136, 120, 136, 56, 216, 56, 216, 120, 296, 120, 296, 152, 264, 152, 264, 168, 40, 168, 40, 136, 40, 120, 8, 136, 8, 72, 40, 72 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 3, 4, 5, 6 ), PoolIntArray( 0, 3, 6, 7, 8, 9 ), PoolIntArray( 10, 0, 9, 11 ), PoolIntArray( 10, 11, 12, 13 ) ]
 outlines = [ PoolVector2Array( 136, 120, 40, 120, 40, 72, 8, 72, 8, 136, 40, 136, 40, 168, 264, 168, 264, 152, 296, 152, 296, 120, 216, 120, 216, 56, 136, 56 ) ]
@@ -42,7 +42,7 @@ collision_mask = 3
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
 visible = false
-navpoly = SubResource( 3 )
+navpoly = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -62,6 +62,9 @@ autostart = true
 
 [node name="Heart" parent="." instance=ExtResource( 2 )]
 position = Vector2( 176, 56 )
+
+[node name="Heart2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 288, 136 )
 
 [node name="LoadingZone" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 104 )

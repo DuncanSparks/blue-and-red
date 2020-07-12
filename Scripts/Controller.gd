@@ -30,12 +30,14 @@ const flags_initial := {
 	"demon_door_6": 0,
 	"demon_door_7": 0,
 	"demon_door_8": 0,
+	"demon_door_9": 0,
 	
 	"floorswitch_1": 0,
 	"floorswitch_2": 0,
 	"floorswitch_3": 0,
 	
 	"stone_blue": 0,
+	"stone_purple": 0,
 }
 
 var flags := flags_initial.duplicate(true)

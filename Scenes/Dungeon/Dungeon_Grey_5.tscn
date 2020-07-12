@@ -1,0 +1,219 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
+[ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/Props/Stone3.png" type="Texture" id=3]
+[ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/NPC.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Sprites/Speech_bubble.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=10]
+[ext_resource path="res://Scripts/Scenes/Dungeon_Grey_5.gd" type="Script" id=11]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 8 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 40.05
+
+[sub_resource type="Animation" id=8]
+resource_name = "Talk"
+length = 0.3
+tracks/0/type = "method"
+tracks/0/path = NodePath("../SoundCollect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ PoolStringArray( "Obtained the purple stone." ), false ],
+"method": "talk_dialogue"
+}, {
+"args": [ "stone_purple", 1 ],
+"method": "talk_set_flag"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Stone")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "You already have the stone." ), false ],
+"method": "talk_dialogue"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Interact:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.32549, 0.32549, 0.32549, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Scene" type="Node2D"]
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_vertical_guides_": [ 160.0 ]
+}
+
+[node name="TileMap" type="TileMap" parent="."]
+z_index = -1000
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 512
+collision_mask = 512
+format = 1
+tile_data = PoolIntArray( 0, 20, 0, 1, 20, 0, 2, 20, 0, 3, 20, 0, 4, 20, 0, 5, 20, 0, 6, 20, 0, 7, 20, 0, 8, 20, 0, 9, 20, 0, 10, 20, 0, 11, 20, 0, 12, 20, 0, 13, 20, 0, 14, 20, 0, 15, 20, 0, 16, 20, 0, 17, 20, 0, 18, 20, 0, 19, 20, 0, 65536, 20, 0, 65537, 20, 0, 65538, 20, 0, 65539, 20, 0, 65540, 20, 0, 65541, 20, 0, 65542, 20, 0, 65543, 20, 0, 65544, 20, 0, 65545, 20, 0, 65546, 20, 0, 65547, 20, 0, 65548, 20, 0, 65549, 20, 0, 65550, 20, 0, 65551, 20, 0, 65552, 20, 0, 65553, 20, 0, 65554, 20, 0, 65555, 20, 0, 131072, 20, 0, 131073, 20, 0, 131074, 20, 0, 131075, 20, 0, 131076, 20, 0, 131077, 20, 0, 131078, 20, 0, 131079, 20, 0, 131080, 20, 0, 131081, 20, 0, 131082, 20, 0, 131083, 20, 0, 131084, 20, 0, 131085, 21, 0, 131086, 21, 0, 131087, 21, 0, 131088, 21, 0, 131089, 21, 0, 131090, 21, 0, 131091, 20, 0, 196608, 20, 0, 196609, 20, 0, 196610, 20, 0, 196611, 20, 0, 196612, 20, 0, 196613, 20, 0, 196614, 20, 0, 196615, 20, 0, 196616, 20, 0, 196617, 20, 0, 196618, 20, 0, 196619, 20, 0, 196620, 20, 0, 196621, 21, 0, 196622, 21, 0, 196623, 21, 0, 196624, 21, 0, 196625, 21, 0, 196626, 21, 0, 196627, 20, 0, 262144, 20, 0, 262145, 20, 0, 262146, 20, 0, 262147, 20, 0, 262148, 20, 0, 262149, 20, 0, 262150, 20, 0, 262151, 20, 0, 262152, 20, 0, 262153, 20, 0, 262154, 20, 0, 262155, 20, 0, 262156, 20, 0, 262157, 6, 0, 262158, 6, 0, 262159, 6, 0, 262160, 6, 0, 262161, 6, 0, 262162, 6, 0, 262163, 20, 0, 327680, 20, 0, 327681, 20, 0, 327682, 20, 0, 327683, 20, 0, 327684, 20, 0, 327685, 20, 0, 327686, 20, 0, 327687, 20, 0, 327688, 20, 0, 327689, 20, 0, 327690, 20, 0, 327691, 20, 0, 327692, 20, 0, 327693, 6, 0, 327694, 6, 0, 327695, 6, 0, 327696, 6, 0, 327697, 6, 0, 327698, 6, 0, 327699, 20, 0, 393216, 20, 0, 393217, 20, 0, 393218, 20, 0, 393219, 20, 0, 393220, 20, 0, 393221, 20, 0, 393222, 21, 0, 393223, 21, 0, 393224, 21, 0, 393225, 21, 0, 393226, 21, 0, 393227, 21, 0, 393228, 21, 0, 393229, 6, 0, 393230, 6, 0, 393231, 6, 0, 393232, 6, 0, 393233, 6, 0, 393234, 6, 0, 393235, 20, 0, 458752, 20, 0, 458753, 20, 0, 458754, 20, 0, 458755, 20, 0, 458756, 20, 0, 458757, 21, 0, 458758, 21, 0, 458759, 21, 0, 458760, 21, 0, 458761, 21, 0, 458762, 21, 0, 458763, 21, 0, 458764, 21, 0, 458765, 6, 0, 458766, 6, 0, 458767, 6, 0, 458768, 6, 0, 458769, 6, 0, 458770, 6, 0, 458771, 20, 0, 524288, 20, 0, 524289, 20, 0, 524290, 20, 0, 524291, 20, 0, 524292, 21, 0, 524293, 21, 0, 524294, 6, 0, 524295, 6, 0, 524296, 6, 0, 524297, 6, 0, 524298, 6, 0, 524299, 6, 0, 524300, 6, 0, 524301, 6, 0, 524302, 6, 0, 524303, 6, 0, 524304, 6, 0, 524305, 6, 0, 524306, 6, 0, 524307, 20, 0, 589824, 20, 0, 589825, 20, 0, 589826, 20, 0, 589827, 20, 0, 589828, 21, 0, 589829, 6, 0, 589830, 6, 0, 589831, 6, 0, 589832, 6, 0, 589833, 6, 0, 589834, 6, 0, 589835, 6, 0, 589836, 6, 0, 589837, 6, 0, 589838, 6, 0, 589839, 6, 0, 589840, 6, 0, 589841, 6, 0, 589842, 6, 0, 589843, 20, 0, 655360, 20, 0, 655361, 20, 0, 655362, 20, 0, 655363, 20, 0, 655364, 6, 0, 655365, 6, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, 6, 0, 655378, 6, 0, 655379, 20, 0, 720896, 20, 0, 720897, 20, 0, 720898, 20, 0, 720899, 20, 0, 720900, 20, 0, 720901, 20, 0, 720902, 20, 0, 720903, 20, 0, 720904, 20, 0, 720905, 20, 0, 720906, 20, 0, 720907, 20, 0, 720908, 20, 0, 720909, 20, 0, 720910, 20, 0, 720911, 6, 0, 720912, 6, 0, 720913, 20, 0, 720914, 20, 0, 720915, 20, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 128, 134 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="LoadingZone" parent="." instance=ExtResource( 2 )]
+position = Vector2( 256, 192 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Grey_4.tscn"
+target_direction = 1
+
+[node name="CollisionShape2D" parent="LoadingZone" index="0"]
+shape = SubResource( 2 )
+
+[node name="NPC" type="StaticBody2D" parent="." instance=ExtResource( 8 )]
+position = Vector2( 256, 80 )
+z_index = 56
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_group_": true
+}
+npc_name = "Ivari"
+npc_color = Color( 0.513726, 1, 0.447059, 1 )
+max_talk_number = 1
+
+[node name="Sprite" type="AnimatedSprite" parent="NPC" index="0"]
+frames = SubResource( 4 )
+
+[node name="Interact" type="Sprite" parent="NPC" index="1"]
+visible = false
+position = Vector2( 0, -22 )
+texture = ExtResource( 9 )
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC" index="2"]
+position = Vector2( -1, 14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC/AreaInteract" index="0"]
+position = Vector2( 0, 2 )
+shape = SubResource( 5 )
+
+[node name="AnimationPlayerTalk" type="AnimationPlayer" parent="NPC" index="4"]
+anims/Talk = SubResource( 8 )
+anims/Talk2 = SubResource( 7 )
+
+[node name="AnimationPlayerInteract" type="AnimationPlayer" parent="NPC" index="5"]
+autoplay = "Idle"
+playback_speed = 0.5
+anims/Idle = SubResource( 6 )
+
+[node name="Stone" type="Sprite" parent="NPC"]
+position = Vector2( -3, -17 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="SoundCollect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -14.0
+
+[node name="Pentagram" type="Sprite" parent="."]
+position = Vector2( 256, 89 )
+texture = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pentagram"]
+autoplay = "Idle"
+anims/Idle = SubResource( 3 )
+[connection signal="body_entered" from="NPC/AreaInteract" to="NPC" method="_on_AreaInteract_body_entered"]
+[connection signal="body_exited" from="NPC/AreaInteract" to="NPC" method="_on_AreaInteract_body_exited"]
+[connection signal="animation_finished" from="NPC/AnimationPlayerTalk" to="NPC" method="_on_AnimationPlayerTalk_animation_finished"]
+
+[editable path="LoadingZone"]
+
+[editable path="NPC"]
