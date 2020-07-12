@@ -27,7 +27,7 @@ const flags_initial := {
 	"demon_door_4": 0,
 }
 
-var flags := flags_initial
+var flags := flags_initial.duplicate(true)
 
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 
@@ -55,6 +55,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("sys_pause") and not menu_open and not player_ref.stopped and not player_ref.transforming:
 		var pause := pause_ref.instance()
 		get_tree().get_root().add_child(pause)
+		stop_timer(true)
 		menu_open = true
 	
 	if Input.is_action_just_pressed("debug_2"):
@@ -81,7 +82,7 @@ func undo_fadeout():
 	
 	
 func reset_flags():
-	flags = flags_initial
+	flags = flags_initial.duplicate(true)
 	
 	
 func goto_scene(scene: String, player_pos: Vector2):
@@ -110,6 +111,13 @@ func initialize_timer():
 	$UI/CanvasLayer/ClockBack.show()
 	tween.interpolate_property($UI/CanvasLayer, "offset", Vector2(0, -50), Vector2(0, 0), 4, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
 	tween.start()
+	
+	
+func uninitialize_timer():
+	$UI/CanvasLayer.set_offset(Vector2(0, -50))
+	transform_meter.hide()
+	$UI/CanvasLayer/ClockBack.hide()
+	timer_transform.stop()
 	
 	
 func start_timer():

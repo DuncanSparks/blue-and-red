@@ -137,6 +137,9 @@ func shield_end():
 	
 	
 func pounce():
+	if not can_control:
+		return
+		
 	if not stunned:
 		$SoundPounce.play()
 		$AnimationPlayerSpeed.stop()
