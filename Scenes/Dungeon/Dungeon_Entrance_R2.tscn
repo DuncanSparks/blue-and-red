@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
@@ -11,11 +11,14 @@ vertices = PoolVector2Array( 24, 72, 40, 72, 40, 88, 24, 152, 72, 152, 120, 120,
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 3, 2, 5 ), PoolIntArray( 6, 7, 8, 9, 10 ), PoolIntArray( 8, 11, 12, 9 ), PoolIntArray( 9, 13, 10 ), PoolIntArray( 10, 14, 15 ), PoolIntArray( 6, 10, 15 ), PoolIntArray( 6, 15, 5, 2 ), PoolIntArray( 5, 16, 17 ), PoolIntArray( 4, 5, 17 ), PoolIntArray( 4, 17, 18, 19 ) ]
 outlines = [ PoolVector2Array( 24, 72, 24, 152, 72, 152, 72, 168, 88, 168, 88, 152, 120, 152, 120, 120, 216, 120, 216, 136, 248, 136, 248, 168, 296, 168, 296, 56, 216, 56, 216, 72, 200, 72, 200, 88, 40, 88, 40, 72 ) ]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 56 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 8, 32 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 32, 8 )
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 4 )
@@ -63,14 +66,14 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
-position = Vector2( 288, 72 )
+position = Vector2( 32, 72 )
 
 [node name="EnemySpawn2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 200, 104 )
+position = Vector2( 168, 104 )
 enemy_type = 1
 
 [node name="TimerSpawn" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 2.0
 one_shot = true
 autostart = true
 
@@ -85,7 +88,7 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Transition_1.tscn"
 target_direction = 3
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="LoadingZone2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 136 )
@@ -93,7 +96,7 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_R1.tscn"
 target_direction = 2
 
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Teleport1" type="Position2D" parent="." groups=[
 "TeleportPoint",
@@ -114,6 +117,18 @@ position = Vector2( 80, 160 )
 "TeleportPoint",
 ]]
 position = Vector2( 264, 160 )
+
+[node name="Teleport5" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 288, 72 )
+
+[node name="LoadingZone3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 248, 0 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_R2A.tscn"
+
+[node name="CollisionShape2D" parent="LoadingZone3" index="0"]
+shape = SubResource( 4 )
 [connection signal="enemy_dead" from="EnemySpawn" to="." method="set_flag"]
 [connection signal="enemy_dead" from="EnemySpawn" to="TileMap2" method="queue_free"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
@@ -122,3 +137,5 @@ position = Vector2( 264, 160 )
 [editable path="LoadingZone"]
 
 [editable path="LoadingZone2"]
+
+[editable path="LoadingZone3"]

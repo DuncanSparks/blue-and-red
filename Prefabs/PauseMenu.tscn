@@ -3,13 +3,14 @@
 [ext_resource path="res://Scripts/PauseMenu.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/UI/ButtonUp.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/UI/ButtonOver.png" type="Texture" id=3]
-[ext_resource path="res://Greenscr.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://Audio/Text.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Audio/Hover.ogg" type="AudioStream" id=6]
+[ext_resource path="res://PIXEARG_.TTF" type="DynamicFontData" id=7]
 
-[sub_resource type="DynamicFont" id=1]
-size = 12
-font_data = ExtResource( 4 )
+[sub_resource type="DynamicFont" id=8]
+size = 8
+extra_spacing_char = 1
+font_data = ExtResource( 7 )
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
@@ -57,7 +58,7 @@ texture_disabled = ExtResource( 2 )
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Button"]
 margin_right = 60.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 8 )
 text = "Resume"
 align = 1
 valign = 1
@@ -79,7 +80,7 @@ texture_disabled = ExtResource( 2 )
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Button2"]
 margin_right = 60.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 8 )
 text = "Title"
 align = 1
 valign = 1
@@ -101,7 +102,7 @@ texture_disabled = ExtResource( 2 )
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Button3"]
 margin_right = 60.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 8 )
 text = "Exit"
 align = 1
 valign = 1

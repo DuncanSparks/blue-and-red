@@ -38,10 +38,12 @@ func _process(delta):
 		else:
 			allow_advance = false
 			text.hide()
+			$Skip.hide()
 			$TimerEnd.start()
 			
 	if Input.is_action_just_pressed("sys_pause"):
 		$TimerText.stop()
+		allow_advance = false
 		text.hide()
 		$Skip.hide()
 		$TimerEnd.start()
