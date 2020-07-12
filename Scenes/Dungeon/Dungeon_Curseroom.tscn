@@ -29,14 +29,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "talk",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "cast",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "annoyed",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
@@ -44,9 +44,9 @@ animations = [ {
 "name": "idle2",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "annoyed",
+"name": "talk",
 "speed": 5.0
 } ]
 
@@ -541,16 +541,8 @@ z_index = 98
 npc_name = "Osme"
 npc_color = Color( 0.8, 0, 0, 1 )
 
-[node name="Sprite" parent="NPC" index="1"]
+[node name="Sprite" parent="NPC" index="0"]
 frames = SubResource( 12 )
-
-[node name="CollisionShape2D" parent="NPC" index="2"]
-position = Vector2( 1, 9 )
-shape = SubResource( 13 )
-
-[node name="AnimationPlayerTalk" parent="NPC" index="4"]
-anims/Talk = SubResource( 14 )
-anims/Talk2 = SubResource( 15 )
 
 [node name="Stone" type="Sprite" parent="NPC"]
 position = Vector2( -3, -17 )
@@ -563,6 +555,14 @@ self_modulate = Color( 0.635294, 0.635294, 0.635294, 1 )
 position = Vector2( -4, -28 )
 texture = ExtResource( 20 )
 centered = false
+
+[node name="CollisionShape2D" parent="NPC" index="4"]
+position = Vector2( 1, 9 )
+shape = SubResource( 13 )
+
+[node name="AnimationPlayerTalk" parent="NPC" index="6"]
+anims/Talk = SubResource( 14 )
+anims/Talk2 = SubResource( 15 )
 
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )

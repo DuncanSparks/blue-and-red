@@ -23,6 +23,11 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "cast",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "annoyed",
@@ -31,11 +36,6 @@ animations = [ {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "idle2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "cast",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ) ],
@@ -223,11 +223,7 @@ position = Vector2( 184, 64 )
 enemy_type = 1
 
 [node name="TimerSpawn" type="Timer" parent="."]
-one_shot = true
-autostart = true
-
-[node name="TimerSpawn2" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 0.9
 one_shot = true
 autostart = true
 
@@ -241,7 +237,7 @@ shape = SubResource( 14 )
 
 [node name="Heart" parent="." instance=ExtResource( 6 )]
 position = Vector2( 272, 128 )
-[connection signal="timeout" from="TimerSpawn2" to="EnemySpawn" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 
 [editable path="LoadingZone2"]
 

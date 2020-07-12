@@ -33,13 +33,13 @@ npc_name = "Ivari"
 npc_color = Color( 0.513726, 1, 0.447059, 1 )
 max_talk_number = 1
 
+[node name="Sprite" type="AnimatedSprite" parent="."]
+
 [node name="Interact" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -22 )
 texture = ExtResource( 1 )
 hframes = 4
-
-[node name="Sprite" type="AnimatedSprite" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1, 14 )

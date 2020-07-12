@@ -234,21 +234,21 @@ shape = SubResource( 7 )
 position = Vector2( 256, 56 )
 max_talk_number = 0
 
-[node name="Sprite" parent="NPC" index="1"]
+[node name="Sprite" parent="NPC" index="0"]
 frames = SubResource( 8 )
-
-[node name="CollisionShape2D" parent="NPC" index="2"]
-position = Vector2( 1, 9 )
-shape = SubResource( 9 )
-
-[node name="AnimationPlayerTalk" parent="NPC" index="4"]
-anims/Talk = SubResource( 10 )
 
 [node name="Tutorial" type="Sprite" parent="NPC"]
 self_modulate = Color( 0.635294, 0.635294, 0.635294, 1 )
 position = Vector2( -4, -29 )
 texture = ExtResource( 10 )
 centered = false
+
+[node name="CollisionShape2D" parent="NPC" index="3"]
+position = Vector2( 1, 9 )
+shape = SubResource( 9 )
+
+[node name="AnimationPlayerTalk" parent="NPC" index="5"]
+anims/Talk = SubResource( 10 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 3
