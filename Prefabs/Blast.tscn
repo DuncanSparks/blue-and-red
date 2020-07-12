@@ -3,10 +3,10 @@
 [ext_resource path="res://Scripts/Blast.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Effects/Blast.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16.0015, 3.00903 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Scale"
 length = 2.5
 tracks/0/type = "value"
@@ -40,9 +40,9 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.00151157, 0.00902462 )
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 
 [node name="AnimationPlayerSize" type="AnimationPlayer" parent="."]
 autoplay = "Scale"
 playback_speed = 5.0
-anims/Scale = SubResource( 3 )
+anims/Scale = SubResource( 2 )

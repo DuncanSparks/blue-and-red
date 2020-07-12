@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Blue and Red"
+config/name="Blue + Red"
 run/main_scene="res://Scenes/Title.tscn"
 boot_splash/image="res://Splash.png"
 config/icon="res://Icon_BR.png"

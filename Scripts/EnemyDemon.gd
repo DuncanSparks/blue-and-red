@@ -17,6 +17,7 @@ var stunned := false
 var iframes := false
 var dead := false
 
+var can_swipe := true
 var can_flame := false
 var can_pounce := false
 var pounce_target := Vector2()
@@ -28,6 +29,7 @@ var player_ref: KinematicBody2D = null
 onready var sprite := $Sprite as AnimatedSprite
 onready var sound_hurt := $SoundHurt as AudioStreamPlayer
 onready var healthbar := $Healthbar as TextureProgress
+onready var swipe_box := $SwipeBox/CollisionShape2D as CollisionShape2D
 
 func _ready():
 	nav_node = get_node("../Navigation2D")
@@ -36,7 +38,7 @@ func _ready():
 		nav_path = nav_node.get_simple_path(get_global_position(), player_ref.get_global_position(), true)
 		$TimerNav.start()
 		
-	$TimerStartPounce.set_wait_time(rand_range(2.5, 4))
+	$TimerStartPounce.set_wait_time(rand_range(0.8, 2))
 	$TimerStartFlame.set_wait_time(rand_range(3.5, 6))
 	$TimerStartPounce.start()
 	$TimerStartFlame.start()
@@ -59,6 +61,9 @@ func _process(delta):
 	if distance_to_player <= 60 and not attacking and can_pounce and not dead:
 		pounce()
 		
+	if distance_to_player <= 20 and not attacking and can_swipe and not dead:
+		swipe()
+		
 		
 func _physics_process(delta):
 	move_and_slide(motion * speed)
@@ -67,6 +72,11 @@ func _physics_process(delta):
 func swipe():
 	attacking = true
 	motion = Vector2.ZERO
+	sprite.play("swipe")
+	$SoundSwipe.play()
+	swipe_box.set_disabled(false)
+	can_swipe = false
+	$TimerSwipe.start()
 	
 	
 func pounce():
@@ -129,8 +139,10 @@ func sprite_management():
 	
 	if motion.x < 0:
 		sprite.set_flip_h(true)
+		swipe_box.set_position(Vector2(-17, 2))
 	elif motion.x > 0:
 		sprite.set_flip_h(false)
+		swipe_box.set_position(Vector2(17, 2))
 		
 		
 func is_moving() -> bool:
@@ -183,7 +195,7 @@ func _on_TimerPounce2_timeout():
 		$PartsLand.set_emitting(true)
 		$PounceBox/CollisionShape2D.set_disabled(true)
 		$TimerPounce3.start()
-		$TimerStartPounce.set_wait_time(rand_range(2.5, 4))
+		$TimerStartPounce.set_wait_time(rand_range(1, 2.8))
 		$TimerStartPounce.start()
 
 
@@ -202,9 +214,9 @@ func _on_TimerFlame_timeout():
 		#flame_inst.set_collision_mask_bit(5, false)
 		flame_inst.grow()
 		flame_inst.speed = 200
-		get_tree().get_root().add_child(flame_inst)
+		get_node("..").add_child(flame_inst)
 		$TimerFlame2.start()
-		$TimerStartFlame.set_wait_time(rand_range(3.5, 6))
+		$TimerStartFlame.set_wait_time(rand_range(2.5, 4))
 		$TimerStartFlame.start()
 
 
@@ -215,3 +227,13 @@ func _on_TimerStartFlame_timeout():
 func _on_AnimationPlayer_animation_finished(anim_name):
 	iframes = false
 	healthbar.hide()
+
+
+func _on_TimerSwipe_timeout():
+	swipe_box.set_disabled(true)
+	attacking = false
+	$TimerSwipe2.start()
+
+
+func _on_TimerSwipe2_timeout():
+	can_swipe = true

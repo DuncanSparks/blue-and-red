@@ -94,7 +94,7 @@ func _process(_delta):
 			blast.motion = Vector2.RIGHT.rotated(angle)
 			blast.get_node("Sprite").set_rotation(angle)
 			blast.get_node("CollisionShape2D").set_rotation(angle)
-			get_tree().get_root().add_child(blast)
+			get_node("..").add_child(blast)
 			can_shoot = false
 			$TimerCooldownShoot.start()
 		#else:
@@ -137,14 +137,23 @@ func shield_end():
 	
 	
 func pounce():
-	$SoundPounce.play()
-	$AnimationPlayerSpeed.stop()
-	sprite.play("pounce_demon")
-	speed = 320.0
-	#motion = Vector2.RIGHT.rotated(get_global_position().direction_to(pounce_target).angle())
-	pouncing = true
-	$PounceBox/CollisionShape2D.set_disabled(false)
-	$TimerPounce.start()
+	if not stunned:
+		$SoundPounce.play()
+		$AnimationPlayerSpeed.stop()
+		sprite.play("pounce_demon")
+		speed = 320.0
+		#motion = Vector2.RIGHT.rotated(get_global_position().direction_to(pounce_target).angle())
+		pouncing = true
+		$PounceBox/CollisionShape2D.set_disabled(false)
+		$TimerPounce.start()
+	else:
+		$AnimationPlayerSpeed.play("Speed Variance")
+		$TimerCooldownPounce.start()
+		var tween := $TweenShieldMeter as Tween
+		var meter := $CooldownPounceMeter as TextureProgress
+		tween.interpolate_property(meter, "value", 3.0, 0.0, 3.0)
+		tween.start()
+		meter.show()
 	
 	
 func heal(amount: int):
@@ -296,7 +305,7 @@ func _on_TimerPounce2_timeout():
 
 
 func _on_TimerCooldownPounce_timeout():
-	if not transforming and not stunned:
+	if not transforming:
 		pounce()
 
 

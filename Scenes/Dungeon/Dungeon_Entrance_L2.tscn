@@ -3,23 +3,20 @@
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Scenes/Dungeon_Entrance_L2.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
-[sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 216, 72, 216, 8, 248, 8, 248, 56, 296, 56, 296, 168, 184, 168, 24, 72, 136, 168, 72, 152, 40, 136, 184, 184, 136, 184, 72, 168, 40, 152, 24, 136 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 3, 4, 5, 6, 0 ), PoolIntArray( 7, 0, 6, 8, 9, 10 ), PoolIntArray( 6, 11, 12, 8 ), PoolIntArray( 8, 13, 9 ), PoolIntArray( 9, 14, 10 ), PoolIntArray( 7, 10, 15 ) ]
-outlines = [ PoolVector2Array( 24, 72, 24, 136, 40, 136, 40, 152, 72, 152, 72, 168, 136, 168, 136, 184, 184, 184, 184, 168, 296, 168, 296, 56, 248, 56, 248, 8, 216, 8, 216, 72 ) ]
-
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 32 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 8 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 8, 40 )
 
 [node name="Scene" type="Node2D"]
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -36,17 +33,20 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 296, 16 )
-
-[node name="Navigation2D" type="Navigation2D" parent="."]
-
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
-visible = false
-navpoly = SubResource( 1 )
+[node name="TileMap2" type="TileMap" parent="."]
+z_index = -1000
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 512
+collision_mask = 512
+format = 1
+tile_data = PoolIntArray( 14, 19, 0, 15, 19, 0, 16, 19, 0, 65550, 19, 0, 65551, 19, 0, 65552, 19, 0, 262144, 18, 0, 327680, 18, 0, 393216, 18, 0, 458752, 18, 0, 524288, 18, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 256, 112 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 3
@@ -58,6 +58,7 @@ position = Vector2( 112, 88 )
 [node name="TimerSpawn" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
+autostart = true
 
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
 position = Vector2( 320, 120 )
@@ -65,14 +66,14 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L1.tscn"
 target_direction = 3
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="LoadingZone2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 248, 0 )
 target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L3.tscn"
 
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="LoadingZone3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 112 )
@@ -80,7 +81,39 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Entrance_L2A.tscn"
 target_direction = 2
 
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
+
+[node name="Teleport1" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 112, 88 )
+
+[node name="Teleport2" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 88, 152 )
+
+[node name="Teleport3" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 272, 160 )
+
+[node name="Teleport4" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 208, 96 )
+
+[node name="Teleport5" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 248, 40 )
+
+[node name="Teleport6" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 32, 112 )
+[connection signal="enemy_dead" from="EnemySpawn" to="." method="set_flag"]
+[connection signal="enemy_dead" from="EnemySpawn" to="TileMap2" method="queue_free"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 
 [editable path="LoadingZone"]

@@ -71,6 +71,7 @@ func _on_TweenIntro_tween_all_completed():
 	
 	
 func _on_TweenStart_tween_all_completed():
+	Controller.reset_flags()
 	Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))
 	
 	

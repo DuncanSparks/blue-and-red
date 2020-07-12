@@ -17,10 +17,14 @@ var player_health: int = 5
 
 var menu_open := false
 
-var flags := {
+const flags_initial := {
 	"game_start": 0,
+	"demon_door_1": 0,
+	"demon_door_2": 0,
 	"meet_ivari": 0,
 }
+
+var flags := flags_initial
 
 onready var player_ref := get_tree().get_root().get_node("Scene/Player") as KinematicBody2D
 
@@ -67,6 +71,14 @@ func fadeout():
 	var tween := $CanvasLayer/Tween as Tween
 	tween.interpolate_property($CanvasLayer/Fade, "color", Color(0, 0, 0, 0), Color(0, 0, 0, 1), 1.0)
 	tween.start()
+	
+	
+func undo_fadeout():
+	$CanvasLayer/Fade.color = Color(0, 0, 0, 0)
+	
+	
+func reset_flags():
+	flags = flags_initial
 	
 	
 func goto_scene(scene: String, player_pos: Vector2):

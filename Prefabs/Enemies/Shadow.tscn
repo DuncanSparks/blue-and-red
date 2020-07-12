@@ -1,0 +1,185 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Sprites/UI/Healthbar2_full.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/UI/Healthbar2_empty.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/EnemyShadow.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/Characters/Demons/Shadow_hurt.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Characters/Demons/Shadow_idle.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Characters/Demons/Shadow_cast.png" type="Texture" id=6]
+[ext_resource path="res://Audio/Teleport.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Audio/Blast.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Audio/Hit.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Audio/Transform2.ogg" type="AudioStream" id=10]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "cast",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 5, 3 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 5, 10 )
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0, 0.506667, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 32.0
+initial_velocity_random = 0.55
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 5.0
+color_ramp = SubResource( 10 )
+
+[sub_resource type="Animation" id=8]
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true ]
+}
+
+[node name="Shadow" type="KinematicBody2D"]
+position = Vector2( 112, 80 )
+collision_layer = 513
+collision_mask = 512
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 5 )
+animation = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 9 )
+shape = SubResource( 6 )
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( 1, 2 )
+shape = SubResource( 7 )
+
+[node name="Healthbar" type="TextureProgress" parent="."]
+visible = false
+margin_left = -5.0
+margin_top = -12.0
+margin_right = 8.0
+margin_bottom = -7.0
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 1 )
+tint_progress = Color( 0.921569, 0, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundBlast" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -22.0
+
+[node name="SoundTeleport" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -22.0
+
+[node name="SoundHurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -12.0
+pitch_scale = 1.5
+
+[node name="SoundDie" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -18.0
+
+[node name="ParticlesDeath" type="Particles2D" parent="."]
+position = Vector2( 2, 8 )
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 11 )
+
+[node name="ParticlesTeleport" type="Particles2D" parent="."]
+position = Vector2( 2, 8 )
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 11 )
+
+[node name="ParticlesTeleport2" type="Particles2D" parent="."]
+position = Vector2( 2, 8 )
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 11 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
+anims/Iframes = SubResource( 8 )
+
+[node name="TweenFade" type="Tween" parent="."]
+
+[node name="TimerAttack" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimerTeleport" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimerTeleport2" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="TimerHurt" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="TimerDeath" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
+[connection signal="timeout" from="TimerAttack" to="." method="_on_TimerAttack_timeout"]
+[connection signal="timeout" from="TimerTeleport" to="." method="_on_TimerTeleport_timeout"]
+[connection signal="timeout" from="TimerTeleport2" to="." method="_on_TimerTeleport2_timeout"]
+[connection signal="timeout" from="TimerHurt" to="." method="teleport"]
+[connection signal="timeout" from="TimerDeath" to="." method="queue_free"]
