@@ -1,17 +1,162 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
-[ext_resource path="res://Scripts/Scenes/Dungeon_Grey_7.gd" type="Script" id=2]
-[ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Scenes/Dungeon_Grey_8.gd" type="Script" id=2]
+[ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/Props/Column.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Props/Stone2.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Props/Stone3.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Props/Stone.png" type="Texture" id=11]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11, 6 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 40, 8 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 6, 3 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Talk"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0 ],
+"method": "talk_set_stone"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "The stone is in place." ), false ],
+"method": "talk_dialogue"
+} ]
+}
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 6, 3 )
+
+[sub_resource type="Animation" id=10]
+resource_name = "Talk"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 1 ],
+"method": "talk_set_stone"
+} ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "The stone is in place." ), false ],
+"method": "talk_dialogue"
+} ]
+}
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=11]
+resource_name = "Talk"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 2 ],
+"method": "talk_set_stone"
+} ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "Talk2"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "The stone is in place." ), false ],
+"method": "talk_dialogue"
+} ]
+}
+
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 40, 8 )
 
 [node name="Scene" type="Node2D"]
@@ -51,91 +196,6 @@ position = Vector2( 128, 134 )
 collision_layer = 3
 collision_mask = 3
 
-[node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
-position = Vector2( 88, 64 )
-enemy_type = 1
-
-[node name="EnemySpawn2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 232, 80 )
-enemy_type = 1
-
-[node name="EnemySpawn3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 56, 152 )
-enemy_type = 1
-
-[node name="EnemySpawn4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 280, 64 )
-
-[node name="EnemySpawn5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 56, 152 )
-
-[node name="EnemySpawn6" parent="." instance=ExtResource( 3 )]
-position = Vector2( 232, 160 )
-
-[node name="EnemySpawn7" parent="." instance=ExtResource( 3 )]
-position = Vector2( 288, 96 )
-enemy_type = 1
-
-[node name="EnemySpawn8" parent="." instance=ExtResource( 3 )]
-position = Vector2( 32, 96 )
-enemy_type = 1
-
-[node name="EnemySpawn9" parent="." instance=ExtResource( 3 )]
-position = Vector2( 88, 160 )
-enemy_type = 1
-
-[node name="TimerSpawn" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-autostart = true
-
-[node name="TimerSpawn2" type="Timer" parent="."]
-wait_time = 3.0
-one_shot = true
-
-[node name="TimerSpawn3" type="Timer" parent="."]
-wait_time = 3.0
-one_shot = true
-
-[node name="TimerSpawn4" type="Timer" parent="."]
-wait_time = 4.0
-one_shot = true
-
-[node name="Teleport1" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
-position = Vector2( 32, 112 )
-
-[node name="Teleport2" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
-position = Vector2( 112, 160 )
-
-[node name="Teleport3" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
-position = Vector2( 232, 160 )
-
-[node name="Teleport4" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
-position = Vector2( 216, 64 )
-
-[node name="Teleport5" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
-position = Vector2( 288, 120 )
-
-[node name="Teleport6" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
-position = Vector2( 120, 96 )
-
-[node name="Teleport7" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
-position = Vector2( 200, 120 )
-
 [node name="Column" type="StaticBody2D" parent="."]
 position = Vector2( 112, 40 )
 z_index = 52
@@ -148,7 +208,7 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
 position = Vector2( 0, 23 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Column3" type="StaticBody2D" parent="."]
 position = Vector2( 80, 56 )
@@ -162,7 +222,7 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column3"]
 position = Vector2( 0, 23 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Column4" type="StaticBody2D" parent="."]
 position = Vector2( 48, 72 )
@@ -176,7 +236,7 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column4"]
 position = Vector2( 0, 23 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Column2" type="StaticBody2D" parent="."]
 position = Vector2( 208, 40 )
@@ -190,7 +250,7 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
 position = Vector2( 0, 23 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Column5" type="StaticBody2D" parent="."]
 position = Vector2( 240, 56 )
@@ -204,7 +264,7 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column5"]
 position = Vector2( 0, 23 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Column6" type="StaticBody2D" parent="."]
 position = Vector2( 272, 72 )
@@ -218,7 +278,7 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column6"]
 position = Vector2( 0, 23 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Heart" parent="." instance=ExtResource( 6 )]
 position = Vector2( 288, 160 )
@@ -235,17 +295,84 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Grey_7.tscn"
 target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 3 )
-[connection signal="enemy_dead" from="EnemySpawn2" to="TimerSpawn2" method="start"]
-[connection signal="enemy_dead" from="EnemySpawn4" to="TimerSpawn3" method="start"]
-[connection signal="enemy_dead" from="EnemySpawn6" to="TimerSpawn4" method="start"]
-[connection signal="enemy_dead" from="EnemySpawn9" to="TileMap2" method="queue_free"]
-[connection signal="enemy_dead" from="EnemySpawn9" to="." method="set_flag"]
-[connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn" to="EnemySpawn2" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn2" to="EnemySpawn3" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn2" to="EnemySpawn4" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn3" to="EnemySpawn5" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn3" to="EnemySpawn6" method="spawn_enemy"]
+shape = SubResource( 2 )
+
+[node name="NPC" parent="." instance=ExtResource( 3 )]
+position = Vector2( 72, 104 )
+z_index = 104
+
+[node name="Sprite" parent="NPC" index="0"]
+frames = SubResource( 3 )
+
+[node name="CollisionShape2D" parent="NPC" index="2"]
+position = Vector2( 1, 9 )
+shape = SubResource( 4 )
+
+[node name="AnimationPlayerTalk" parent="NPC" index="4"]
+anims/Talk = SubResource( 5 )
+anims/Talk2 = SubResource( 6 )
+
+[node name="Stone" type="Sprite" parent="NPC"]
+visible = false
+position = Vector2( -3, -17 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="NPC2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 160, 104 )
+z_index = 104
+
+[node name="Sprite" parent="NPC2" index="0"]
+frames = SubResource( 7 )
+
+[node name="CollisionShape2D" parent="NPC2" index="2"]
+position = Vector2( 1, 9 )
+shape = SubResource( 9 )
+
+[node name="AnimationPlayerTalk" parent="NPC2" index="4"]
+anims/Talk = SubResource( 10 )
+anims/Talk2 = SubResource( 12 )
+
+[node name="Stone" type="Sprite" parent="NPC2"]
+visible = false
+position = Vector2( -3, -17 )
+texture = ExtResource( 10 )
+centered = false
+
+[node name="NPC3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 248, 104 )
+z_index = 104
+
+[node name="Sprite" parent="NPC3" index="0"]
+frames = SubResource( 8 )
+
+[node name="CollisionShape2D" parent="NPC3" index="2"]
+position = Vector2( 1, 9 )
+shape = SubResource( 9 )
+
+[node name="AnimationPlayerTalk" parent="NPC3" index="4"]
+anims/Talk = SubResource( 11 )
+anims/Talk2 = SubResource( 13 )
+
+[node name="Stone" type="Sprite" parent="NPC3"]
+visible = false
+position = Vector2( -3, -17 )
+texture = ExtResource( 11 )
+centered = false
+
+[node name="LoadingZone2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 160, 0 )
+target_scene = "res://Scenes/Dungeon/Dungeon_End.tscn"
+
+[node name="CollisionShape2D" parent="LoadingZone2" index="0"]
+shape = SubResource( 14 )
 
 [editable path="LoadingZone"]
+
+[editable path="NPC"]
+
+[editable path="NPC2"]
+
+[editable path="NPC3"]
+
+[editable path="LoadingZone2"]

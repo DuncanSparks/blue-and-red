@@ -130,6 +130,7 @@ shape = SubResource( 1 )
 
 [node name="NPC" parent="." instance=ExtResource( 2 )]
 position = Vector2( 160, 76 )
+z_index = 76
 
 [node name="Sprite" parent="NPC" index="0"]
 frames = SubResource( 2 )

@@ -38,6 +38,10 @@ const flags_initial := {
 	
 	"stone_blue": 0,
 	"stone_purple": 0,
+	
+	"set_stone_blue": 0,
+	"set_stone_purple": 0,
+	"set_stone_red": 0,
 }
 
 var flags := flags_initial.duplicate(true)

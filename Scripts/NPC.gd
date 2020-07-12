@@ -66,6 +66,30 @@ func talk_start_timer():
 	Controller.start_timer()
 	
 	
+func talk_set_stone(id: int):
+	match id:
+		0:
+			if Controller.flag("stone_blue") == 1:
+				get_node("Stone").show()
+				Controller.set_flag("set_stone_blue", 1)
+				talk_dialogue(PoolStringArray(["You placed the blue stone on the pedestal."]), false)
+			else:
+				talk_dialogue(PoolStringArray(["You need the blue stone for this pedestal."]), false)
+				talk_number = -1
+		1:
+			if Controller.flag("stone_purple") == 1:
+				get_node("Stone").show()
+				Controller.set_flag("set_stone_purple", 1)
+				talk_dialogue(PoolStringArray(["You placed the purple stone on the pedestal."]), false)
+			else:
+				talk_dialogue(PoolStringArray(["You need the purple stone for this pedestal."]), false)
+				talk_number = -1
+		2:
+			get_node("Stone").show()
+			Controller.set_flag("set_stone_red", 1)
+			talk_dialogue(PoolStringArray(["You placed the red stone on the pedestal."]), false)
+	
+	
 func talk_set_player_transformed(value: bool):
 	Controller.set_player_transformed(value)
 

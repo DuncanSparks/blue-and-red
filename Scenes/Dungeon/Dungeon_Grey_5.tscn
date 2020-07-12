@@ -154,6 +154,7 @@ anims/Idle = SubResource( 2 )
 
 [node name="NPC" parent="." instance=ExtResource( 8 )]
 position = Vector2( 256, 80 )
+z_index = 80
 
 [node name="Sprite" parent="NPC" index="0"]
 frames = SubResource( 3 )
