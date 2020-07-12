@@ -108,6 +108,9 @@ func hurt(amount: int):
 		$SoundDie.play()
 		$ParticlesDeath.set_emitting(true)
 		$CollisionShape2D.call_deferred("set_disabled", true)
+		$SwipeBox/CollisionShape2D.call_deferred("set_disabled", true)
+		$PounceBox/CollisionShape2D.call_deferred("set_disabled", true)
+		$Hurtbox/CollisionShape2D.call_deferred("set_disabled", true)
 		var tween := $TweenFade as Tween
 		tween.interpolate_property(sprite, "self_modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.42)
 		tween.start()

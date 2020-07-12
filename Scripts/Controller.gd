@@ -120,8 +120,12 @@ func restore_checkpoint():
 	$MusicDemon.set_volume_db(-14)
 	get_node(checkpoint_music).play()
 	Cursor.change_mode(player_transformed)
-	stop_timer(false)
-	
+	if flags["meet_ivari"] == 1:
+		initialize_timer()
+		timer_active = true
+		timer_transform.set_wait_time(20)
+		timer_transform.start()
+		timer_transform.set_paused(false)
 	
 	
 func set_player_transformed(value: bool):

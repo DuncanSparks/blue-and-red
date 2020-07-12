@@ -36,14 +36,14 @@ animations = [ {
 "name": "flame",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 8 ) ],
-"loop": false,
-"name": "pounce",
-"speed": 12.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 22 ) ],
 "loop": false,
 "name": "swipe",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "pounce",
 "speed": 12.0
 }, {
 "frames": [ ExtResource( 11 ) ],
@@ -51,15 +51,15 @@ animations = [ {
 "name": "land",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "flame_2",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "run",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "flame_2",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
@@ -70,22 +70,22 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 9, 7 )
 
-[sub_resource type="RectangleShape2D" id=14]
-
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 18, 6 )
 
 [sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 18, 6 )
+
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 9, 12 )
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=6]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
 
-[sub_resource type="ParticlesMaterial" id=11]
+[sub_resource type="ParticlesMaterial" id=8]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -94,9 +94,9 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 10 )
+color_ramp = SubResource( 7 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:visible")
@@ -111,20 +111,20 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="Gradient" id=15]
+[sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0, 0.386667, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=16]
-gradient = SubResource( 15 )
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
 
-[sub_resource type="Curve" id=17]
+[sub_resource type="Curve" id=12]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.150289, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=12]
-curve = SubResource( 17 )
+[sub_resource type="CurveTexture" id=13]
+curve = SubResource( 12 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=14]
 emission_shape = 2
 emission_box_extents = Vector3( 5, 0, 1 )
 flag_disable_z = true
@@ -138,8 +138,8 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 5.0
 scale_random = 0.5
-scale_curve = SubResource( 12 )
-color_ramp = SubResource( 16 )
+scale_curve = SubResource( 13 )
+color_ramp = SubResource( 11 )
 
 [node name="Demon" type="KinematicBody2D"]
 position = Vector2( 216, 80 )
@@ -166,7 +166,7 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwipeBox"]
 position = Vector2( 17, 2 )
-shape = SubResource( 14 )
+shape = SubResource( 3 )
 disabled = true
 
 [node name="PounceBox" type="Area2D" parent="."]
@@ -175,7 +175,7 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PounceBox"]
 position = Vector2( 0, 3 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 disabled = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
@@ -184,7 +184,7 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 5, 0 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="ParticlesDeath" type="Particles2D" parent="."]
 position = Vector2( 2, 8 )
@@ -192,7 +192,7 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 11 )
+process_material = SubResource( 8 )
 
 [node name="SoundSwipe" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 23 )
@@ -279,7 +279,7 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-anims/Iframes = SubResource( 8 )
+anims/Iframes = SubResource( 9 )
 
 [node name="Healthbar" type="TextureProgress" parent="."]
 visible = false
@@ -303,7 +303,7 @@ amount = 5
 one_shot = true
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 13 )
+process_material = SubResource( 14 )
 texture = ExtResource( 16 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
