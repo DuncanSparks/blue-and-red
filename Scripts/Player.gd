@@ -163,6 +163,7 @@ func heal(amount: int):
 	$SoundHeal.play()
 	health = min(health + amount, 5)
 	healthbar.set_value(health)
+	Controller.player_health = health
 	healthbar.show()
 	$TimerHeal.start()
 	
