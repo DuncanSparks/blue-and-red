@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle.png" type="Texture" id=2]
@@ -18,17 +18,15 @@
 [ext_resource path="res://Sprites/Props/Stone.png" type="Texture" id=16]
 [ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=17]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Sprites/UI/Question_mark.png" type="Texture" id=20]
+[ext_resource path="res://Scripts/Scenes/Dungeon_Curseroom.gd" type="Script" id=21]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "cast",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
@@ -44,6 +42,11 @@ animations = [ {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "idle2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "cast",
 "speed": 5.0
 } ]
 
@@ -127,8 +130,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 5.5, 6, 6.5, 7, 16 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 5.5, 6, 6.5, 7, 15.9, 16 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Obtained the red stone." ), false ],
 "method": "talk_dialogue"
@@ -144,6 +147,9 @@ tracks/0/keys = {
 }, {
 "args": [ PoolStringArray( "You know what\?", "I think I\'ll toy with you a bit first.", "How about you try fighting some demonic instincts for a while\?" ) ],
 "method": "talk_dialogue"
+}, {
+"args": [ "cursed", 1 ],
+"method": "talk_set_flag"
 }, {
 "args": [ true ],
 "method": "talk_set_player_transformed"
@@ -367,9 +373,12 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [ 0.0, true ],
+"method": "seek"
+}, {
 "args": [ "Tutorial", -1, 1.0, false ],
 "method": "play"
 } ]
@@ -409,6 +418,7 @@ tracks/0/keys = {
 extents = Vector2( 24, 8 )
 
 [node name="Scene" type="Node2D"]
+script = ExtResource( 21 )
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1000
@@ -527,6 +537,12 @@ position = Vector2( -3, -17 )
 texture = ExtResource( 16 )
 centered = false
 
+[node name="Tutorial" type="Sprite" parent="NPC"]
+visible = false
+position = Vector2( -4, -28 )
+texture = ExtResource( 20 )
+centered = false
+
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
 volume_db = -14.0
@@ -577,6 +593,9 @@ target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
 shape = SubResource( 18 )
+
+[node name="Heart" parent="." instance=ExtResource( 19 )]
+position = Vector2( 240, 56 )
 
 [editable path="NPC"]
 

@@ -21,7 +21,10 @@ const flags_initial := {
 	"game_start": 0,
 	"demon_door_1": 0,
 	"demon_door_2": 0,
+	"cursed": 0,
 	"meet_ivari": 0,
+	"demon_door_3": 0,
+	"demon_door_4": 0,
 }
 
 var flags := flags_initial

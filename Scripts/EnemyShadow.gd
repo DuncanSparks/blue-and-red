@@ -66,7 +66,7 @@ func teleport():
 func hurt(amount: int):
 	$SoundHurt.play()
 	sprite.play("hurt")
-	health -= 1
+	health -= amount
 	$Healthbar.set_value(health)
 	$TimerTeleport.stop()
 	$TimerAttack.stop()

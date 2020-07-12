@@ -9,7 +9,7 @@
 [ext_resource path="res://Scripts/Scenes/Dungeon_Entrance1.gd" type="Script" id=7]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=9]
-[ext_resource path="res://Sprites/Effects/Orb.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/UI/Question_mark.png" type="Texture" id=10]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 24, 24, 296, 24, 296, 168, 184, 168, 184, 184, 136, 184, 136, 168, 24, 168 )
@@ -64,9 +64,12 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [ 0.0, true ],
+"method": "seek"
+}, {
 "args": [ "Tutorial", -1, 1.0, false ],
 "method": "play"
 } ]
@@ -241,8 +244,8 @@ shape = SubResource( 9 )
 [node name="AnimationPlayerTalk" parent="NPC" index="4"]
 anims/Talk = SubResource( 10 )
 
-[node name="Stone" type="Sprite" parent="NPC"]
-position = Vector2( -3, -15 )
+[node name="Tutorial" type="Sprite" parent="NPC"]
+position = Vector2( -4, -29 )
 texture = ExtResource( 10 )
 centered = false
 
@@ -262,6 +265,9 @@ __meta__ = {
 self_modulate = Color( 1, 1, 1, 0 )
 texture = ExtResource( 6 )
 centered = false
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Start = SubResource( 11 )
