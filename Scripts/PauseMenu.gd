@@ -42,6 +42,8 @@ func _on_Button2_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
+		Controller.get_node("MusicHuman").stop()
+		Controller.get_node("MusicDemon").stop()
 
 
 func _on_Button3_pressed():
@@ -54,6 +56,8 @@ func _on_Button3_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
+		Controller.get_node("MusicHuman").stop()
+		Controller.get_node("MusicDemon").stop()
 
 
 func _on_Tween_tween_all_completed():

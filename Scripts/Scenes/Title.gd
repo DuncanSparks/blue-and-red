@@ -80,6 +80,8 @@ func _on_TweenStart_tween_all_completed():
 	Controller.player_health = 5
 	Controller.player_transformed = false
 	Controller.goto_scene("res://Scenes/Intro.tscn", Vector2())
+	Controller.get_node("MusicHuman").set_volume_db(-14)
+	Controller.get_node("MusicDemon").set_volume_db(-14)
 	#Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))
 	
 	
