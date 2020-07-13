@@ -40,6 +40,8 @@ onready var timer_footsteps_demon := $TimerFootstepsDemon as Timer
 func _ready():
 	if not can_control:
 		hide()
+		
+	demon_run_target = get_global_mouse_position()
 	
 
 func _process(_delta):
@@ -51,16 +53,17 @@ func _process(_delta):
 		
 	set_z_index(int(get_position().y))
 	
+	var mouse_pos := get_global_mouse_position()
+	var unit_vector := get_position().direction_to(mouse_pos).normalized()
+	demon_run_target = demon_run_target.linear_interpolate(mouse_pos + unit_vector * 48, 0.02)
+	$Test.set_global_position(demon_run_target)
+	
 	if not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
 		if not demon_form:
 			var input_x := int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 			var input_y := int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 			motion = Vector2(input_x, input_y)
 		else:
-			var mouse_pos := get_global_mouse_position()
-			var unit_vector := get_position().direction_to(mouse_pos).normalized()
-			demon_run_target = demon_run_target.linear_interpolate(mouse_pos + unit_vector * 60, 0.02)
-			$Test.set_global_position(demon_run_target)
 			motion = motion.linear_interpolate(Vector2.RIGHT.rotated(get_position().direction_to(demon_run_target).angle()), 0.05)
 		
 		sprite_management()
@@ -177,6 +180,8 @@ func hurt(amount: int = 1):
 	Controller.player_health = health
 	healthbar.show()
 	stunned = true
+	$TimerCooldownPounce.set_paused(true)
+	$TweenShieldMeter.stop($CooldownPounceMeter)
 	if health > 0:
 		$TimerStun.start()
 		iframes = true
@@ -227,6 +232,8 @@ func _on_Hurtbox_body_entered(body):
 
 func _on_TimerStun_timeout():
 	stunned = false
+	$TweenShieldMeter.resume($CooldownPounceMeter)
+	$TimerCooldownPounce.set_paused(false)
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
@@ -257,7 +264,7 @@ func start_pounce_meter(start: bool):
 		$TimerCooldownPounce.stop()
 	
 
-func finish_transformation(use_override: bool = false, override: bool = false):
+func finish_transformation(use_override: bool = false, override: bool = false, use_iframes: bool = false):
 	demon_form = not demon_form if not use_override else override
 	if demon_form:
 		$AnimationPlayerSpeed.play("Speed Variance")
@@ -281,6 +288,9 @@ func finish_transformation(use_override: bool = false, override: bool = false):
 		$CollisionHuman.set_disabled(false)
 		$Healthbar.set_tint_progress(Color("#00c6ff"))
 	transforming = false
+	if use_iframes and not stopped:
+		iframes = true
+		$AnimationPlayer.play("Iframes")
 
 
 func _on_TimerPounce_timeout():

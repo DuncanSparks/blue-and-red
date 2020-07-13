@@ -11,19 +11,19 @@
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=10]
 [ext_resource path="res://PIXEARG_.TTF" type="DynamicFontData" id=11]
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 10 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "cast",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
@@ -36,16 +36,16 @@ animations = [ {
 "name": "annoyed",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 7 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "idle",
+"name": "idle2",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 15, 7 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=4]
 resource_name = "Talk"
 length = 2.0
 tracks/0/type = "method"
@@ -98,7 +98,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=5]
 resource_name = "Talk2"
 length = 0.1
 tracks/0/type = "method"
@@ -116,10 +116,10 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 11, 6 )
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=7]
 size = 8
 font_data = ExtResource( 11 )
 
@@ -149,7 +149,7 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 160, 192 )
-shape = SubResource( 16 )
+shape = SubResource( 1 )
 
 [node name="NPCOsme" parent="." instance=ExtResource( 3 )]
 position = Vector2( 160, 32 )
@@ -163,11 +163,11 @@ animation = "idle"
 
 [node name="CollisionShape2D" parent="NPCOsme" index="2"]
 position = Vector2( 1, 23 )
-shape = SubResource( 13 )
+shape = SubResource( 3 )
 
 [node name="AnimationPlayerTalk" parent="NPCOsme" index="4"]
-anims/Talk = SubResource( 12 )
-anims/Talk2 = SubResource( 15 )
+anims/Talk = SubResource( 4 )
+anims/Talk2 = SubResource( 5 )
 
 [node name="Column" type="StaticBody2D" parent="."]
 position = Vector2( 72, 32 )
@@ -181,7 +181,7 @@ texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
 position = Vector2( 0, 23 )
-shape = SubResource( 11 )
+shape = SubResource( 6 )
 
 [node name="Column2" type="StaticBody2D" parent="."]
 position = Vector2( 256, 32 )
@@ -195,7 +195,7 @@ texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
 position = Vector2( 0, 23 )
-shape = SubResource( 11 )
+shape = SubResource( 6 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 10 )]
 
@@ -205,7 +205,7 @@ margin_left = 32.0
 margin_top = 136.0
 margin_right = 288.0
 margin_bottom = 170.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 1, 0.67451, 1 )
 text = "x Enemies defeated
 x Deaths

@@ -103,11 +103,11 @@ func _process(delta):
 		menu_open = true
 		run_speedrun_stats = false
 	
-	if Input.is_action_just_pressed("debug_2"):
-		goto_scene("res://Scenes/Dungeon/Dungeon_End.tscn", Vector2(160, 90))
-	#	timer_transform.set_wait_time(0.1)
-	#	timer_transform.start()
-	
+	#if Input.is_action_just_pressed("debug_2"):
+		#goto_scene("res://Scenes/Dungeon/Dungeon_End.tscn", Vector2(160, 90))
+		#timer_transform.set_wait_time(0.1)
+		#timer_transform.start()
+
 		
 		
 func move_player(position: Vector2):
@@ -181,10 +181,10 @@ func set_flag(id: String, value: int):
 	flags[id] = value
 	
 	
-func fadeout_music(music: NodePath, time: float):
+func fadeout_music(music: NodePath, time_: float):
 	var mus := get_node(music) as AudioStreamPlayer
 	var tween := $TweenMusic as Tween
-	tween.interpolate_property(mus, "volume_db", mus.get_volume_db(), -60, time)
+	tween.interpolate_property(mus, "volume_db", mus.get_volume_db(), -60, time_)
 	tween.start()
 	
 	

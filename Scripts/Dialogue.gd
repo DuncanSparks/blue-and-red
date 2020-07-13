@@ -11,7 +11,7 @@ var dialogue := []
 var dialogue_page := 0
 var page_length := 0
 
-var allow_advance := true
+var allow_advance := false
 
 onready var name_label := $CanvasLayer/Box/Name as Label
 onready var text := $CanvasLayer/Box/Text as RichTextLabel
@@ -28,10 +28,13 @@ func _process(delta):
 				text.set_visible_characters(0)
 				text.set_bbcode(dialogue[dialogue_page])
 				page_length = len(strip(dialogue[dialogue_page]))
+				allow_advance = false
 				$TimerText.start()
 			else:
 				emit_signal("dialogue_finished")
 				queue_free()
+		else:
+			text.set_visible_characters(len(dialogue[dialogue_page]) + 1)
 	
 	
 func start_dialogue(text_input: Array, name: String, name_color: Color, show_name: bool = true):
