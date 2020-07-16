@@ -41,7 +41,7 @@ func attack():
 	blast.motion = Vector2.RIGHT.rotated(angle)
 	blast.get_node("Sprite").set_rotation(angle)
 	blast.get_node("CollisionShape2D").set_rotation(angle)
-	blast.set_modulate(Color(0, 0, 0, 1))
+	blast.set_modulate(Color("#a334f1"))
 	blast.set_collision_layer_bit(5, false)
 	blast.set_collision_mask_bit(5, false)
 	blast.set_collision_layer_bit(15, true)

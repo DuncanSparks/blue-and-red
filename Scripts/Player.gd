@@ -95,6 +95,7 @@ func _process(_delta):
 			blast.set_position(get_position())
 			var angle := get_position().direction_to(get_global_mouse_position()).angle()
 			blast.motion = Vector2.RIGHT.rotated(angle)
+			blast.set_modulate(Color("#1e82e0"))
 			blast.get_node("Sprite").set_rotation(angle)
 			blast.get_node("CollisionShape2D").set_rotation(angle)
 			get_node("..").add_child(blast)

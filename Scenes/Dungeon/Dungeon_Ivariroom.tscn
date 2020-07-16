@@ -156,7 +156,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ PoolStringArray( "You\'re not used to being a demon, so it\'ll be hard to control yourself.", "For one thing, you\'ll be running a lot more erratically.", "You\'ll also leap in the direction you\'re facing every few seconds.", "But, hey, look on the bright side: At least you\'re a killing machine now.", "Defeating Osme should be no problem for you.", "Just remember that the timer won\'t run if there are no enemies in the room.", "Don\'t say Osme doesn\'t have a sense of humor." ), true ],
+"args": [ PoolStringArray( "You\'re not used to being a demon, so it\'ll be hard to control yourself.", "For one thing, you\'ll be running a lot more erratically.", "You\'ll also leap in the direction you\'re facing every few seconds.", "But, hey, look on the bright side: At least you\'re a killing machine now.", "Defeating Osme should be no problem for you." ), true ],
 "method": "talk_dialogue"
 } ]
 }
