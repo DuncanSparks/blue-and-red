@@ -40,11 +40,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ 0 ],
 "method": "talk_set_stone"
+}, {
+"args": [  ],
+"method": "talk_checkpoint"
 } ]
 }
 
@@ -87,11 +90,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ 1 ],
 "method": "talk_set_stone"
+}, {
+"args": [  ],
+"method": "talk_checkpoint"
 } ]
 }
 
@@ -130,11 +136,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ 2 ],
 "method": "talk_set_stone"
+}, {
+"args": [  ],
+"method": "talk_checkpoint"
 } ]
 }
 

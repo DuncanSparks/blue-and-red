@@ -17,14 +17,14 @@ extents = Vector2( 32, 8 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 6 ) ],
-"loop": true,
-"name": "cast",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "cast",
 "speed": 5.0
 } ]
 
@@ -40,8 +40,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 11.9, 12, 12.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 11.5, 11.9, 12, 12.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Um... hello.", "You\'re a sprightly little demon, aren\'t you\?", "What do you want\?" ) ],
 "method": "talk_dialogue"
@@ -58,10 +58,13 @@ tracks/0/keys = {
 "args": [ PoolStringArray( "Oh... there\'s one important detail I forgot to mention." ) ],
 "method": "talk_dialogue"
 }, {
-"args": [  ],
+"args": [ true ],
 "method": "talk_initialize_timer"
 }, {
 "args": [ PoolStringArray( "[color=#ff0000]You\'ll turn back into a demon when that timer runs out.[/color]", "[color=#00c6ff]And then back into a human when it runs out after that.[/color]", "And again and again until who-knows-when.", "I\'m not powerful enough to fully break Osme\'s curses. Sorry. Did what I can." ) ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "Just know that [color=#b488ff]the timer will only run while there are enemies in the room.[/color]", "Don\'t say Osme doesn\'t have a sense of humor.", "...", "Well, good luck, kid." ) ],
 "method": "talk_dialogue"
 }, {
 "args": [ "meet_ivari", 1 ],

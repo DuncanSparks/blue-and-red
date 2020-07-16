@@ -28,18 +28,22 @@ func _ready():
 	
 	
 func _process(delta):
-	if Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("sys_interact") and allow_advance:
-		if page < len(dialogue) - 1:
-			text.set_visible_characters(0)
-			page += 1
-			text.set_text(dialogue[page])
-			page_length = len(dialogue[page].replace(" ", ""))
-			$TimerText.start()
+	if Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("sys_interact"):
+		if allow_advance:
+			if page < len(dialogue) - 1:
+				text.set_visible_characters(0)
+				allow_advance = false
+				page += 1
+				text.set_text(dialogue[page])
+				page_length = len(dialogue[page].replace(" ", ""))
+				$TimerText.start()
+			else:
+				allow_advance = false
+				text.hide()
+				$Skip.hide()
+				$TimerEnd.start()
 		else:
-			allow_advance = false
-			text.hide()
-			$Skip.hide()
-			$TimerEnd.start()
+			text.set_visible_characters(len(dialogue[page]) + 1)
 			
 	if Input.is_action_just_pressed("sys_pause"):
 		$TimerText.stop()
@@ -62,7 +66,7 @@ func _on_TimerText_timeout():
 	var chars := text.get_visible_characters()
 	text.set_visible_characters(chars + 1)
 	if chars + 1 < page_length:
-		Controller.play_sound_oneshot(text_sound, rand_range(0.98, 1.02), -18)
+		Controller.play_sound_oneshot(text_sound, rand_range(0.98, 1.02), -26)
 	if chars + 1 >= len(dialogue[page]):
 		$TimerText.stop()
 		allow_advance = true

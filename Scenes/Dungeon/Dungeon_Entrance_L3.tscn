@@ -23,6 +23,9 @@ extents = Vector2( 8, 32 )
 [node name="Scene" type="Node2D"]
 script = ExtResource( 6 )
 
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 128, 134 )
+
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1000
 tile_set = ExtResource( 1 )
@@ -43,13 +46,9 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 128, 134 )
-
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
-visible = false
 navpoly = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -94,8 +93,8 @@ autostart = true
 wait_time = 1.5
 one_shot = true
 autostart = true
-[connection signal="enemy_dead" from="EnemySpawn2" to="TileMap2" method="queue_free"]
 [connection signal="enemy_dead" from="EnemySpawn2" to="." method="set_flag"]
+[connection signal="enemy_dead" from="EnemySpawn2" to="TileMap2" method="queue_free"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn2" method="spawn_enemy"]
 

@@ -58,8 +58,8 @@ func talk_play_music(music: String):
 	Controller.get_node(music).play()
 	
 	
-func talk_initialize_timer():
-	Controller.initialize_timer()
+func talk_initialize_timer(first_time: bool = false):
+	Controller.initialize_timer(first_time)
 	
 	
 func talk_start_timer():

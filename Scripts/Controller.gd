@@ -125,6 +125,8 @@ func checkpoint():
 	
 func restore_checkpoint():
 	player_transformed = checkpoint_form
+	player_ref.finish_transformation(true, checkpoint_form)
+	player_ref.demon_form = checkpoint_form
 	player_health = 5
 	flags = checkpoint_flags.duplicate(true)
 	collected_hearts = checkpoint_collected_hearts.duplicate(true)
@@ -188,9 +190,10 @@ func fadeout_music(music: NodePath, time_: float):
 	tween.start()
 	
 	
-func initialize_timer():
-	player_transformed = false
-	transform_meter.set_progress_texture(meter_texture_1)
+func initialize_timer(first_time: bool = false):
+	if first_time:
+		player_transformed = false
+	transform_meter.set_progress_texture(meter_texture_1 if not player_transformed else meter_texture_2)
 	var tween := $Tween as Tween
 	$UI/CanvasLayer.set_offset(Vector2(0, -50))
 	transform_meter.show()

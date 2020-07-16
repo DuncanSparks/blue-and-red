@@ -55,7 +55,7 @@ func _process(_delta):
 	
 	var mouse_pos := get_global_mouse_position()
 	var unit_vector := get_position().direction_to(mouse_pos).normalized()
-	demon_run_target = demon_run_target.linear_interpolate(mouse_pos + unit_vector * 48, 0.02)
+	demon_run_target = demon_run_target.linear_interpolate(mouse_pos + unit_vector * 40, 0.02)
 	$Test.set_global_position(demon_run_target)
 	
 	if not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:

@@ -23,6 +23,7 @@ var can_pounce := false
 var pounce_target := Vector2()
 
 var nav_path: PoolVector2Array = []
+var target_nav_point: Vector2
 var nav_node: Navigation2D = null
 var player_ref: KinematicBody2D = null
 
@@ -35,7 +36,7 @@ func _ready():
 	nav_node = get_node("../Navigation2D")
 	player_ref = get_node("../Player")
 	if path_to_player:
-		nav_path = nav_node.get_simple_path(get_global_position(), player_ref.get_global_position(), true)
+		nav_path = nav_node.get_simple_path(get_global_position(), player_ref.get_global_position())
 		$TimerNav.start()
 		
 	$TimerStartPounce.set_wait_time(rand_range(0.8, 2))
@@ -49,7 +50,12 @@ func _process(delta):
 	
 	if not stunned and not attacking and not dead:
 		if path_to_player:
-			move_along_path(speed * delta)
+			if len(nav_path) <= 2:
+				target_nav_point = nav_path[-1]
+			else:
+				target_nav_point = nav_path[1] if get_global_position().distance_to(nav_path[1]) > 5 else nav_path[2]
+				
+			motion = Vector2.RIGHT.rotated(get_global_position().direction_to(target_nav_point).angle())
 		
 		sprite_management()
 	
@@ -64,9 +70,18 @@ func _process(delta):
 	if distance_to_player <= 20 and not attacking and can_swipe and not dead:
 		swipe()
 		
+	#update()
+		
 		
 func _physics_process(delta):
 	move_and_slide(motion * speed)
+	
+	
+#func _draw():
+#	for i in range(len(nav_path)):
+#		var v := float(i) / float(len(nav_path))
+#		draw_circle(to_local(nav_path[i]), 4, Color(v, v, v))
+	#draw_circle(to_local(nav_node.get_closest_point(player_ref.get_global_position())), 4, Color.white)
 
 	
 func swipe():
@@ -154,7 +169,7 @@ func is_moving() -> bool:
 
 
 func _on_TimerNav_timeout():
-	nav_path = nav_node.get_simple_path(get_global_position(), player_ref.get_global_position(), false)
+	nav_path = nav_node.get_simple_path(get_global_position(), player_ref.get_global_position())
 
 
 func _on_Hurtbox_body_entered(body):

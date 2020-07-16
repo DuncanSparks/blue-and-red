@@ -61,29 +61,19 @@ animations = [ {
 "name": "demon_to_human",
 "speed": 7.0
 }, {
-"frames": [ ExtResource( 9 ) ],
-"loop": true,
-"name": "shield_human",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 16 ) ],
-"loop": true,
-"name": "idle_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "idle_human",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
 "loop": false,
 "name": "pounce_demon",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 10 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
 "loop": true,
-"name": "land_demon",
+"name": "run_demon",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "shield_human",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
@@ -91,19 +81,29 @@ animations = [ {
 "name": "run_human",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
-"loop": false,
-"name": "human_to_demon",
-"speed": 7.0
-}, {
 "frames": [ ExtResource( 12 ) ],
 "loop": true,
 "name": "ouch_human",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 34 ) ],
+"frames": [ ExtResource( 51 ), ExtResource( 53 ), ExtResource( 51 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 50 ), ExtResource( 49 ) ],
 "loop": true,
-"name": "ouch_demon",
+"name": "run_cast_human",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
+"loop": false,
+"name": "human_to_demon",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 16 ) ],
+"loop": true,
+"name": "start_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "land_demon",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 49 ) ],
@@ -111,24 +111,24 @@ animations = [ {
 "name": "idle_cast_human",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
+"frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "run_demon",
-"speed": 10.0
+"name": "idle_human",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ) ],
 "loop": true,
 "name": "sit_demon",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 51 ), ExtResource( 53 ), ExtResource( 51 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 50 ), ExtResource( 49 ) ],
-"loop": true,
-"name": "run_cast_human",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 16 ) ],
 "loop": true,
-"name": "start_demon",
+"name": "idle_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 34 ) ],
+"loop": true,
+"name": "ouch_demon",
 "speed": 5.0
 } ]
 
@@ -375,7 +375,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 3 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [  ],
+"args": [ false, false, true ],
 "method": "finish_transformation"
 } ]
 }
@@ -744,8 +744,8 @@ texture = ExtResource( 28 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="animation_finished" from="Shield/AnimationPlayer2" to="." method="_on_AnimationPlayer2_animation_finished"]
-[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
+[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerCooldownShoot" to="." method="_on_TimerCooldownShoot_timeout"]
 [connection signal="timeout" from="TimerCooldownShield" to="." method="_on_TimerCooldownShield_timeout"]

@@ -32,14 +32,17 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Obtained the blue stone." ), false ],
 "method": "talk_dialogue"
 }, {
 "args": [ "stone_blue", 1 ],
 "method": "talk_set_flag"
+}, {
+"args": [  ],
+"method": "talk_checkpoint"
 } ]
 }
 tracks/1/type = "method"
