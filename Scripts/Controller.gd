@@ -102,13 +102,7 @@ func _process(delta):
 		stop_timer(true)
 		menu_open = true
 		run_speedrun_stats = false
-	
-	#if Input.is_action_just_pressed("debug_2"):
-		#goto_scene("res://Scenes/Dungeon/Dungeon_End.tscn", Vector2(160, 90))
-		#timer_transform.set_wait_time(0.1)
-		#timer_transform.start()
 
-		
 		
 func move_player(position: Vector2):
 	player_ref.set_position(position)
@@ -270,7 +264,3 @@ func _on_Clock_value_changed(value):
 func _on_TimerPostTransform_timeout():
 	$TimerTransform.set_wait_time(12)
 	$TimerTransform.start()
-
-
-func _on_Tween_tween_all_completed():
-	pass # Replace with function body.

@@ -30,7 +30,6 @@ var demon_form := false
 var demon_run_target := Vector2()
 
 onready var sprite := $Sprite as AnimatedSprite
-#onready var sprite_sword := $SpriteSword as AnimatedSprite
 onready var healthbar := $Healthbar as TextureProgress
 
 onready var timer_footsteps_human := $TimerFootstepsHuman as Timer
@@ -69,40 +68,7 @@ func _process(_delta):
 		sprite_management()
 	elif not pouncing:
 		motion = Vector2.ZERO
-		
-#	var slide_count := get_slide_count()
-#	if slide_count > 0:
-#		var total := Vector2()
-#		for i in range(slide_count):
-#			var coll := get_slide_collision(i)
-#			total += get_position().direction_to(coll.get_position())
-#
-#		var slide_count_2 := get_slide_count()
-#		while slide_count_2 > 0:
-#			#move_and_slide(total)
-#			position += total
-#			#move_and_slide(total)
-#			slide_count_2 = get_slide_count()
-#		#print(total)
-			
-		
-#	if is_moving():
-#		if demon_form:
-#			if timer_footsteps_demon.is_stopped():
-#				timer_footsteps_demon.start()
-#		else:
-#			if timer_footsteps_human.is_stopped():
-#				timer_footsteps_human.start()
-#	else:
-#		if demon_form:
-#			timer_footsteps_demon.stop()
-#		else:
-#			timer_footsteps_human.stop()
-	
-	#if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
-	#	if not demon_form:
-	#		sprite_sword.play("swing")
-	#		$AreaSword/CollisionPolygon2D.set_disabled(false)
+
 			
 	if Input.is_action_just_pressed("attack") and not stopped and not stunned and not shielding and not transforming and not pouncing and not shooting:
 		if not demon_form and can_shoot:
@@ -117,20 +83,11 @@ func _process(_delta):
 			get_node("..").add_child(blast)
 			can_shoot = false
 			$TimerCooldownShoot.start()
-		#else:
-		#	pounce()
-			
-	#if Input.is_action_just_pressed("action_shield") and not stopped and not cooldown_shield and not stunned and not transforming and not shooting:
-	#	if not demon_form:
-	#		shield()
-	
-	#if Input.is_action_just_pressed("debug_1"):
-	#	demon_form = not demon_form
-	
+
 	
 func _physics_process(_delta):
 	if can_control:
-		motion = move_and_slide(motion * speed)
+		move_and_slide(motion * speed)
 	
 	
 func shield():

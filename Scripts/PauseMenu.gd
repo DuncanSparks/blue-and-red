@@ -6,7 +6,6 @@ export(AudioStream) var click_sound: AudioStream
 onready var but1 := $CanvasLayer/VBoxContainer/Button as TextureButton
 onready var but2 := $CanvasLayer/VBoxContainer/Button2 as TextureButton
 onready var but3 := $CanvasLayer/VBoxContainer/Button3 as TextureButton
-onready var but4 := $CanvasLayer/VBoxContainer/Button4 as TextureButton
 
 
 func _ready():
@@ -31,7 +30,6 @@ func _on_Button_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
-		but4.set_disabled(true)
 	
 	
 func _on_Button2_pressed():
@@ -44,7 +42,6 @@ func _on_Button2_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
-		but4.set_disabled(true)
 		Controller.get_node("MusicHuman").stop()
 		Controller.get_node("MusicDemon").stop()
 
@@ -59,19 +56,8 @@ func _on_Button3_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
-		but4.set_disabled(true)
 		Controller.get_node("MusicHuman").stop()
 		Controller.get_node("MusicDemon").stop()
-		
-func _on_Button4_pressed():
-	if not but4.disabled:
-		$SoundClick.play()
-		get_tree().set_pause(false)
-		Controller.menu_open = false
-		Controller.stop_timer(false)
-		Controller.run_speedrun_stats = true
-		Controller.restore_checkpoint()
-		queue_free()
 
 
 func _on_Tween_tween_all_completed():
@@ -84,7 +70,6 @@ func _on_Tween2_tween_all_completed():
 	but1.set_disabled(false)
 	but2.set_disabled(false)
 	but3.set_disabled(false)
-	but4.set_disabled(false)
 
 
 func _on_Tween3_tween_all_completed():

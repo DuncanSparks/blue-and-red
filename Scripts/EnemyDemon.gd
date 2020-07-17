@@ -70,18 +70,9 @@ func _process(delta):
 	if distance_to_player <= 20 and not attacking and can_swipe and not dead:
 		swipe()
 		
-	#update()
-		
 		
 func _physics_process(delta):
 	move_and_slide(motion * speed)
-	
-	
-#func _draw():
-#	for i in range(len(nav_path)):
-#		var v := float(i) / float(len(nav_path))
-#		draw_circle(to_local(nav_path[i]), 4, Color(v, v, v))
-	#draw_circle(to_local(nav_node.get_closest_point(player_ref.get_global_position())), 4, Color.white)
 
 	
 func swipe():
@@ -227,10 +218,6 @@ func _on_TimerFlame_timeout():
 		flame_inst.motion = Vector2.RIGHT.rotated(get_position().direction_to(player_ref.get_global_position()).angle())
 		flame_inst.get_node("AnimatedSprite").play("idle_flame")
 		flame_inst.set_scale(Vector2(1.5, 1.5))
-		#$flame_inst.set_collision_layer_bit(15, true)
-		#$flame_inst.set_collision_mask_bit(15, true)
-		#flame_inst.set_collision_layer_bit(5, false)
-		#flame_inst.set_collision_mask_bit(5, false)
 		flame_inst.grow()
 		flame_inst.speed = 200
 		get_node("..").add_child(flame_inst)
