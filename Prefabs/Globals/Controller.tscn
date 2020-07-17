@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Controller.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/UI/Clock_red.png" type="Texture" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Audio/Music/Music_demon.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Audio/Music/Music_human.ogg" type="AudioStream" id=8]
 [ext_resource path="res://PIXEARG_.TTF" type="DynamicFontData" id=9]
+[ext_resource path="res://Sprites/UI/Healthbar_empty.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/UI/Healthbar_full.png" type="Texture" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 8
@@ -117,7 +119,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Healthbar" type="TextureProgress" parent="CanvasLayer2"]
+visible = false
+margin_left = 270.0
+margin_top = 147.0
+margin_right = 291.0
+margin_bottom = 152.0
+rect_scale = Vector2( 2, 2 )
+max_value = 5.0
+value = 5.0
+texture_under = ExtResource( 10 )
+texture_progress = ExtResource( 11 )
+tint_progress = Color( 0, 0.776471, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TweenMusic" type="Tween" parent="."]
+
+[node name="TweenHealthbar" type="Tween" parent="."]
 [connection signal="value_changed" from="UI/CanvasLayer/Clock" to="." method="_on_Clock_value_changed"]
 [connection signal="timeout" from="TimerTransform" to="." method="_on_TimerTransform_timeout"]
 [connection signal="timeout" from="TimerPostTransform" to="." method="_on_TimerPostTransform_timeout"]

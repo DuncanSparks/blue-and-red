@@ -17,7 +17,8 @@ func _ready():
 		
 	Controller.can_pause = false
 	Controller.run_speedrun_stats = false
-	Controller.get_node("CanvasLayer2/Time").hide()
+	Controller.speedrun_timer.hide()
+	Controller.healthbar.hide()
 
 
 func _process(delta):

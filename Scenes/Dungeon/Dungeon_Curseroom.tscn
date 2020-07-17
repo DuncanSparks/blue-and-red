@@ -30,6 +30,11 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "annoyed",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "cast",
@@ -38,11 +43,6 @@ animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "talk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 9 ) ],
-"loop": true,
-"name": "annoyed",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],

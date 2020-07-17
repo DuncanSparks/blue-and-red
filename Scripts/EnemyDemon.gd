@@ -17,7 +17,7 @@ var stunned := false
 var iframes := false
 var dead := false
 
-var can_swipe := true
+var can_swipe := false
 var can_flame := false
 var can_pounce := false
 var pounce_target := Vector2()

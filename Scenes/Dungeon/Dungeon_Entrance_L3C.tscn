@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=2]
@@ -22,8 +22,10 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=3]
-resource_name = "Talk"
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 6, 3 )
+
+[sub_resource type="Animation" id=4]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -74,8 +76,7 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Talk2"
+[sub_resource type="Animation" id=5]
 length = 0.1
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -92,7 +93,7 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -139,9 +140,13 @@ z_index = 76
 [node name="Sprite" parent="NPC" index="0"]
 frames = SubResource( 2 )
 
+[node name="CollisionShape2D" parent="NPC" index="2"]
+position = Vector2( 1, 9 )
+shape = SubResource( 3 )
+
 [node name="AnimationPlayerTalk" parent="NPC" index="4"]
-anims/Talk = SubResource( 3 )
-anims/Talk2 = SubResource( 4 )
+anims/Talk = SubResource( 4 )
+anims/Talk2 = SubResource( 5 )
 
 [node name="Stone" type="Sprite" parent="NPC"]
 position = Vector2( -3, -17 )
@@ -158,7 +163,7 @@ texture = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pentagram"]
 autoplay = "Idle"
-anims/Idle = SubResource( 5 )
+anims/Idle = SubResource( 6 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 10 )]
 

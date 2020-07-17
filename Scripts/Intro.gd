@@ -76,6 +76,7 @@ func _on_TimerEnd_timeout():
 	Controller.get_node("MusicHuman").play()
 	Controller.can_pause = true
 	Controller.run_speedrun_stats = true
-	Controller.get_node("CanvasLayer2/Time").show()
+	Controller.speedrun_timer.show()
+	Controller.healthbar.show()
 	Controller.can_pause = true
 	Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))

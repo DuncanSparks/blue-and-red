@@ -219,8 +219,8 @@ shape = SubResource( 4 )
 [connection signal="timeout" from="TimerSpawn3" to="EnemySpawn5" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn3" to="EnemySpawn6" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn4" to="EnemySpawn9" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn7" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn4" to="EnemySpawn8" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn7" method="spawn_enemy"]
 
 [editable path="LoadingZone"]
 

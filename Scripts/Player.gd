@@ -31,9 +31,7 @@ var demon_run_target := Vector2()
 
 onready var sprite := $Sprite as AnimatedSprite
 onready var healthbar := $Healthbar as TextureProgress
-
-onready var timer_footsteps_human := $TimerFootstepsHuman as Timer
-onready var timer_footsteps_demon := $TimerFootstepsDemon as Timer
+onready var anim_player_footsteps := $AnimationPlayerFootsteps as AnimationPlayer
 
 
 func _ready():
@@ -83,6 +81,11 @@ func _process(_delta):
 			get_node("..").add_child(blast)
 			can_shoot = false
 			$TimerCooldownShoot.start()
+			
+	if is_moving() and not pouncing:
+		anim_player_footsteps.play("Demon" if demon_form else "Human")
+	else:
+		anim_player_footsteps.stop()
 
 	
 func _physics_process(_delta):
@@ -176,6 +179,7 @@ func transformation(demon: bool):
 		sprite.play("ouch_demon" if demon_form else "ouch_human")
 		$AnimationPlayerTransform.play("Transform Human to Demon" if demon else "Transform Demon to Human")
 		Cursor.change_mode(demon)
+		Controller.change_healthbar_color(demon)
 	else:
 		pending_transformation = true
 
@@ -194,14 +198,15 @@ func sprite_management():
 		
 func is_moving() -> bool:
 	return motion != Vector2.ZERO
+	
+	
+func play_footstep_sound(base_pitch: float = 1.0):
+	Controller.play_sound_oneshot(footstep_sound_demon if demon_form else footstep_sound_human, rand_range(base_pitch - 0.05, base_pitch + 0.05), -22 if demon_form else -24)
 
 
 func _on_Hurtbox_body_entered(body):
 	if not iframes and not transforming and not pouncing:
-		if not shielding:
-			hurt()
-		else:
-			pass
+		hurt()
 
 
 func _on_TimerStun_timeout():
@@ -295,14 +300,6 @@ func _on_TimerPounce2_timeout():
 func _on_TimerCooldownPounce_timeout():
 	if not transforming:
 		pounce()
-
-
-func _on_TimerFootstepsHuman_timeout():
-	Controller.play_sound_oneshot(footstep_sound_human, rand_range(0.95, 1.05), -24)
-
-
-func _on_TimerFootstepsDemon_timeout():
-	Controller.play_sound_oneshot(footstep_sound_demon, rand_range(0.95, 1.05), -24)
 
 
 func _on_TimerDie_timeout():

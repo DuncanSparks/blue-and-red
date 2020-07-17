@@ -74,6 +74,7 @@ onready var player_ref := get_tree().get_root().get_node("Scene/Player") as Kine
 onready var transform_meter := $UI/CanvasLayer/Clock as TextureProgress
 onready var timer_transform := $TimerTransform as Timer
 onready var speedrun_timer := $CanvasLayer2/Time as Label
+onready var healthbar := $CanvasLayer2/Healthbar as TextureProgress
 
 
 func _ready():
@@ -89,6 +90,8 @@ func _ready():
 
 func _process(delta):
 	Cursor.set_cursor_position(get_global_mouse_position())
+	healthbar.set_value(player_health)
+	
 	if run_speedrun_stats:
 		time += delta
 		speedrun_timer.set_text(get_time_string())
@@ -225,6 +228,12 @@ func stop_timer(stop: bool, change_mode: int = -1):
 	
 	if flags["meet_ivari"] == 1:
 		timer_active = not stop
+	
+	
+func change_healthbar_color(demon: bool):
+	var tween := $TweenHealthbar as Tween
+	tween.interpolate_property(healthbar, "tint_progress", Color("#00c6ff") if demon else Color.red, Color.red if demon else Color("#00c6ff"), 4.0)
+	tween.start()
 	
 	
 func play_sound_oneshot(sound: AudioStream, pitch: float = 1.0, volume: float = 0.0):

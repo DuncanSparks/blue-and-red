@@ -31,6 +31,26 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "land",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "flame_2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "ouch",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "flame",
@@ -45,26 +65,6 @@ animations = [ {
 "loop": false,
 "name": "swipe",
 "speed": 12.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "land",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 11 ) ],
-"loop": true,
-"name": "run",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "flame_2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "ouch",
-"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -278,6 +278,7 @@ one_shot = true
 
 [node name="TimerSwipe2" type="Timer" parent="."]
 one_shot = true
+autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
