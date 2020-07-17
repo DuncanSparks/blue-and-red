@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=6]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=10]
 [ext_resource path="res://Scripts/Scenes/Dungeon_Grey_5.gd" type="Script" id=11]
 
@@ -177,6 +178,9 @@ texture = ExtResource( 3 )
 centered = false
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 7 )]
+
+[node name="Heart" parent="." instance=ExtResource( 9 )]
+position = Vector2( 176, 152 )
 
 [editable path="LoadingZone"]
 

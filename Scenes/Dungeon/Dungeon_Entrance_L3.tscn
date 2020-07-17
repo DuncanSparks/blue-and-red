@@ -49,6 +49,7 @@ __meta__ = {
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true

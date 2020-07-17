@@ -1,30 +1,24 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Player_demon_run3.png" type="Texture" id=2]
 [ext_resource path="res://Audio/Ouch.ogg" type="AudioStream" id=3]
 [ext_resource path="res://Sprites/Characters/Protag_transform_1.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Effects/Sword3.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Characters/Player_demon.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Effects/Sword6.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Characters/Player_human.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/Characters/Player_human_shield.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Characters/Player_demon_run1.png" type="Texture" id=10]
-[ext_resource path="res://Sprites/Effects/Sword1.png" type="Texture" id=11]
 [ext_resource path="res://Sprites/Characters/Player_human_ouch.png" type="Texture" id=12]
-[ext_resource path="res://Sprites/Effects/Sword5.png" type="Texture" id=13]
 [ext_resource path="res://Audio/Shield.ogg" type="AudioStream" id=14]
 [ext_resource path="res://Sprites/Characters/Protag_transform_2.png" type="Texture" id=15]
 [ext_resource path="res://Sprites/Characters/Player_demon_run1a.png" type="Texture" id=16]
 [ext_resource path="res://Sprites/UI/Healthbar_full.png" type="Texture" id=17]
 [ext_resource path="res://Sprites/Characters/Protag_transform_3.png" type="Texture" id=18]
 [ext_resource path="res://Audio/Transform2.ogg" type="AudioStream" id=19]
-[ext_resource path="res://Sprites/Effects/Sword2.png" type="Texture" id=20]
 [ext_resource path="res://Sprites/Characters/Protag_transform_4.png" type="Texture" id=21]
 [ext_resource path="res://Sprites/Characters/Player_demon_run2.png" type="Texture" id=22]
 [ext_resource path="res://Audio/Transform1.ogg" type="AudioStream" id=23]
 [ext_resource path="res://Sprites/UI/Healthbar_empty.png" type="Texture" id=24]
-[ext_resource path="res://Sprites/Effects/Sword4.png" type="Texture" id=25]
 [ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=26]
 [ext_resource path="res://Sprites/Characters/Protag_transform_5.png" type="Texture" id=27]
 [ext_resource path="res://Sprites/Effects/Orb.png" type="Texture" id=28]
@@ -61,50 +55,10 @@ animations = [ {
 "name": "demon_to_human",
 "speed": 7.0
 }, {
-"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
-"loop": false,
-"name": "pounce_demon",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "run_demon",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 9 ) ],
-"loop": true,
-"name": "shield_human",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 40 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 8 ), ExtResource( 43 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 8 ) ],
 "loop": true,
 "name": "run_human",
 "speed": 10.0
-}, {
-"frames": [ ExtResource( 12 ) ],
-"loop": true,
-"name": "ouch_human",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 51 ), ExtResource( 53 ), ExtResource( 51 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 50 ), ExtResource( 49 ) ],
-"loop": true,
-"name": "run_cast_human",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
-"loop": false,
-"name": "human_to_demon",
-"speed": 7.0
-}, {
-"frames": [ ExtResource( 16 ) ],
-"loop": true,
-"name": "start_demon",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "land_demon",
-"speed": 5.0
 }, {
 "frames": [ ExtResource( 49 ) ],
 "loop": true,
@@ -121,35 +75,62 @@ animations = [ {
 "name": "sit_demon",
 "speed": 6.0
 }, {
+"frames": [ ExtResource( 6 ), ExtResource( 2 ), ExtResource( 22 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "run_demon",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "shield_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "ouch_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 27 ) ],
+"loop": false,
+"name": "human_to_demon",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "land_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
+"loop": false,
+"name": "pounce_demon",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 51 ), ExtResource( 53 ), ExtResource( 51 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 50 ), ExtResource( 49 ) ],
+"loop": true,
+"name": "run_cast_human",
+"speed": 10.0
+}, {
 "frames": [ ExtResource( 16 ) ],
 "loop": true,
-"name": "idle_demon",
+"name": "start_demon",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 34 ) ],
 "loop": true,
 "name": "ouch_demon",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ) ],
+"loop": true,
+"name": "idle_demon",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 4, 3 )
+extents = Vector2( 5, 3 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 14, 5 )
-
-[sub_resource type="SpriteFrames" id=4]
-animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 11 ), ExtResource( 20 ), ExtResource( 5 ), ExtResource( 25 ), ExtResource( 13 ), ExtResource( 7 ) ],
-"loop": false,
-"name": "swing",
-"speed": 24.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 5, 13 )
@@ -526,20 +507,6 @@ position = Vector2( 1, 7 )
 shape = SubResource( 3 )
 disabled = true
 
-[node name="SpriteSword" type="AnimatedSprite" parent="."]
-position = Vector2( 18, 0 )
-frames = SubResource( 4 )
-animation = "idle"
-playing = true
-
-[node name="AreaSword" type="Area2D" parent="."]
-collision_layer = 32
-collision_mask = 32
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AreaSword"]
-polygon = PoolVector2Array( 23.3711, -8.20177, 27.1617, -0.100296, 25.0806, 11.9404, 19.1345, 14.1702, 5.97891, 7.85252, 6.2019, -7.90446, 14.452, -14.2221 )
-disabled = true
-
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 32768
 collision_mask = 32768
@@ -739,8 +706,6 @@ one_shot = true
 [node name="Test" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 28 )
-[connection signal="animation_finished" from="SpriteSword" to="AreaSword/CollisionPolygon2D" method="set_disabled" binds= [ true ]]
-[connection signal="animation_finished" from="SpriteSword" to="SpriteSword" method="play" binds= [ "idle" ]]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="animation_finished" from="Shield/AnimationPlayer2" to="." method="_on_AnimationPlayer2_animation_finished"]

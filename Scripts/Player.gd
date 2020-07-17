@@ -30,7 +30,7 @@ var demon_form := false
 var demon_run_target := Vector2()
 
 onready var sprite := $Sprite as AnimatedSprite
-onready var sprite_sword := $SpriteSword as AnimatedSprite
+#onready var sprite_sword := $SpriteSword as AnimatedSprite
 onready var healthbar := $Healthbar as TextureProgress
 
 onready var timer_footsteps_human := $TimerFootstepsHuman as Timer
@@ -69,6 +69,22 @@ func _process(_delta):
 		sprite_management()
 	elif not pouncing:
 		motion = Vector2.ZERO
+		
+#	var slide_count := get_slide_count()
+#	if slide_count > 0:
+#		var total := Vector2()
+#		for i in range(slide_count):
+#			var coll := get_slide_collision(i)
+#			total += get_position().direction_to(coll.get_position())
+#
+#		var slide_count_2 := get_slide_count()
+#		while slide_count_2 > 0:
+#			#move_and_slide(total)
+#			position += total
+#			#move_and_slide(total)
+#			slide_count_2 = get_slide_count()
+#		#print(total)
+			
 		
 #	if is_moving():
 #		if demon_form:
@@ -114,7 +130,7 @@ func _process(_delta):
 	
 func _physics_process(_delta):
 	if can_control:
-		move_and_slide(motion * speed)
+		motion = move_and_slide(motion * speed)
 	
 	
 func shield():

@@ -1,15 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
-
-[sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 216, 72, 216, 8, 248, 8, 248, 56, 296, 56, 296, 168, 184, 168, 24, 72, 136, 168, 72, 152, 40, 136, 184, 184, 136, 184, 72, 168, 40, 152, 24, 136 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 3, 4, 5, 6, 0 ), PoolIntArray( 7, 0, 6, 8, 9, 10 ), PoolIntArray( 6, 11, 12, 8 ), PoolIntArray( 8, 13, 9 ), PoolIntArray( 9, 14, 10 ), PoolIntArray( 7, 10, 15 ) ]
-outlines = [ PoolVector2Array( 24, 72, 24, 136, 40, 136, 40, 152, 72, 152, 72, 168, 136, 168, 136, 184, 184, 184, 184, 168, 296, 168, 296, 56, 248, 56, 248, 8, 216, 8, 216, 72 ) ]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 8 )
@@ -32,16 +27,7 @@ __meta__ = {
 }
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 128, 134 )
-
-[node name="Navigation2D" type="Navigation2D" parent="."]
-
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
-visible = false
-navpoly = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
+position = Vector2( 96, 64 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 3
