@@ -17,7 +17,7 @@ func _ready():
 	
 func hover():
 	if not but1.disabled:
-		Controller.play_sound_oneshot(hover_sound, rand_range(0.95, 1.05), -12)
+		Controller.play_sound_oneshot(hover_sound, rand_range(0.95, 1.05), -20)
 		
 		
 func _on_Button_pressed():

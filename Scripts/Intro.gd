@@ -78,5 +78,8 @@ func _on_TimerEnd_timeout():
 	Controller.run_speedrun_stats = true
 	Controller.speedrun_timer.show()
 	Controller.healthbar.show()
+	Controller.stone1.show()
+	Controller.stone2.show()
+	Controller.stone3.show()
 	Controller.can_pause = true
 	Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))

@@ -30,24 +30,24 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
-"loop": true,
-"name": "annoyed",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "cast",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "talk",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "idle2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "annoyed",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "talk",
 "speed": 5.0
 } ]
 
@@ -134,8 +134,8 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 5.5, 6, 6.5, 7, 12, 15.9, 16, 16.1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
-"args": [ PoolStringArray( "Obtained the red stone." ), false ],
-"method": "talk_dialogue"
+"args": [ "stone_red", 1 ],
+"method": "talk_set_flag"
 }, {
 "args": [ "MusicHuman", 2.5 ],
 "method": "talk_fadeout_music"
@@ -385,6 +385,20 @@ tracks/14/keys = {
 "values": [ {
 "args": [  ],
 "method": "show"
+} ]
+}
+tracks/15/type = "method"
+tracks/15/path = NodePath(".")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ PoolStringArray( "Obtained the red stone." ), false ],
+"method": "talk_dialogue"
 } ]
 }
 

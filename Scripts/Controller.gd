@@ -5,6 +5,13 @@ signal dialogue_finished
 export(Texture) var meter_texture_1: Texture
 export(Texture) var meter_texture_2: Texture
 
+export(Texture) var stone_not_found_texture_1: Texture
+export(Texture) var stone_not_found_texture_2: Texture
+export(Texture) var stone_not_found_texture_3: Texture
+export(Texture) var stone_found_texture_1: Texture
+export(Texture) var stone_found_texture_2: Texture
+export(Texture) var stone_found_texture_3: Texture
+
 export(bool) var start_with_timer := false
 
 const dialogue_ref := preload("res://Prefabs/Dialogue.tscn")
@@ -40,6 +47,7 @@ const flags_initial := {
 	
 	"stone_blue": 0,
 	"stone_purple": 0,
+	"stone_red": 0,
 	
 	"set_stone_blue": 0,
 	"set_stone_purple": 0,
@@ -75,6 +83,9 @@ onready var transform_meter := $UI/CanvasLayer/Clock as TextureProgress
 onready var timer_transform := $TimerTransform as Timer
 onready var speedrun_timer := $CanvasLayer2/Time as Label
 onready var healthbar := $CanvasLayer2/Healthbar as TextureProgress
+onready var stone1 := $CanvasLayer2/Stone as TextureRect
+onready var stone2 := $CanvasLayer2/Stone2 as TextureRect
+onready var stone3 := $CanvasLayer2/Stone3 as TextureRect
 
 
 func _ready():
@@ -91,6 +102,10 @@ func _ready():
 func _process(delta):
 	Cursor.set_cursor_position(get_global_mouse_position())
 	healthbar.set_value(player_health)
+	
+	stone1.set_texture(stone_found_texture_1 if flags["stone_blue"] == 1 else stone_not_found_texture_1)
+	stone2.set_texture(stone_found_texture_2 if flags["stone_purple"] == 1 else stone_not_found_texture_2)
+	stone3.set_texture(stone_found_texture_3 if flags["stone_red"] == 1 else stone_not_found_texture_3)
 	
 	if run_speedrun_stats:
 		time += delta
@@ -111,13 +126,22 @@ func move_player(position: Vector2):
 	player_ref.set_position(position)
 	
 	
-func checkpoint():
+func checkpoint(animation: bool = true):
 	checkpoint_music = "MusicDemon" if $MusicDemon.is_playing() else "MusicHuman"
 	checkpoint_scene = get_tree().get_root().get_node("Scene").filename
 	checkpoint_pos = get_tree().get_root().get_node("Scene/Player").get_global_position()
 	checkpoint_form = player_transformed
 	checkpoint_flags = flags.duplicate(true)
 	checkpoint_collected_hearts = collected_hearts.duplicate(true)
+
+	if animation:
+		$SoundCheckpoint.play()
+		var text := $CanvasLayer2/Checkpoint as Label
+		text.set_self_modulate(Color(1, 1, 1, 1))
+		var tween := $TweenCheckpoint as Tween
+		tween.interpolate_property(text, "rect_position", Vector2(8, 192), Vector2(8, 164), 2.0, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+		tween.interpolate_property(text, "self_modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN, 3.0)
+		tween.start()
 	
 	
 func restore_checkpoint():
@@ -273,3 +297,7 @@ func _on_Clock_value_changed(value):
 func _on_TimerPostTransform_timeout():
 	$TimerTransform.set_wait_time(12)
 	$TimerTransform.start()
+
+
+func _on_TweenCheckpoint_tween_all_completed():
+	$CanvasLayer2/Checkpoint.rect_position = Vector2(8, 192)

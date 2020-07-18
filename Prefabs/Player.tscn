@@ -60,20 +60,10 @@ animations = [ {
 "name": "idle_human",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 12 ) ],
-"loop": true,
-"name": "ouch_human",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 30 ), ExtResource( 31 ), ExtResource( 2 ) ],
 "loop": false,
 "name": "pounce_demon",
 "speed": 15.0
-}, {
-"frames": [ ExtResource( 49 ) ],
-"loop": true,
-"name": "idle_cast_human",
-"speed": 5.0
 }, {
 "frames": [ ExtResource( 51 ), ExtResource( 53 ), ExtResource( 51 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 50 ), ExtResource( 49 ) ],
 "loop": true,
@@ -88,6 +78,16 @@ animations = [ {
 "frames": [ ExtResource( 34 ) ],
 "loop": true,
 "name": "ouch_demon",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "ouch_human",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 49 ) ],
+"loop": true,
+"name": "idle_cast_human",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
@@ -115,15 +115,15 @@ animations = [ {
 "name": "start_demon",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 16 ) ],
-"loop": true,
-"name": "idle_demon",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 21 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 4 ), ExtResource( 35 ) ],
 "loop": false,
 "name": "demon_to_human",
 "speed": 7.0
+}, {
+"frames": [ ExtResource( 16 ) ],
+"loop": true,
+"name": "idle_demon",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -209,7 +209,7 @@ tracks/0/keys = {
 "values": [ 90.0, 200.0, 90.0 ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=10]
 resource_name = "Demon"
 length = 0.4
 loop = true
@@ -223,15 +223,15 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
-"args": [ 1.2 ],
+"args": [ 1.4 ],
 "method": "play_footstep_sound"
 }, {
-"args": [ 1.1 ],
+"args": [ 1.4 ],
 "method": "play_footstep_sound"
 } ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=11]
 resource_name = "Human"
 length = 0.8
 loop = true
@@ -253,8 +253,7 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "Transform Demon to Human"
+[sub_resource type="Animation" id=12]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:self_modulate")
@@ -359,7 +358,7 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:self_modulate")
@@ -464,14 +463,14 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Gradient" id=12]
+[sub_resource type="Gradient" id=14]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=13]
-gradient = SubResource( 12 )
+[sub_resource type="GradientTexture" id=15]
+gradient = SubResource( 14 )
 
-[sub_resource type="ParticlesMaterial" id=14]
+[sub_resource type="ParticlesMaterial" id=16]
 emission_shape = 2
 emission_box_extents = Vector3( 15, 15, 15 )
 flag_disable_z = true
@@ -482,9 +481,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 radial_accel = -120.0
 scale = 2.0
-color_ramp = SubResource( 13 )
+color_ramp = SubResource( 15 )
 
-[sub_resource type="ParticlesMaterial" id=15]
+[sub_resource type="ParticlesMaterial" id=17]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -493,22 +492,22 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 13 )
+color_ramp = SubResource( 15 )
 
-[sub_resource type="Gradient" id=16]
+[sub_resource type="Gradient" id=18]
 offsets = PoolRealArray( 0, 0.386667, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=17]
-gradient = SubResource( 16 )
+[sub_resource type="GradientTexture" id=19]
+gradient = SubResource( 18 )
 
-[sub_resource type="Curve" id=18]
+[sub_resource type="Curve" id=20]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.150289, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=19]
-curve = SubResource( 18 )
+[sub_resource type="CurveTexture" id=21]
+curve = SubResource( 20 )
 
-[sub_resource type="ParticlesMaterial" id=20]
+[sub_resource type="ParticlesMaterial" id=22]
 emission_shape = 2
 emission_box_extents = Vector3( 5, 0, 1 )
 flag_disable_z = true
@@ -522,8 +521,8 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 5.0
 scale_random = 0.5
-scale_curve = SubResource( 19 )
-color_ramp = SubResource( 17 )
+scale_curve = SubResource( 21 )
+color_ramp = SubResource( 19 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
@@ -635,12 +634,12 @@ anims/Iframes = SubResource( 8 )
 "anims/Speed Variance" = SubResource( 9 )
 
 [node name="AnimationPlayerFootsteps" type="AnimationPlayer" parent="."]
-anims/Demon = SubResource( 21 )
-anims/Human = SubResource( 22 )
+anims/Demon = SubResource( 10 )
+anims/Human = SubResource( 11 )
 
 [node name="AnimationPlayerTransform" type="AnimationPlayer" parent="."]
-"anims/Transform Demon to Human" = SubResource( 10 )
-"anims/Transform Human to Demon" = SubResource( 11 )
+"anims/Transform Demon to Human" = SubResource( 12 )
+"anims/Transform Human to Demon" = SubResource( 13 )
 
 [node name="Healthbar" type="TextureProgress" parent="."]
 visible = false
@@ -694,7 +693,7 @@ __meta__ = {
 [node name="PartsTransform" type="Particles2D" parent="."]
 emitting = false
 amount = 16
-process_material = SubResource( 14 )
+process_material = SubResource( 16 )
 
 [node name="PartsTransform2" type="Particles2D" parent="."]
 position = Vector2( 2, 8 )
@@ -702,7 +701,7 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 15 )
+process_material = SubResource( 17 )
 
 [node name="PartsLand" type="Particles2D" parent="."]
 position = Vector2( -2, 15 )
@@ -711,7 +710,7 @@ amount = 5
 one_shot = true
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 20 )
+process_material = SubResource( 22 )
 texture = ExtResource( 32 )
 
 [node name="TimerCooldownShoot" type="Timer" parent="."]
@@ -760,8 +759,8 @@ texture = ExtResource( 28 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
 [connection signal="animation_finished" from="Shield/AnimationPlayer2" to="." method="_on_AnimationPlayer2_animation_finished"]
-[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="timeout" from="Shield/Timer" to="." method="shield_end"]
+[connection signal="timeout" from="Shield/Timer" to="Shield/AnimationPlayer2" method="play" binds= [ "Fadeout" ]]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerCooldownShoot" to="." method="_on_TimerCooldownShoot_timeout"]
 [connection signal="timeout" from="TimerCooldownShield" to="." method="_on_TimerCooldownShield_timeout"]
