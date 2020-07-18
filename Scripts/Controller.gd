@@ -217,6 +217,7 @@ func initialize_timer(first_time: bool = false):
 	transform_meter.set_progress_texture(meter_texture_1 if not player_transformed else meter_texture_2)
 	var tween := $Tween as Tween
 	$UI/CanvasLayer.set_offset(Vector2(0, -50))
+	transform_meter.set_value(12)
 	transform_meter.show()
 	$UI/CanvasLayer/ClockBack.show()
 	tween.interpolate_property($UI/CanvasLayer, "offset", Vector2(0, -50), Vector2(0, 0), 4, Tween.TRANS_BOUNCE, Tween.EASE_OUT)

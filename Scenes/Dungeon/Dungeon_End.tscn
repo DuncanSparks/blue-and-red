@@ -26,6 +26,11 @@ animations = [ {
 "name": "cast",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "talk",
@@ -34,11 +39,6 @@ animations = [ {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "annoyed",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
 "speed": 5.0
 } ]
 
@@ -171,7 +171,7 @@ anims/Talk2 = SubResource( 5 )
 
 [node name="Column" type="StaticBody2D" parent="."]
 position = Vector2( 72, 32 )
-z_index = 52
+z_index = 36
 __meta__ = {
 "_edit_group_": true
 }
@@ -185,7 +185,7 @@ shape = SubResource( 6 )
 
 [node name="Column2" type="StaticBody2D" parent="."]
 position = Vector2( 256, 32 )
-z_index = 52
+z_index = 36
 __meta__ = {
 "_edit_group_": true
 }
