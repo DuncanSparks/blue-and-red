@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/Scenes/Dungeon_End.gd" type="Script" id=2]
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle2.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
@@ -10,6 +11,14 @@
 [ext_resource path="res://Sprites/Props/Column.png" type="Texture" id=9]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=10]
 [ext_resource path="res://PIXEARG_.TTF" type="DynamicFontData" id=11]
+[ext_resource path="res://Audio/Thunder.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Sprites/UI/Healthbar_boss_full.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/UI/Healthbar_boss_empty.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=15]
+[ext_resource path="res://Audio/OsmeTeleport.ogg" type="AudioStream" id=16]
+[ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=17]
+[ext_resource path="res://Audio/Transform3.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Audio/Music/Music_boss.ogg" type="AudioStream" id=19]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 10 )
@@ -21,16 +30,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "cast",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "talk",
@@ -40,6 +39,16 @@ animations = [ {
 "loop": true,
 "name": "annoyed",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -47,7 +56,7 @@ extents = Vector2( 15, 7 )
 
 [sub_resource type="Animation" id=4]
 resource_name = "Talk"
-length = 2.0
+length = 5.0
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -55,23 +64,23 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.1, 0.7, 0.9, 1.2, 1.9 ),
+"times": PoolRealArray( 0.1, 1, 2.8, 3.2, 5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "values": [ {
-"args": [ PoolStringArray( "Oh.", "It\'s you.", "Great." ) ],
+"args": [ PoolStringArray( "Oh.", "It\'s you.", "Great.", "Looks like someone managed to partially break my curse.", "Remind me to slap Ivari later.", "And it looks like you\'ve gotten pretty acclimated to being a demon. I\'m impressed.", "You even managed to get past all my cohorts." ) ],
 "method": "talk_dialogue"
 }, {
-"args": [ PoolStringArray( "You look like you\'re enjoying yourself scampering around as a demon.", "You even managed to get past all my cohorts.", "And now you\'re here to seal me away, aren\'t you\?" ) ],
+"args": [ PoolStringArray( "Well...", "I think you know what happens now." ) ],
 "method": "talk_dialogue"
 }, {
-"args": [ PoolStringArray( "Well, guess what\?", "I\'m not letting myself be humiliated by a student.", "That\'s right! You don\'t GET to fight me.", "I\'m sealing MYSELF away.", "I could use a break for a few months, anyway!", "So, if you wanted the satisfaction of defeating me, too bad.", "We probably wouldn\'t have had enough time, anyway.", "I have an appointment at twelve." ) ],
+"args": [ PoolStringArray( "Now you have to battle with me.", "I\'m Lord Osme, and I\'m the boss of this dungeon." ) ],
 "method": "talk_dialogue"
 }, {
-"args": [ PoolStringArray( "I\'ll also do you a favor and not break that curse.", "I\'m sure you\'ll find some use for it.", "In the meantime, though...", "Here\'s some information you might find relevant.", "Thanks for playing." ) ],
+"args": [ PoolStringArray( "You want to seal me away\?", "Give it a try, nerd!" ) ],
 "method": "talk_dialogue"
 }, {
 "args": [  ],
-"method": "talk_show_stats"
+"method": "queue_free"
 } ]
 }
 tracks/1/type = "method"
@@ -81,7 +90,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 0.8, 1.1 ),
+"times": PoolRealArray( 0, 0.9, 2.8, 3.1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "values": [ {
 "args": [ "annoyed", false ],
@@ -90,11 +99,93 @@ tracks/1/keys = {
 "args": [ "idle2", false ],
 "method": "play"
 }, {
-"args": [ "annoyed", false ],
+"args": [ "idle", false ],
 "method": "play"
 }, {
-"args": [ "idle2", false ],
+"args": [ "cast", false ],
 "method": "play"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../CanvasLayer/Flash:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.8, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../SoundThunder")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("../AnimationPlayerScreenshake")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Screenshake", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("../AnimationPlayerTeleport")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 3.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Teleport", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("../MusicBoss")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 4.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("..")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 3.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "initiate_healthbar"
 } ]
 }
 
@@ -116,6 +207,47 @@ tracks/0/keys = {
 } ]
 }
 
+[sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0, 0.489583, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
+
+[sub_resource type="Curve" id=14]
+max_value = 2.0
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 2 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=15]
+curve = SubResource( 14 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 15 )
+color_ramp = SubResource( 12 )
+
+[sub_resource type="Gradient" id=16]
+offsets = PoolRealArray( 0, 0.572917, 0.994792 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=17]
+gradient = SubResource( 16 )
+
+[sub_resource type="ParticlesMaterial" id=18]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 0.6
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 5.0
+scale_random = 0.5
+color_ramp = SubResource( 17 )
+
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 11, 6 )
 
@@ -123,7 +255,128 @@ extents = Vector2( 11, 6 )
 size = 8
 font_data = ExtResource( 11 )
 
+[sub_resource type="Animation" id=8]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Teleport"
+tracks/0/type = "value"
+tracks/0/path = NodePath("NPCOsme/Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("NPCOsme/Sprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("NPCOsme/Sprite")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("NPCOsme/PartsTeleport")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("SoundTeleport")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("NPCOsme/PartsTeleport2")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("SoundTeleport2")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "idle_center",
+"speed": 5.0
+} ]
+
 [node name="Scene" type="Node2D"]
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -135,7 +388,7 @@ cell_size = Vector2( 16, 16 )
 collision_layer = 512
 collision_mask = 512
 format = 1
-tile_data = PoolIntArray( 0, 20, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 21, 0, 6, 21, 0, 7, 21, 0, 8, 21, 0, 9, 21, 0, 10, 21, 0, 11, 21, 0, 12, 21, 0, 13, 21, 0, 14, 21, 0, 15, 21, 0, 16, 21, 0, 17, 21, 0, 18, 21, 0, 19, 20, 0, 65536, 20, 0, 65537, 21, 0, 65538, 21, 0, 65539, 21, 0, 65540, 21, 0, 65541, 21, 0, 65542, 21, 0, 65543, 21, 0, 65544, 21, 0, 65545, 21, 0, 65546, 21, 0, 65547, 21, 0, 65548, 21, 0, 65549, 21, 0, 65550, 21, 0, 65551, 21, 0, 65552, 21, 0, 65553, 21, 0, 65554, 21, 0, 65555, 20, 0, 131072, 20, 0, 131073, 21, 0, 131074, 21, 0, 131075, 6, 0, 131076, 6, 0, 131077, 6, 0, 131078, 5, 0, 131079, 6, 0, 131080, 6, 0, 131081, 6, 0, 131082, 6, 0, 131083, 6, 0, 131084, 6, 0, 131085, 6, 0, 131086, 6, 0, 131087, -1610612732, 0, 131088, 6, 0, 131089, 21, 0, 131090, 21, 0, 131091, 20, 0, 196608, 20, 0, 196609, 24, 0, 196610, 24, 0, 196611, 25, 0, 196612, 6, 0, 196613, 6, 0, 196614, 10, 0, 196615, 6, 0, 196616, 6, 0, 196617, 6, 0, 196618, 6, 0, 196619, 6, 0, 196620, 6, 0, 196621, 6, 0, 196622, 6, 0, 196623, 6, 0, 196624, 536870937, 0, 196625, 24, 0, 196626, 24, 0, 196627, 20, 0, 262144, 20, 0, 262145, 24, 0, 262146, 24, 0, 262147, 25, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 262151, -1610612727, 0, 262152, 6, 0, 262153, 6, 0, 262154, 6, 0, 262155, 6, 0, 262156, 6, 0, 262157, 6, 0, 262158, 6, 0, 262159, 6, 0, 262160, 536870937, 0, 262161, 24, 0, 262162, 24, 0, 262163, 20, 0, 327680, 20, 0, 327681, 24, 0, 327682, 24, 0, 327683, 25, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0, 327688, 6, 0, 327689, 6, 0, 327690, 6, 0, 327691, 6, 0, 327692, 6, 0, 327693, 6, 0, 327694, 2, 0, 327695, 6, 0, 327696, 536870937, 0, 327697, 24, 0, 327698, 24, 0, 327699, 20, 0, 393216, 20, 0, 393217, 24, 0, 393218, 24, 0, 393219, 25, 0, 393220, 4, 0, 393221, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 6, 0, 393225, 6, 0, 393226, 6, 0, 393227, 6, 0, 393228, 6, 0, 393229, 6, 0, 393230, 2, 0, 393231, 6, 0, 393232, 536870937, 0, 393233, 24, 0, 393234, 24, 0, 393235, 20, 0, 458752, 20, 0, 458753, 24, 0, 458754, 24, 0, 458755, 25, 0, 458756, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 458766, 2, 0, 458767, 6, 0, 458768, 536870937, 0, 458769, 24, 0, 458770, 24, 0, 458771, 20, 0, 524288, 20, 0, 524289, 24, 0, 524290, 24, 0, 524291, 25, 0, 524292, 6, 0, 524293, 6, 0, 524294, 6, 0, 524295, 6, 0, 524296, 6, 0, 524297, 6, 0, 524298, 6, 0, 524299, 6, 0, 524300, 6, 0, 524301, 6, 0, 524302, 6, 0, 524303, 6, 0, 524304, 536870937, 0, 524305, 24, 0, 524306, 24, 0, 524307, 20, 0, 589824, 20, 0, 589825, 24, 0, 589826, 24, 0, 589827, 25, 0, 589828, 6, 0, 589829, 6, 0, 589830, 6, 0, 589831, 6, 0, 589832, 6, 0, 589833, 6, 0, 589834, 6, 0, 589835, 6, 0, 589836, 6, 0, 589837, 6, 0, 589838, 6, 0, 589839, 11, 0, 589840, 536870937, 0, 589841, 24, 0, 589842, 24, 0, 589843, 20, 0, 655360, 20, 0, 655361, 24, 0, 655362, 24, 0, 655363, 25, 0, 655364, 6, 0, 655365, 6, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, -1610612729, 0, 655375, 6, 0, 655376, 536870937, 0, 655377, 24, 0, 655378, 24, 0, 655379, 20, 0, 720896, 20, 0, 720897, 20, 0, 720898, 20, 0, 720899, 20, 0, 720900, 20, 0, 720901, 20, 0, 720902, 20, 0, 720903, 20, 0, 720904, 6, 0, 720905, 6, 0, 720906, 6, 0, 720907, 6, 0, 720908, 20, 0, 720909, 20, 0, 720910, 20, 0, 720911, 20, 0, 720912, 20, 0, 720913, 20, 0, 720914, 20, 0, 720915, 20, 0 )
+tile_data = PoolIntArray( 0, 20, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 21, 0, 6, 21, 0, 7, 21, 0, 8, 21, 0, 9, 21, 0, 10, 21, 0, 11, 21, 0, 12, 21, 0, 13, 21, 0, 14, 21, 0, 15, 21, 0, 16, 21, 0, 17, 21, 0, 18, 21, 0, 19, 20, 0, 65536, 20, 0, 65537, 21, 0, 65538, 21, 0, 65539, 21, 0, 65540, 21, 0, 65541, 21, 0, 65542, 21, 0, 65543, 21, 0, 65544, 21, 0, 65545, 21, 0, 65546, 21, 0, 65547, 21, 0, 65548, 21, 0, 65549, 21, 0, 65550, 21, 0, 65551, 21, 0, 65552, 21, 0, 65553, 21, 0, 65554, 21, 0, 65555, 20, 0, 131072, 20, 0, 131073, 21, 0, 131074, 21, 0, 131075, 25, 0, 131076, 6, 0, 131077, 6, 0, 131078, 5, 0, 131079, 6, 0, 131080, 6, 0, 131081, 6, 0, 131082, 6, 0, 131083, 6, 0, 131084, 6, 0, 131085, 6, 0, 131086, 6, 0, 131087, -1610612732, 0, 131088, 536870937, 0, 131089, 21, 0, 131090, 21, 0, 131091, 20, 0, 196608, 20, 0, 196609, 24, 0, 196610, 24, 0, 196611, 25, 0, 196612, 6, 0, 196613, 6, 0, 196614, 10, 0, 196615, 6, 0, 196616, 6, 0, 196617, 6, 0, 196618, 6, 0, 196619, 6, 0, 196620, 6, 0, 196621, 6, 0, 196622, 6, 0, 196623, 6, 0, 196624, 536870937, 0, 196625, 24, 0, 196626, 24, 0, 196627, 20, 0, 262144, 20, 0, 262145, 24, 0, 262146, 24, 0, 262147, 25, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 262151, -1610612727, 0, 262152, 6, 0, 262153, 6, 0, 262154, 6, 0, 262155, 6, 0, 262156, 6, 0, 262157, 6, 0, 262158, 6, 0, 262159, 6, 0, 262160, 536870937, 0, 262161, 24, 0, 262162, 24, 0, 262163, 20, 0, 327680, 20, 0, 327681, 24, 0, 327682, 24, 0, 327683, 25, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0, 327688, 6, 0, 327689, 6, 0, 327690, 6, 0, 327691, 6, 0, 327692, 6, 0, 327693, 6, 0, 327694, 2, 0, 327695, 2, 0, 327696, 536870937, 0, 327697, 24, 0, 327698, 24, 0, 327699, 20, 0, 393216, 20, 0, 393217, 24, 0, 393218, 24, 0, 393219, 25, 0, 393220, 4, 0, 393221, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 6, 0, 393225, 6, 0, 393226, 6, 0, 393227, 6, 0, 393228, 6, 0, 393229, 6, 0, 393230, 2, 0, 393231, 2, 0, 393232, 536870937, 0, 393233, 24, 0, 393234, 24, 0, 393235, 20, 0, 458752, 20, 0, 458753, 24, 0, 458754, 24, 0, 458755, 25, 0, 458756, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 458766, 2, 0, 458767, 6, 0, 458768, 536870937, 0, 458769, 24, 0, 458770, 24, 0, 458771, 20, 0, 524288, 20, 0, 524289, 24, 0, 524290, 24, 0, 524291, 25, 0, 524292, 6, 0, 524293, 6, 0, 524294, 6, 0, 524295, 6, 0, 524296, 6, 0, 524297, 6, 0, 524298, 6, 0, 524299, 6, 0, 524300, 6, 0, 524301, 6, 0, 524302, 6, 0, 524303, 6, 0, 524304, 536870937, 0, 524305, 24, 0, 524306, 24, 0, 524307, 20, 0, 589824, 20, 0, 589825, 24, 0, 589826, 24, 0, 589827, 25, 0, 589828, 6, 0, 589829, 6, 0, 589830, 6, 0, 589831, 6, 0, 589832, 6, 0, 589833, 6, 0, 589834, 6, 0, 589835, 6, 0, 589836, 6, 0, 589837, 6, 0, 589838, 6, 0, 589839, 11, 0, 589840, 536870937, 0, 589841, 24, 0, 589842, 24, 0, 589843, 20, 0, 655360, 20, 0, 655361, 24, 0, 655362, 24, 0, 655363, 25, 0, 655364, 6, 0, 655365, 6, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, -1610612729, 0, 655375, 6, 0, 655376, 536870937, 0, 655377, 24, 0, 655378, 24, 0, 655379, 20, 0, 720896, 20, 0, 720897, 20, 0, 720898, 20, 0, 720899, 20, 0, 720900, 20, 0, 720901, 20, 0, 720902, 20, 0, 720903, 20, 0, 720904, 6, 0, 720905, 6, 0, 720906, 6, 0, 720907, 6, 0, 720908, 20, 0, 720909, 20, 0, 720910, 20, 0, 720911, 20, 0, 720912, 20, 0, 720913, 20, 0, 720914, 20, 0, 720915, 20, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -169,6 +422,21 @@ shape = SubResource( 3 )
 anims/Talk = SubResource( 4 )
 anims/Talk2 = SubResource( 5 )
 
+[node name="PartsTeleport" type="Particles2D" parent="NPCOsme"]
+emitting = false
+amount = 3
+lifetime = 0.5
+one_shot = true
+process_material = SubResource( 13 )
+texture = ExtResource( 17 )
+
+[node name="PartsTeleport2" type="Particles2D" parent="NPCOsme"]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 18 )
+
 [node name="Column" type="StaticBody2D" parent="."]
 position = Vector2( 72, 32 )
 z_index = 36
@@ -198,6 +466,32 @@ position = Vector2( 0, 23 )
 shape = SubResource( 6 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 10 )]
+position = Vector2( 288, 24 )
+
+[node name="Teleport1" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 72, 96 )
+
+[node name="Teleport2" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 252, 136 )
+
+[node name="Teleport3" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 232, 64 )
+
+[node name="Teleport4" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 160, 32 )
+
+[node name="Teleport5" type="Position2D" parent="." groups=[
+"TeleportPoint",
+]]
+position = Vector2( 104, 56 )
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -214,5 +508,75 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayerScreenshake" type="AnimationPlayer" parent="."]
+playback_speed = 4.0
+anims/Screenshake = SubResource( 8 )
+
+[node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="."]
+playback_speed = 5.0
+anims/Teleport = SubResource( 10 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 4
+
+[node name="Flash" type="ColorRect" parent="CanvasLayer"]
+visible = false
+margin_right = 320.0
+margin_bottom = 192.0
+mouse_filter = 2
+color = Color( 1, 0.898039, 0.823529, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HealthbarBoss" type="TextureProgress" parent="CanvasLayer"]
+margin_left = 96.0
+margin_top = 200.0
+margin_right = 226.0
+margin_bottom = 210.0
+max_value = 16.0
+value = 16.0
+texture_under = ExtResource( 14 )
+texture_progress = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundThunder" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -6.0
+bus = "Reverb"
+
+[node name="SoundTeleport" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+volume_db = -16.0
+
+[node name="SoundTeleport2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+volume_db = -16.0
+pitch_scale = 0.6
+
+[node name="MusicBoss" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+volume_db = -14.0
+
+[node name="TweenHealthbar" type="Tween" parent="."]
+
+[node name="BossOsme" type="KinematicBody2D" parent="."]
+position = Vector2( -64, 64 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="AnimatedSprite" parent="BossOsme"]
+frames = SubResource( 9 )
+animation = "idle_center"
+
+[node name="Pentagram" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.392157 )
+position = Vector2( 160, 85 )
+texture = ExtResource( 15 )
 
 [editable path="NPCOsme"]

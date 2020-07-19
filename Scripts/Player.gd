@@ -141,7 +141,7 @@ func pounce():
 	
 func heal(amount: int):
 	$SoundHeal.play()
-	health = min(health + amount, 5)
+	health = int(min(health + amount, 5))
 	healthbar.set_value(health)
 	Controller.player_health = health
 	healthbar.show()
