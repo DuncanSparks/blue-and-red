@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/OsmeOuch.ogg-bbb7bfb9390c0f6a292b2ff69f7a8a26.oggstr"
+
+[deps]
+
+source_file="res://Audio/OsmeOuch.ogg"
+dest_files=[ "res://.import/OsmeOuch.ogg-bbb7bfb9390c0f6a292b2ff69f7a8a26.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
