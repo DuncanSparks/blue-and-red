@@ -307,7 +307,7 @@ target_direction = 1
 shape = SubResource( 2 )
 
 [node name="NPC" parent="." instance=ExtResource( 3 )]
-position = Vector2( 72, 104 )
+position = Vector2( 64, 104 )
 z_index = 104
 
 [node name="Sprite" parent="NPC" index="0"]
@@ -349,7 +349,7 @@ texture = ExtResource( 10 )
 centered = false
 
 [node name="NPC3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 248, 104 )
+position = Vector2( 256, 104 )
 z_index = 104
 
 [node name="Sprite" parent="NPC3" index="0"]

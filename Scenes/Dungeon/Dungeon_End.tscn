@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Scenes/Dungeon_End.gd" type="Script" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://Sprites/Characters/Osme/Osme_shield.png" type="Texture" id=20]
 [ext_resource path="res://Scripts/BossOsme.gd" type="Script" id=21]
 [ext_resource path="res://Audio/OsmeOuch.ogg" type="AudioStream" id=22]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_ouch_right.png" type="Texture" id=23]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_idle_right.png" type="Texture" id=24]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_cast_right.png" type="Texture" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 10 )
@@ -38,11 +41,6 @@ animations = [ {
 "name": "talk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "annoyed",
@@ -51,6 +49,11 @@ animations = [ {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "cast",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
 "speed": 5.0
 } ]
 
@@ -189,6 +192,20 @@ tracks/7/keys = {
 "values": [ {
 "args": [  ],
 "method": "initiate_healthbar"
+} ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath("../TimerStartBattle")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 4.9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start"
 } ]
 }
 
@@ -371,6 +388,26 @@ tracks/6/keys = {
 
 [sub_resource type="SpriteFrames" id=18]
 animations = [ {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "ouch_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "cast_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast_center",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 24 ) ],
+"loop": true,
+"name": "idle_side",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "idle_center",
@@ -400,6 +437,272 @@ shader = SubResource( 19 )
 shader_param/sinConst = 0.015
 shader_param/timeConst = 2.0
 shader_param/color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="RectangleShape2D" id=24]
+extents = Vector2( 15, 7 )
+
+[sub_resource type="RectangleShape2D" id=25]
+extents = Vector2( 16, 14 )
+
+[sub_resource type="Animation" id=23]
+resource_name = "In"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.3, 0.2 ), Vector2( 0.5, 1.3 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Sprite")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("PartsTeleport")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("SoundTeleport")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("PartsTeleport2")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("SoundTeleport2")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("Shield")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+} ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Shield:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.3, 0.2 ), Vector2( 0.5, 1.3 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "Out"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("PartsTeleport")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("SoundTeleport")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("PartsTeleport2")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+} ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("SoundTeleport2")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("Sprite")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("Shield")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "teleport"
+} ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Shield:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
+}
 
 [sub_resource type="Animation" id=21]
 resource_name = "Shield"
@@ -615,11 +918,41 @@ __meta__ = {
 
 [node name="Sprite" type="AnimatedSprite" parent="BossOsme"]
 frames = SubResource( 18 )
-animation = "idle_center"
+animation = "cast_center"
 
 [node name="Shield" type="Sprite" parent="BossOsme"]
 material = SubResource( 20 )
 texture = ExtResource( 20 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme"]
+position = Vector2( 1, 23 )
+shape = SubResource( 24 )
+
+[node name="Hurtbox" type="Area2D" parent="BossOsme"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/Hurtbox"]
+position = Vector2( 0, -15 )
+shape = SubResource( 25 )
+
+[node name="PartsTeleport" type="Particles2D" parent="BossOsme"]
+emitting = false
+amount = 3
+lifetime = 0.5
+one_shot = true
+process_material = SubResource( 10 )
+texture = ExtResource( 17 )
+
+[node name="PartsTeleport2" type="Particles2D" parent="BossOsme"]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 13 )
+
+[node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="BossOsme"]
+playback_speed = 5.0
+anims/In = SubResource( 23 )
+anims/Out = SubResource( 22 )
 
 [node name="AnimationPlayerShield" type="AnimationPlayer" parent="BossOsme"]
 autoplay = "Shield"
@@ -630,9 +963,30 @@ anims/Shield = SubResource( 21 )
 stream = ExtResource( 22 )
 volume_db = -10.0
 
+[node name="SoundTeleport" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 16 )
+volume_db = -16.0
+
+[node name="SoundTeleport2" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 18 )
+volume_db = -16.0
+pitch_scale = 0.6
+
+[node name="TimerTeleport2" type="Timer" parent="BossOsme"]
+
+[node name="TimerAttack" type="Timer" parent="BossOsme"]
+one_shot = true
+
 [node name="Pentagram" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.392157 )
 position = Vector2( 160, 85 )
 texture = ExtResource( 15 )
+
+[node name="TimerStartBattle" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+[connection signal="timeout" from="BossOsme/TimerTeleport2" to="BossOsme" method="_on_TimerTeleport2_timeout"]
+[connection signal="timeout" from="BossOsme/TimerAttack" to="BossOsme" method="_on_TimerAttack_timeout"]
+[connection signal="timeout" from="TimerStartBattle" to="BossOsme" method="initialize"]
 
 [editable path="NPCOsme"]
