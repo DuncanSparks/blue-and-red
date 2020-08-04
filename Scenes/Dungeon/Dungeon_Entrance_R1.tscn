@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/FloorSwitch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/Scenes/Dungeon_Entrance_R1.gd" type="Script" id=6]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/GenericScene.gd" type="Script" id=7]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 136, 56, 136, 8, 184, 8, 184, 56, 296, 56, 296, 168, 72, 168, 72, 152, 24, 56, 40, 136, 40, 152, 24, 136 )
@@ -22,7 +23,7 @@ extents = Vector2( 8, 32 )
 extents = Vector2( 8, 56 )
 
 [node name="Scene" type="Node2D"]
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -82,6 +83,14 @@ position = Vector2( 284, 141 )
 [node name="Sprite" parent="FloorSwitch" index="0"]
 flip_v = true
 
+[node name="CollisionShape2D" parent="FloorSwitch" index="1"]
+position = Vector2( 0, -0.21022 )
+
+[node name="OperateOnFlag" parent="FloorSwitch" instance=ExtResource( 6 )]
+flag = "floorswitch_2"
+value = 1
+operation = 4
+
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
 position = Vector2( 160, 0 )
 target_scene = "res://Scenes/Dungeon/Dungeon_Ivariroom.tscn"
@@ -105,8 +114,8 @@ target_direction = 3
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
 shape = SubResource( 4 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
+[connection signal="activated" from="FloorSwitch" to="." method="set_flag" binds= [ "floorswitch_2", 1 ]]
 [connection signal="activated" from="FloorSwitch" to="TileMap2" method="queue_free"]
-[connection signal="activated" from="FloorSwitch" to="." method="set_flag"]
 
 [editable path="FloorSwitch"]
 

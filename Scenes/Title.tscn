@@ -243,7 +243,7 @@ margin_right = 340.0
 margin_bottom = 22.0
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.313726, 0.313726, 0.313726, 1 )
-text = "F4: Fullscreen"
+text = "F11: Fullscreen"
 __meta__ = {
 "_edit_use_anchors_": false
 }

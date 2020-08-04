@@ -199,11 +199,7 @@ __meta__ = {
 }
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 128, 134 )
-
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
+position = Vector2( 104, 144 )
 
 [node name="Column" type="StaticBody2D" parent="."]
 position = Vector2( 112, 40 )
@@ -307,7 +303,7 @@ target_direction = 1
 shape = SubResource( 2 )
 
 [node name="NPC" parent="." instance=ExtResource( 3 )]
-position = Vector2( 64, 104 )
+position = Vector2( 48, 104 )
 z_index = 104
 
 [node name="Sprite" parent="NPC" index="0"]
@@ -349,7 +345,7 @@ texture = ExtResource( 10 )
 centered = false
 
 [node name="NPC3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 256, 104 )
+position = Vector2( 272, 104 )
 z_index = 104
 
 [node name="Sprite" parent="NPC3" index="0"]

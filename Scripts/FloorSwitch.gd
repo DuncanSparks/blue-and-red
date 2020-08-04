@@ -7,11 +7,12 @@ export(int, "Human,Demon") var type: int
 var activated := false
 
 func _ready():
-	match type:
-		0:
-			$Sprite.set_modulate(Color("#002061"))
-		1:
-			$Sprite.set_modulate(Color("#770000"))
+	if not activated:
+		match type:
+			0:
+				$Sprite.set_modulate(Color("#002061"))
+			1:
+				$Sprite.set_modulate(Color("#770000"))
 			
 			
 func activate(sound: bool = true):

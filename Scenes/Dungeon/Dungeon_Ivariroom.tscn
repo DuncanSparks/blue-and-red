@@ -9,7 +9,7 @@
 [ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=7]
 [ext_resource path="res://Audio/Badspell2.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scripts/Scenes/Dungeon_Ivariroom.gd" type="Script" id=10]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -202,7 +202,6 @@ scale_curve = SubResource( 10 )
 color_ramp = SubResource( 8 )
 
 [node name="Scene" type="Node2D"]
-script = ExtResource( 10 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -253,6 +252,12 @@ emitting = false
 amount = 4
 process_material = SubResource( 11 )
 texture = ExtResource( 7 )
+
+[node name="OperateOnFlag" parent="NPCIvari" instance=ExtResource( 10 )]
+flag = "meet_ivari"
+value = 1
+operation = 3
+parameter = 1
 
 [node name="SoundSpell" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

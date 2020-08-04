@@ -6,7 +6,7 @@
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 8 )
 
 [node name="Scene" type="Node2D"]
@@ -29,17 +29,13 @@ __meta__ = {
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 96, 64 )
 
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
-
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
 position = Vector2( 232, 192 )
 target_scene = "res://Scenes/Dungeon/Dungeon_Entrance3.tscn"
 target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="TimerSpawn" type="Timer" parent="."]
 wait_time = 0.8

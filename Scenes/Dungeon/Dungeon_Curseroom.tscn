@@ -20,7 +20,7 @@
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Sprites/UI/Question_mark.png" type="Texture" id=20]
-[ext_resource path="res://Scripts/Scenes/Dungeon_Curseroom.gd" type="Script" id=21]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=22]
 
 [sub_resource type="SpriteFrames" id=1]
@@ -456,7 +456,6 @@ tracks/0/keys = {
 extents = Vector2( 24, 8 )
 
 [node name="Scene" type="Node2D"]
-script = ExtResource( 21 )
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1000
@@ -575,12 +574,28 @@ position = Vector2( -3, -17 )
 texture = ExtResource( 16 )
 centered = false
 
+[node name="OperateOnFlag" parent="NPC/Stone" instance=ExtResource( 21 )]
+flag = "cursed"
+value = 1
+operation = 2
+
 [node name="Tutorial" type="Sprite" parent="NPC"]
 visible = false
 self_modulate = Color( 0.635294, 0.635294, 0.635294, 1 )
 position = Vector2( -4, -28 )
 texture = ExtResource( 20 )
 centered = false
+
+[node name="OperateOnFlag" parent="NPC/Tutorial" instance=ExtResource( 21 )]
+flag = "cursed"
+value = 1
+operation = 1
+
+[node name="OperateOnFlag" parent="NPC" instance=ExtResource( 21 )]
+flag = "cursed"
+value = 1
+operation = 3
+parameter = 1
 
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )

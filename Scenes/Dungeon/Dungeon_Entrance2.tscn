@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scripts/Scenes/Dungeon_Entrance2.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/GenericScene.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=6]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 136, 56, 136, 8, 184, 8, 184, 56, 296, 56, 296, 168, 184, 168, 136, 168, 184, 184, 136, 184, 24, 56, 24, 168 )
@@ -19,6 +20,9 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
+enemy_threshold = 1
+flag_override = "demon_door_1"
+flag_override_value = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1000
@@ -44,6 +48,10 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="OperateOnFlag" parent="TileMap2" instance=ExtResource( 6 )]
+flag = "demon_door_1"
+value = 1
+
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
 
@@ -55,10 +63,6 @@ navpoly = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
 
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
 position = Vector2( 160, 192 )
@@ -82,8 +86,9 @@ enemy_type = 1
 [node name="TimerSpawn" type="Timer" parent="."]
 one_shot = true
 autostart = true
-[connection signal="enemy_dead" from="EnemySpawn" to="." method="set_flag"]
-[connection signal="enemy_dead" from="EnemySpawn" to="TileMap2" method="queue_free"]
+[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
+[connection signal="enemy_threshold_reached" from="." to="." method="set_flag" binds= [ "demon_door_1", 1 ]]
+[connection signal="enemy_dead" from="EnemySpawn" to="." method="increment_enemies_defeated"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 
 [editable path="LoadingZone"]

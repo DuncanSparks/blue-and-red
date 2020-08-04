@@ -10,7 +10,7 @@
 [ext_resource path="res://Prefabs/NPC.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=10]
-[ext_resource path="res://Scripts/Scenes/Dungeon_Grey_5.gd" type="Script" id=11]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 8 )
@@ -113,7 +113,6 @@ tracks/0/keys = {
 }
 
 [node name="Scene" type="Node2D"]
-script = ExtResource( 11 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
@@ -132,10 +131,6 @@ __meta__ = {
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
-
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
 
 [node name="LoadingZone" parent="." instance=ExtResource( 2 )]
 position = Vector2( 256, 192 )
@@ -176,6 +171,17 @@ anims/Talk2 = SubResource( 6 )
 position = Vector2( -3, -17 )
 texture = ExtResource( 3 )
 centered = false
+
+[node name="OperateOnFlag" parent="NPC/Stone" instance=ExtResource( 11 )]
+flag = "stone_purple"
+value = 1
+operation = 2
+
+[node name="OperateOnFlag" parent="NPC" instance=ExtResource( 11 )]
+flag = "stone_purple"
+value = 1
+operation = 3
+parameter = 1
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 7 )]
 

@@ -1,22 +1,17 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 
-[sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 104, 72, 104, 56, 168, 56, 168, 72, 120, 152, 232, 72, 232, 88, 216, 152, 120, 168, 264, 88, 264, 16, 296, 16, 296, 88, 296, 104, 312, 104, 312, 168, 296, 152, 296, 168, 216, 168, 16, 152, 16, 120, 88, 120, 88, 72 )
-polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 3, 5, 6, 7, 8, 4 ), PoolIntArray( 9, 10, 11, 12 ), PoolIntArray( 9, 12, 13, 7 ), PoolIntArray( 13, 14, 15, 16 ), PoolIntArray( 15, 17, 16 ), PoolIntArray( 13, 16, 7 ), PoolIntArray( 6, 9, 7 ), PoolIntArray( 7, 18, 8 ), PoolIntArray( 4, 19, 20, 21 ), PoolIntArray( 0, 4, 21, 22 ) ]
-outlines = [ PoolVector2Array( 104, 56, 104, 72, 88, 72, 88, 120, 16, 120, 16, 152, 120, 152, 120, 168, 216, 168, 216, 152, 296, 152, 296, 168, 312, 168, 312, 104, 296, 104, 296, 88, 296, 16, 264, 16, 264, 88, 232, 88, 232, 72, 168, 72, 168, 56 ) ]
-
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 8 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 32 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 24, 8 )
 
 [node name="Scene" type="Node2D"]
@@ -38,19 +33,6 @@ __meta__ = {
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
-
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
-
-[node name="Navigation2D" type="Navigation2D" parent="."]
-
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
-visible = false
-navpoly = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 3 )]
 position = Vector2( 144, 64 )
@@ -95,7 +77,7 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Grey_1.tscn"
 target_direction = 1
 
 [node name="CollisionShape2D" parent="LoadingZone" index="0"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="LoadingZone2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 320, 88 )
@@ -103,14 +85,14 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Grey_6.tscn"
 target_direction = 3
 
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="LoadingZone3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 32, 0 )
 target_scene = "res://Scenes/Dungeon/Dungeon_Grey_4.tscn"
 
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 
 [editable path="LoadingZone"]

@@ -6,7 +6,7 @@
 [ext_resource path="res://Sprites/Props/Pedestal.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Sprites/Props/Stone2.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/Scenes/Dungeon_Entrance_L3C.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Audio/Collect.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Sprites/Props/Pentagram.png" type="Texture" id=9]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=10]
@@ -110,7 +110,6 @@ tracks/0/keys = {
 }
 
 [node name="Scene" type="Node2D"]
-script = ExtResource( 7 )
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1000
@@ -152,6 +151,17 @@ anims/Talk2 = SubResource( 5 )
 position = Vector2( -3, -17 )
 texture = ExtResource( 6 )
 centered = false
+
+[node name="OperateOnFlag" parent="NPC/Stone" instance=ExtResource( 7 )]
+flag = "stone_blue"
+value = 1
+operation = 2
+
+[node name="OperateOnFlag" parent="NPC" instance=ExtResource( 7 )]
+flag = "stone_blue"
+value = 1
+operation = 3
+parameter = 1
 
 [node name="SoundCollect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
