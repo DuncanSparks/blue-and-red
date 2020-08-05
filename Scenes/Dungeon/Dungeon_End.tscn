@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Scenes/Dungeon_End.gd" type="Script" id=2]
@@ -25,9 +25,9 @@
 [ext_resource path="res://Sprites/Characters/Osme/Osme_ouch_right.png" type="Texture" id=23]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle_right.png" type="Texture" id=24]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_cast_right.png" type="Texture" id=25]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 10 )
+[ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Audio/Blast.ogg" type="AudioStream" id=27]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_shadow.png" type="Texture" id=28]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -46,14 +46,14 @@ animations = [ {
 "name": "annoyed",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "cast",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "idle2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast",
 "speed": 5.0
 } ]
 
@@ -206,6 +206,34 @@ tracks/8/keys = {
 "values": [ {
 "args": [  ],
 "method": "start"
+} ]
+}
+tracks/9/type = "method"
+tracks/9/path = NodePath("../TileMap2")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 1.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+} ]
+}
+tracks/10/type = "method"
+tracks/10/path = NodePath("../TileMap2")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 1.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "collision_use_parent", false ],
+"method": "set"
 } ]
 }
 
@@ -388,14 +416,14 @@ tracks/6/keys = {
 
 [sub_resource type="SpriteFrames" id=18]
 animations = [ {
+"frames": [ ExtResource( 28 ) ],
+"loop": true,
+"name": "ground",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 23 ) ],
 "loop": true,
 "name": "ouch_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 25 ) ],
-"loop": true,
-"name": "cast_side",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
@@ -411,6 +439,11 @@ animations = [ {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "idle_center",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "cast_side",
 "speed": 5.0
 } ]
 
@@ -438,10 +471,10 @@ shader_param/sinConst = 0.015
 shader_param/timeConst = 2.0
 shader_param/color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="RectangleShape2D" id=24]
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 15, 7 )
 
-[sub_resource type="RectangleShape2D" id=25]
+[sub_resource type="RectangleShape2D" id=22]
 extents = Vector2( 16, 14 )
 
 [sub_resource type="Animation" id=23]
@@ -540,35 +573,34 @@ tracks/6/keys = {
 "method": "play"
 } ]
 }
-tracks/7/type = "method"
-tracks/7/path = NodePath("Shield")
+tracks/7/type = "value"
+tracks/7/path = NodePath("Shield:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "show"
-} ]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("Shield:scale")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.3, 0.2 ), Vector2( 0.5, 1.3 ), Vector2( 1, 1 ) ]
 }
+tracks/8/type = "method"
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show_shield"
+} ]
+}
 
-[sub_resource type="Animation" id=22]
-resource_name = "Out"
+[sub_resource type="Animation" id=24]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -704,8 +736,7 @@ tracks/9/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
 }
 
-[sub_resource type="Animation" id=21]
-resource_name = "Shield"
+[sub_resource type="Animation" id=25]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:rotation_degrees")
@@ -719,6 +750,9 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 0.0, 360.0 ]
 }
+
+[sub_resource type="RectangleShape2D" id=26]
+extents = Vector2( 40, 8 )
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 2 )
@@ -738,16 +772,22 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="TileMap2" type="TileMap" parent="."]
+visible = false
+z_index = -1000
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_use_parent = true
+collision_layer = 512
+collision_mask = 512
+format = 1
+tile_data = PoolIntArray( 720904, 18, 0, 720905, 18, 0, 720906, 18, 0, 720907, 18, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
-
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 160, 192 )
-shape = SubResource( 1 )
 
 [node name="NPCOsme" parent="." instance=ExtResource( 3 )]
 position = Vector2( 160, 32 )
@@ -917,22 +957,25 @@ __meta__ = {
 }
 
 [node name="Sprite" type="AnimatedSprite" parent="BossOsme"]
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.3, 0.2 )
 frames = SubResource( 18 )
-animation = "cast_center"
+animation = "ground"
 
 [node name="Shield" type="Sprite" parent="BossOsme"]
 material = SubResource( 20 )
+scale = Vector2( 0.3, 0.2 )
 texture = ExtResource( 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme"]
 position = Vector2( 1, 23 )
-shape = SubResource( 24 )
+shape = SubResource( 21 )
 
 [node name="Hurtbox" type="Area2D" parent="BossOsme"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/Hurtbox"]
 position = Vector2( 0, -15 )
-shape = SubResource( 25 )
+shape = SubResource( 22 )
 
 [node name="PartsTeleport" type="Particles2D" parent="BossOsme"]
 emitting = false
@@ -952,12 +995,12 @@ process_material = SubResource( 13 )
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="BossOsme"]
 playback_speed = 5.0
 anims/In = SubResource( 23 )
-anims/Out = SubResource( 22 )
+anims/Out = SubResource( 24 )
 
 [node name="AnimationPlayerShield" type="AnimationPlayer" parent="BossOsme"]
 autoplay = "Shield"
 playback_speed = 0.03
-anims/Shield = SubResource( 21 )
+anims/Shield = SubResource( 25 )
 
 [node name="SoundHurt" type="AudioStreamPlayer" parent="BossOsme"]
 stream = ExtResource( 22 )
@@ -972,7 +1015,15 @@ stream = ExtResource( 18 )
 volume_db = -16.0
 pitch_scale = 0.6
 
+[node name="SoundBlast" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 27 )
+volume_db = -22.0
+
+[node name="TimerTeleport" type="Timer" parent="BossOsme"]
+one_shot = true
+
 [node name="TimerTeleport2" type="Timer" parent="BossOsme"]
+one_shot = true
 
 [node name="TimerAttack" type="Timer" parent="BossOsme"]
 one_shot = true
@@ -985,6 +1036,15 @@ texture = ExtResource( 15 )
 [node name="TimerStartBattle" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="LoadingZone" parent="." instance=ExtResource( 26 )]
+position = Vector2( 160, 192 )
+target_scene = "res://Scenes/Dungeon/Dungeon_Grey_8.tscn"
+target_direction = 1
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="LoadingZone"]
+shape = SubResource( 26 )
+[connection signal="timeout" from="BossOsme/TimerTeleport" to="BossOsme" method="teleport_start"]
 [connection signal="timeout" from="BossOsme/TimerTeleport2" to="BossOsme" method="_on_TimerTeleport2_timeout"]
 [connection signal="timeout" from="BossOsme/TimerAttack" to="BossOsme" method="_on_TimerAttack_timeout"]
 [connection signal="timeout" from="TimerStartBattle" to="BossOsme" method="initialize"]
