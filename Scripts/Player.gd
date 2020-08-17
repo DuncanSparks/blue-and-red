@@ -77,6 +77,7 @@ func _process(_delta):
 			blast.set_modulate(Color("#1e82e0"))
 			blast.get_node("Sprite").set_rotation(angle)
 			blast.get_node("CollisionShape2D").set_rotation(angle)
+			blast.add_to_group("PlayerBlast")
 			get_node("..").add_child(blast)
 			can_shoot = false
 			$TimerCooldownShoot.start()
@@ -92,27 +93,27 @@ func _physics_process(_delta):
 		move_and_slide(motion * speed)
 	
 	
-func shield():
-	$SoundShield.play()
-	sprite.play("shield_human")
-	var spr := $Shield as Sprite
-	spr.set_self_modulate(Color(1, 1, 1, 1))
-	spr.set_scale(Vector2(1, 1))
-	$Shield.show()
-	$Shield/AnimationPlayer.play("Spin")
-	shielding = true
-	$Shield/Timer.start()
-	cooldown_shield = true
-	
-	
-func shield_end():
-	shielding = false
-	var tween := $TweenShieldMeter as Tween
-	var meter := $CooldownShieldMeter as TextureProgress
-	meter.show()
-	tween.interpolate_property(meter, "value", 4.0, 0.0, 4.0)
-	tween.start()
-	$TimerCooldownShield.start()
+#func shield():
+#	$SoundShield.play()
+#	sprite.play("shield_human")
+#	var spr := $Shield as Sprite
+#	spr.set_self_modulate(Color(1, 1, 1, 1))
+#	spr.set_scale(Vector2(1, 1))
+#	$Shield.show()
+#	$Shield/AnimationPlayer.play("Spin")
+#	shielding = true
+#	$Shield/Timer.start()
+#	cooldown_shield = true
+#
+#
+#func shield_end():
+#	shielding = false
+#	var tween := $TweenShieldMeter as Tween
+#	var meter := $CooldownShieldMeter as TextureProgress
+#	meter.show()
+#	tween.interpolate_property(meter, "value", 4.0, 0.0, 4.0)
+#	tween.start()
+#	$TimerCooldownShield.start()
 	
 	
 func pounce():

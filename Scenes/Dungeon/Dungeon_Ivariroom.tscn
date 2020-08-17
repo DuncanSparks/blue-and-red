@@ -6,7 +6,7 @@
 [ext_resource path="res://Sprites/Characters/Friendly NPCs/Ivari_idle.png" type="Texture" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Sprites/Characters/Friendly NPCs/Ivari_cast.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Characters/Shield.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Effects/Spell.png" type="Texture" id=7]
 [ext_resource path="res://Audio/Badspell2.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=10]
@@ -186,8 +186,8 @@ colors = PoolColorArray( 0, 1, 0.141176, 0, 0, 1, 0.141176, 1, 0, 1, 0.141176, 1
 gradient = SubResource( 7 )
 
 [sub_resource type="Curve" id=9]
-max_value = 3.0
-_data = [ Vector2( 0, 0.910227 ), 0.0, 0.0, 0, 0, Vector2( 1, 3 ), 0.0, 0.0, 0, 0 ]
+max_value = 2.0
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.02727 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=10]
 curve = SubResource( 9 )
@@ -197,7 +197,6 @@ flag_disable_z = true
 gravity = Vector3( -10, 0, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale = 0.2
 scale_curve = SubResource( 10 )
 color_ramp = SubResource( 8 )
 

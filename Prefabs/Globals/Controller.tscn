@@ -35,6 +35,7 @@ stone_not_found_texture_3 = ExtResource( 15 )
 stone_found_texture_1 = ExtResource( 17 )
 stone_found_texture_2 = ExtResource( 16 )
 stone_found_texture_3 = ExtResource( 18 )
+start_with_timer = true
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0

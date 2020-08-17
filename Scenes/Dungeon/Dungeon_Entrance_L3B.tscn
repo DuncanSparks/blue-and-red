@@ -120,12 +120,12 @@ autostart = true
 wait_time = 3.0
 one_shot = true
 autostart = true
-[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_threshold_reached" from="." to="." method="set_flag" binds= [ "demon_door_5", 1 ]]
+[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_dead" from="EnemySpawn" to="." method="increment_enemies_defeated"]
 [connection signal="enemy_dead" from="EnemySpawn2" to="." method="increment_enemies_defeated"]
-[connection signal="activated" from="FloorSwitch" to="TileMap3" method="queue_free"]
 [connection signal="activated" from="FloorSwitch" to="." method="set_flag" binds= [ "floorswitch_3", 1 ]]
+[connection signal="activated" from="FloorSwitch" to="TileMap3" method="queue_free"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn2" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn" method="spawn_enemy"]
 

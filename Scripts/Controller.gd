@@ -65,6 +65,8 @@ var checkpoint_scene: String
 var checkpoint_pos: Vector2
 var checkpoint_form: bool
 
+var boss_cutscene := false
+
 var checkpoint_flags := {
 	
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Scenes/Dungeon_End.gd" type="Script" id=2]
@@ -25,11 +25,16 @@
 [ext_resource path="res://Sprites/Characters/Osme/Osme_ouch_right.png" type="Texture" id=23]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_idle_right.png" type="Texture" id=24]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_cast_right.png" type="Texture" id=25]
-[ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_shadow3.png" type="Texture" id=26]
 [ext_resource path="res://Audio/Blast.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_shadow.png" type="Texture" id=28]
+[ext_resource path="res://Audio/Music/Music_human.ogg" type="AudioStream" id=29]
+[ext_resource path="res://Audio/Hit.ogg" type="AudioStream" id=30]
+[ext_resource path="res://Audio/Shield.ogg" type="AudioStream" id=31]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_shadow1.png" type="Texture" id=32]
+[ext_resource path="res://Sprites/Characters/Osme/Osme_shadow2.png" type="Texture" id=33]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
@@ -46,21 +51,21 @@ animations = [ {
 "name": "annoyed",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "cast",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 15, 7 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "Talk"
 length = 5.0
 tracks/0/type = "method"
@@ -237,7 +242,7 @@ tracks/10/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "Talk2"
 length = 0.1
 tracks/0/type = "method"
@@ -255,36 +260,36 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Gradient" id=6]
+[sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 0, 0.489583, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=7]
-gradient = SubResource( 6 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 
-[sub_resource type="Curve" id=8]
+[sub_resource type="Curve" id=7]
 max_value = 2.0
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 2 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=9]
-curve = SubResource( 8 )
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
 
-[sub_resource type="ParticlesMaterial" id=10]
+[sub_resource type="ParticlesMaterial" id=9]
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale_curve = SubResource( 9 )
-color_ramp = SubResource( 7 )
+scale_curve = SubResource( 8 )
+color_ramp = SubResource( 6 )
 
-[sub_resource type="Gradient" id=11]
+[sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0, 0.572917, 0.994792 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=12]
-gradient = SubResource( 11 )
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=12]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -294,16 +299,16 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
 scale_random = 0.5
-color_ramp = SubResource( 12 )
+color_ramp = SubResource( 11 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 11, 6 )
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=14]
 size = 8
 font_data = ExtResource( 11 )
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=15]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -318,7 +323,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=16]
 tracks/0/type = "value"
 tracks/0/path = NodePath("NPCOsme/Sprite:scale")
 tracks/0/interp = 1
@@ -414,22 +419,12 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="SpriteFrames" id=18]
+[sub_resource type="SpriteFrames" id=17]
 animations = [ {
-"frames": [ ExtResource( 28 ) ],
-"loop": true,
-"name": "ground",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 23 ) ],
-"loop": true,
-"name": "ouch_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "cast_center",
-"speed": 5.0
+"frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 26 ) ],
+"loop": false,
+"name": "ground2",
+"speed": 20.0
 }, {
 "frames": [ ExtResource( 24 ) ],
 "loop": true,
@@ -441,13 +436,28 @@ animations = [ {
 "name": "idle_center",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast_center",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 25 ) ],
 "loop": true,
 "name": "cast_side",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "ouch_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 28 ) ],
+"loop": true,
+"name": "ground",
+"speed": 5.0
 } ]
 
-[sub_resource type="Shader" id=19]
+[sub_resource type="Shader" id=18]
 code = "shader_type canvas_item;
 
 uniform float sinConst = 0.2;
@@ -465,19 +475,19 @@ void fragment() {
 "
 custom_defines = ""
 
-[sub_resource type="ShaderMaterial" id=20]
-shader = SubResource( 19 )
+[sub_resource type="ShaderMaterial" id=19]
+shader = SubResource( 18 )
 shader_param/sinConst = 0.015
 shader_param/timeConst = 2.0
 shader_param/color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="RectangleShape2D" id=21]
+[sub_resource type="RectangleShape2D" id=20]
 extents = Vector2( 15, 7 )
 
-[sub_resource type="RectangleShape2D" id=22]
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 16, 14 )
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=22]
 resource_name = "In"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
@@ -592,15 +602,18 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "show_shield"
+}, {
+"args": [  ],
+"method": "display_shield"
 } ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=23]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -736,7 +749,7 @@ tracks/9/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=24]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:rotation_degrees")
@@ -751,8 +764,8 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=26]
-extents = Vector2( 40, 8 )
+[sub_resource type="RectangleShape2D" id=25]
+extents = Vector2( 40, 10 )
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 2 )
@@ -796,23 +809,23 @@ npc_name = "Osme"
 npc_color = Color( 0.8, 0, 0, 1 )
 
 [node name="Sprite" parent="NPCOsme" index="0"]
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 animation = "idle"
 
 [node name="CollisionShape2D" parent="NPCOsme" index="2"]
 position = Vector2( 1, 23 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="AnimationPlayerTalk" parent="NPCOsme" index="4"]
-anims/Talk = SubResource( 4 )
-anims/Talk2 = SubResource( 5 )
+anims/Talk = SubResource( 3 )
+anims/Talk2 = SubResource( 4 )
 
 [node name="PartsTeleport" type="Particles2D" parent="NPCOsme"]
 emitting = false
 amount = 3
 lifetime = 0.5
 one_shot = true
-process_material = SubResource( 10 )
+process_material = SubResource( 9 )
 texture = ExtResource( 17 )
 
 [node name="PartsTeleport2" type="Particles2D" parent="NPCOsme"]
@@ -820,7 +833,7 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 13 )
+process_material = SubResource( 12 )
 
 [node name="Column" type="StaticBody2D" parent="."]
 position = Vector2( 72, 32 )
@@ -834,7 +847,7 @@ texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
 position = Vector2( 0, 23 )
-shape = SubResource( 14 )
+shape = SubResource( 13 )
 
 [node name="Column2" type="StaticBody2D" parent="."]
 position = Vector2( 256, 32 )
@@ -848,7 +861,7 @@ texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
 position = Vector2( 0, 23 )
-shape = SubResource( 14 )
+shape = SubResource( 13 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 10 )]
 position = Vector2( 288, 24 )
@@ -884,7 +897,7 @@ margin_left = 32.0
 margin_top = 136.0
 margin_right = 288.0
 margin_bottom = 170.0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color = Color( 0, 1, 0.67451, 1 )
 text = "x Enemies defeated
 x Deaths
@@ -896,11 +909,11 @@ __meta__ = {
 
 [node name="AnimationPlayerScreenshake" type="AnimationPlayer" parent="."]
 playback_speed = 4.0
-anims/Screenshake = SubResource( 16 )
+anims/Screenshake = SubResource( 15 )
 
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="."]
 playback_speed = 5.0
-anims/Teleport = SubResource( 17 )
+anims/Teleport = SubResource( 16 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 4
@@ -917,12 +930,12 @@ __meta__ = {
 }
 
 [node name="HealthbarBoss" type="TextureProgress" parent="CanvasLayer"]
-margin_left = 96.0
+margin_left = 128.0
 margin_top = 200.0
-margin_right = 226.0
+margin_right = 258.0
 margin_bottom = 210.0
-max_value = 16.0
-value = 16.0
+max_value = 8.0
+value = 8.0
 texture_under = ExtResource( 14 )
 texture_progress = ExtResource( 13 )
 __meta__ = {
@@ -947,6 +960,11 @@ pitch_scale = 0.6
 stream = ExtResource( 19 )
 volume_db = -14.0
 
+[node name="MusicEnding" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 29 )
+volume_db = -14.0
+pitch_scale = 0.9
+
 [node name="TweenHealthbar" type="Tween" parent="."]
 
 [node name="BossOsme" type="KinematicBody2D" parent="."]
@@ -957,32 +975,40 @@ __meta__ = {
 }
 
 [node name="Sprite" type="AnimatedSprite" parent="BossOsme"]
-self_modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 0.3, 0.2 )
-frames = SubResource( 18 )
-animation = "ground"
+frames = SubResource( 17 )
+animation = "cast_center"
 
 [node name="Shield" type="Sprite" parent="BossOsme"]
-material = SubResource( 20 )
-scale = Vector2( 0.3, 0.2 )
+material = SubResource( 19 )
 texture = ExtResource( 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme"]
 position = Vector2( 1, 23 )
-shape = SubResource( 21 )
+shape = SubResource( 20 )
+disabled = true
 
 [node name="Hurtbox" type="Area2D" parent="BossOsme"]
+collision_layer = 32
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/Hurtbox"]
 position = Vector2( 0, -15 )
-shape = SubResource( 22 )
+shape = SubResource( 21 )
+disabled = true
+
+[node name="GroundAttackHitbox" type="Area2D" parent="BossOsme"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/GroundAttackHitbox"]
+position = Vector2( 1, 23 )
+shape = SubResource( 20 )
+disabled = true
 
 [node name="PartsTeleport" type="Particles2D" parent="BossOsme"]
 emitting = false
 amount = 3
 lifetime = 0.5
 one_shot = true
-process_material = SubResource( 10 )
+process_material = SubResource( 9 )
 texture = ExtResource( 17 )
 
 [node name="PartsTeleport2" type="Particles2D" parent="BossOsme"]
@@ -990,21 +1016,25 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 13 )
+process_material = SubResource( 12 )
 
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="BossOsme"]
 playback_speed = 5.0
-anims/In = SubResource( 23 )
-anims/Out = SubResource( 24 )
+anims/In = SubResource( 22 )
+anims/Out = SubResource( 23 )
 
 [node name="AnimationPlayerShield" type="AnimationPlayer" parent="BossOsme"]
 autoplay = "Shield"
 playback_speed = 0.03
-anims/Shield = SubResource( 25 )
+anims/Shield = SubResource( 24 )
 
 [node name="SoundHurt" type="AudioStreamPlayer" parent="BossOsme"]
 stream = ExtResource( 22 )
-volume_db = -10.0
+volume_db = -8.0
+
+[node name="SoundHurt2" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 30 )
+pitch_scale = 1.5
 
 [node name="SoundTeleport" type="AudioStreamPlayer" parent="BossOsme"]
 stream = ExtResource( 16 )
@@ -1019,6 +1049,11 @@ pitch_scale = 0.6
 stream = ExtResource( 27 )
 volume_db = -22.0
 
+[node name="SoundBounce" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 31 )
+volume_db = -16.0
+pitch_scale = 3.0
+
 [node name="TimerTeleport" type="Timer" parent="BossOsme"]
 one_shot = true
 
@@ -1026,6 +1061,10 @@ one_shot = true
 one_shot = true
 
 [node name="TimerAttack" type="Timer" parent="BossOsme"]
+one_shot = true
+
+[node name="TimerGroundAttack" type="Timer" parent="BossOsme"]
+wait_time = 3.0
 one_shot = true
 
 [node name="Pentagram" type="Sprite" parent="."]
@@ -1037,16 +1076,17 @@ texture = ExtResource( 15 )
 wait_time = 3.0
 one_shot = true
 
-[node name="LoadingZone" parent="." instance=ExtResource( 26 )]
-position = Vector2( 160, 192 )
-target_scene = "res://Scenes/Dungeon/Dungeon_Grey_8.tscn"
-target_direction = 1
+[node name="Walls" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="LoadingZone"]
-shape = SubResource( 26 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 160, 200 )
+shape = SubResource( 25 )
+[connection signal="body_entered" from="BossOsme/Hurtbox" to="BossOsme" method="_on_Hurtbox_body_entered"]
+[connection signal="body_entered" from="BossOsme/GroundAttackHitbox" to="BossOsme" method="_on_GroundAttackHitbox_body_entered"]
 [connection signal="timeout" from="BossOsme/TimerTeleport" to="BossOsme" method="teleport_start"]
 [connection signal="timeout" from="BossOsme/TimerTeleport2" to="BossOsme" method="_on_TimerTeleport2_timeout"]
 [connection signal="timeout" from="BossOsme/TimerAttack" to="BossOsme" method="_on_TimerAttack_timeout"]
+[connection signal="timeout" from="BossOsme/TimerGroundAttack" to="BossOsme" method="_on_TimerGroundAttack_timeout"]
 [connection signal="timeout" from="TimerStartBattle" to="BossOsme" method="initialize"]
 
 [editable path="NPCOsme"]

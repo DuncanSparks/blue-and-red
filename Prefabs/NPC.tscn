@@ -38,6 +38,7 @@ max_talk_number = 1
 [node name="Interact" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -22 )
+z_index = 50
 texture = ExtResource( 1 )
 hframes = 4
 

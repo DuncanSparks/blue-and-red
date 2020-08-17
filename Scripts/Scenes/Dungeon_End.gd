@@ -6,5 +6,5 @@ func _ready():
 
 func initiate_healthbar():
 	var tween := $TweenHealthbar as Tween
-	tween.interpolate_property($CanvasLayer/HealthbarBoss, "rect_position", Vector2(96, 200), Vector2(96, 162), 4, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
+	tween.interpolate_property($CanvasLayer/HealthbarBoss, "rect_position", Vector2(128, 200), Vector2(128, 162), 4, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
 	tween.start()

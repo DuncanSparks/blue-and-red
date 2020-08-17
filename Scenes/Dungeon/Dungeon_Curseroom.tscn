@@ -30,14 +30,9 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 10 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "idle2",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "cast",
+"name": "talk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
@@ -45,9 +40,14 @@ animations = [ {
 "name": "annoyed",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "talk",
+"name": "cast",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "idle2",
 "speed": 5.0
 } ]
 
@@ -140,7 +140,7 @@ tracks/0/keys = {
 "args": [ "MusicHuman", 2.5 ],
 "method": "talk_fadeout_music"
 }, {
-"args": [ PoolStringArray( "[shake]Foolish mortal!![/shake]", "[shake]What business do you have here\? Do you not know that I am the...[/shake]", "..." ) ],
+"args": [ PoolStringArray( "[shake level=6]Foolish mortal!![/shake]", "[shake level=6]What business do you have here\? Do you not know that I am the...[/shake]", "..." ) ],
 "method": "talk_dialogue"
 }, {
 "args": [ PoolStringArray( "You know what\? I\'ve given this spiel twice this month already.", "Let\'s just skip this part and cut to it." ) ],
@@ -583,6 +583,7 @@ operation = 2
 visible = false
 self_modulate = Color( 0.635294, 0.635294, 0.635294, 1 )
 position = Vector2( -4, -28 )
+z_index = 30
 texture = ExtResource( 20 )
 centered = false
 
