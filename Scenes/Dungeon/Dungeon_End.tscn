@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Scenes/Dungeon_End.gd" type="Script" id=2]
@@ -46,6 +46,11 @@ animations = [ {
 "name": "talk",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "annoyed",
@@ -54,11 +59,6 @@ animations = [ {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "cast",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
 "speed": 5.0
 } ]
 
@@ -426,11 +426,6 @@ animations = [ {
 "name": "ground2",
 "speed": 20.0
 }, {
-"frames": [ ExtResource( 24 ) ],
-"loop": true,
-"name": "idle_side",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "idle_center",
@@ -439,6 +434,11 @@ animations = [ {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "cast_center",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 24 ) ],
+"loop": true,
+"name": "idle_side",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 25 ) ],
@@ -485,7 +485,25 @@ shader_param/color = Color( 0, 0, 0, 1 )
 extents = Vector2( 15, 7 )
 
 [sub_resource type="RectangleShape2D" id=21]
-extents = Vector2( 16, 14 )
+extents = Vector2( 14, 28 )
+
+[sub_resource type="Gradient" id=27]
+offsets = PoolRealArray( 0, 0.506667, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=28]
+gradient = SubResource( 27 )
+
+[sub_resource type="ParticlesMaterial" id=29]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 32.0
+initial_velocity_random = 0.55
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 5.0
+color_ramp = SubResource( 28 )
 
 [sub_resource type="Animation" id=22]
 resource_name = "In"
@@ -602,15 +620,24 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "show_shield"
-}, {
-"args": [  ],
-"method": "display_shield"
 } ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Shield:self_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -762,6 +789,33 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="Animation" id=26]
+resource_name = "Shield Fade"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shield:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shield:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=25]
@@ -992,7 +1046,7 @@ collision_layer = 32
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/Hurtbox"]
-position = Vector2( 0, -15 )
+position = Vector2( 0, 2 )
 shape = SubResource( 21 )
 disabled = true
 
@@ -1018,6 +1072,13 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 12 )
 
+[node name="PartsHurt" type="Particles2D" parent="BossOsme"]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 29 )
+
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="BossOsme"]
 playback_speed = 5.0
 anims/In = SubResource( 22 )
@@ -1027,6 +1088,9 @@ anims/Out = SubResource( 23 )
 autoplay = "Shield"
 playback_speed = 0.03
 anims/Shield = SubResource( 24 )
+
+[node name="AnimationPlayerShield2" type="AnimationPlayer" parent="BossOsme"]
+"anims/Shield Fade" = SubResource( 26 )
 
 [node name="SoundHurt" type="AudioStreamPlayer" parent="BossOsme"]
 stream = ExtResource( 22 )
@@ -1067,6 +1131,10 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
+[node name="TimerDropShield" type="Timer" parent="BossOsme"]
+wait_time = 0.8
+one_shot = true
+
 [node name="Pentagram" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.392157 )
 position = Vector2( 160, 85 )
@@ -1081,12 +1149,14 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 160, 200 )
 shape = SubResource( 25 )
+[connection signal="area_entered" from="BossOsme/Hurtbox" to="BossOsme" method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="BossOsme/Hurtbox" to="BossOsme" method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="BossOsme/GroundAttackHitbox" to="BossOsme" method="_on_GroundAttackHitbox_body_entered"]
 [connection signal="timeout" from="BossOsme/TimerTeleport" to="BossOsme" method="teleport_start"]
 [connection signal="timeout" from="BossOsme/TimerTeleport2" to="BossOsme" method="_on_TimerTeleport2_timeout"]
 [connection signal="timeout" from="BossOsme/TimerAttack" to="BossOsme" method="_on_TimerAttack_timeout"]
 [connection signal="timeout" from="BossOsme/TimerGroundAttack" to="BossOsme" method="_on_TimerGroundAttack_timeout"]
+[connection signal="timeout" from="BossOsme/TimerDropShield" to="BossOsme" method="_on_TimerDropShield_timeout"]
 [connection signal="timeout" from="TimerStartBattle" to="BossOsme" method="initialize"]
 
 [editable path="NPCOsme"]

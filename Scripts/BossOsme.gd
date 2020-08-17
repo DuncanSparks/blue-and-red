@@ -16,6 +16,7 @@ var selected_attack := 0
 var turn_to_face := false
 var follow := false
 var ground_attack := false
+var drop_shield := true
 
 var iframes := false
 
@@ -102,6 +103,7 @@ func teleport():
 func hurt(amount: int):
 	$SoundHurt.play()
 	$SoundHurt2.play()
+	$PartsHurt.set_emitting(true)
 	health -= amount
 	iframes = true
 	$TimerTeleport.stop()
@@ -110,7 +112,9 @@ func hurt(amount: int):
 
 
 func _on_TimerTeleport2_timeout():
-	shielding = not shielding
+	shielding = true
+	ground_attack = false
+	drop_shield = not drop_shield
 	iframes = false
 	selected_attack = int(round(rand_range(0, 3))) if not first_attack else 0
 	if first_attack:
@@ -133,8 +137,8 @@ func _on_TimerTeleport2_timeout():
 	turn_to_face = true
 	
 	
-func display_shield():
-	shield.set_visible(shielding and not in_ground)
+#func display_shield():
+	#shield.set_visible(true)
 	
 	
 func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0):
@@ -153,7 +157,6 @@ func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0):
 
 func _on_TimerAttack_timeout():
 	$GroundAttackHitbox/CollisionShape2D.set_disabled(true)
-	ground_attack = false
 	attacking = true
 	match selected_attack:
 		3:
@@ -161,6 +164,7 @@ func _on_TimerAttack_timeout():
 			$CollisionShape2D.set_disabled(true)
 			$TimerGroundAttack.start()
 		_:
+			$TimerDropShield.start()
 			for i in range(-1, 2):
 				if iframes:
 					break
@@ -173,6 +177,7 @@ func _on_TimerAttack_timeout():
 				
 			$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
 			$TimerTeleport.start()
+			
 		#1:
 		#	follow = true
 		#2:
@@ -189,6 +194,11 @@ func _on_Hurtbox_body_entered(body):
 		body.motion = body.motion.rotated(PI)
 		body.get_node("Sprite").rotation_degrees += 180
 		body.speed *= 2
+		
+		
+func _on_Hurtbox_area_entered(area):
+	if not iframes and not shielding and not in_ground and area.is_in_group("PlayerPounce"):
+		hurt(2)
 
 
 func _on_TimerGroundAttack_timeout():
@@ -208,4 +218,11 @@ func _on_TimerGroundAttack_timeout():
 
 func _on_GroundAttackHitbox_body_entered(body):
 	if body.is_in_group("Player"):
-		body.hurt(1)
+		if not body.iframes and not body.transforming and not body.pouncing:
+			body.hurt(1)
+
+
+func _on_TimerDropShield_timeout():
+	if drop_shield:
+		shielding = false
+		$AnimationPlayerShield2.play("Shield Fade")

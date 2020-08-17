@@ -31,14 +31,24 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 22 ) ],
+"loop": false,
+"name": "swipe",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "land",
+"name": "flame",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "pounce",
+"speed": 12.0
 }, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "flame_2",
+"name": "land",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 11 ) ],
@@ -51,20 +61,10 @@ animations = [ {
 "name": "ouch",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "flame",
+"name": "flame_2",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 8 ) ],
-"loop": false,
-"name": "pounce",
-"speed": 12.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 22 ) ],
-"loop": false,
-"name": "swipe",
-"speed": 12.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -78,14 +78,14 @@ extents = Vector2( 18, 6 )
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 9, 12 )
 
-[sub_resource type="Gradient" id=6]
+[sub_resource type="Gradient" id=27]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=7]
-gradient = SubResource( 6 )
+[sub_resource type="GradientTexture" id=28]
+gradient = SubResource( 27 )
 
-[sub_resource type="ParticlesMaterial" id=8]
+[sub_resource type="ParticlesMaterial" id=29]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -94,7 +94,7 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 7 )
+color_ramp = SubResource( 28 )
 
 [sub_resource type="Animation" id=9]
 length = 3.0
@@ -194,7 +194,7 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 8 )
+process_material = SubResource( 29 )
 
 [node name="SoundSwipe" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 23 )
