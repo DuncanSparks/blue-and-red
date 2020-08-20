@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Scenes/Dungeon_End.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://Audio/Shield.ogg" type="AudioStream" id=31]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_shadow1.png" type="Texture" id=32]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_shadow2.png" type="Texture" id=33]
+[ext_resource path="res://Audio/Badspell.ogg" type="AudioStream" id=34]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -41,14 +42,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "talk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -56,9 +57,9 @@ animations = [ {
 "name": "annoyed",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "cast",
+"name": "idle2",
 "speed": 5.0
 } ]
 
@@ -426,9 +427,14 @@ animations = [ {
 "name": "ground2",
 "speed": 20.0
 }, {
-"frames": [ ExtResource( 7 ) ],
+"frames": [ ExtResource( 25 ) ],
 "loop": true,
-"name": "idle_center",
+"name": "cast_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 28 ) ],
+"loop": true,
+"name": "ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
@@ -436,24 +442,19 @@ animations = [ {
 "name": "cast_center",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 24 ) ],
-"loop": true,
-"name": "idle_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 25 ) ],
-"loop": true,
-"name": "cast_side",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 23 ) ],
 "loop": true,
 "name": "ouch_side",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 28 ) ],
+"frames": [ ExtResource( 24 ) ],
 "loop": true,
-"name": "ground",
+"name": "idle_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "idle_center",
 "speed": 5.0
 } ]
 
@@ -487,14 +488,14 @@ extents = Vector2( 15, 7 )
 [sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 14, 28 )
 
-[sub_resource type="Gradient" id=27]
+[sub_resource type="Gradient" id=22]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=28]
-gradient = SubResource( 27 )
+[sub_resource type="GradientTexture" id=23]
+gradient = SubResource( 22 )
 
-[sub_resource type="ParticlesMaterial" id=29]
+[sub_resource type="ParticlesMaterial" id=24]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -503,10 +504,9 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 28 )
+color_ramp = SubResource( 23 )
 
-[sub_resource type="Animation" id=22]
-resource_name = "In"
+[sub_resource type="Animation" id=25]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -640,7 +640,7 @@ tracks/9/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=26]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -776,7 +776,7 @@ tracks/9/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=27]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:rotation_degrees")
@@ -791,8 +791,7 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Animation" id=26]
-resource_name = "Shield Fade"
+[sub_resource type="Animation" id=28]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:scale")
 tracks/0/interp = 1
@@ -818,7 +817,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=25]
+[sub_resource type="RectangleShape2D" id=29]
 extents = Vector2( 40, 10 )
 
 [node name="Scene" type="Node2D"]
@@ -1077,20 +1076,20 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 29 )
+process_material = SubResource( 24 )
 
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="BossOsme"]
 playback_speed = 5.0
-anims/In = SubResource( 22 )
-anims/Out = SubResource( 23 )
+anims/In = SubResource( 25 )
+anims/Out = SubResource( 26 )
 
 [node name="AnimationPlayerShield" type="AnimationPlayer" parent="BossOsme"]
 autoplay = "Shield"
 playback_speed = 0.03
-anims/Shield = SubResource( 24 )
+anims/Shield = SubResource( 27 )
 
 [node name="AnimationPlayerShield2" type="AnimationPlayer" parent="BossOsme"]
-"anims/Shield Fade" = SubResource( 26 )
+"anims/Shield Fade" = SubResource( 28 )
 
 [node name="SoundHurt" type="AudioStreamPlayer" parent="BossOsme"]
 stream = ExtResource( 22 )
@@ -1117,6 +1116,10 @@ volume_db = -22.0
 stream = ExtResource( 31 )
 volume_db = -16.0
 pitch_scale = 3.0
+
+[node name="SoundSpell" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 34 )
+volume_db = -4.0
 
 [node name="TimerTeleport" type="Timer" parent="BossOsme"]
 one_shot = true
@@ -1148,7 +1151,7 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 160, 200 )
-shape = SubResource( 25 )
+shape = SubResource( 29 )
 [connection signal="area_entered" from="BossOsme/Hurtbox" to="BossOsme" method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="BossOsme/Hurtbox" to="BossOsme" method="_on_Hurtbox_body_entered"]
 [connection signal="body_entered" from="BossOsme/GroundAttackHitbox" to="BossOsme" method="_on_GroundAttackHitbox_body_entered"]

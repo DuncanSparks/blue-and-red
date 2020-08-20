@@ -1,13 +1,16 @@
 extends KinematicBody2D
 
 var motion := Vector2()
-var speed := 110.0
+var speed := 100.0
 
 const blast_ref := preload("res://Prefabs/Blast.tscn")
+const spike_ref := preload("res://Prefabs/Enemies/OsmeSpike.tscn")
 
 var active := false
 var health := 8
 var shielding := false
+
+var attack_count := 0
 
 var first_attack := true
 var attacking := false
@@ -17,6 +20,7 @@ var turn_to_face := false
 var follow := false
 var ground_attack := false
 var drop_shield := true
+var ultra_move := false
 
 var iframes := false
 
@@ -112,15 +116,18 @@ func hurt(amount: int):
 
 
 func _on_TimerTeleport2_timeout():
+	attack_count += 1
 	shielding = true
 	ground_attack = false
 	drop_shield = not drop_shield
 	iframes = false
-	selected_attack = int(round(rand_range(0, 3))) if not first_attack else 0
+	selected_attack = int(round(rand_range(0, 6))) if attack_count > 2 else int(round(rand_range(0, 2))) if not first_attack else 0
 	if first_attack:
 		first_attack = false
 		
 	in_ground = selected_attack == 3
+	if in_ground and health < 4 and not ultra_move:
+		in_ground = false
 		
 	anim_player_teleport.play("In")
 	#sprite.play("idle")
@@ -141,11 +148,13 @@ func _on_TimerTeleport2_timeout():
 	#shield.set_visible(true)
 	
 	
-func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0):
+func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0, homing: bool = true):
 	var blast := blast_ref.instance()
 	blast.set_position(pos)
-	var angle: float = direction if is_ground_attack else get_position().direction_to(player_ref.get_global_position()).angle()
+	var angle: float = direction if is_ground_attack or not homing else get_position().direction_to(player_ref.get_global_position()).angle()
 	blast.motion = Vector2.RIGHT.rotated(angle)
+	if not homing:
+		blast.speed *= 0.5
 	blast.get_node("Sprite").set_rotation(angle)
 	blast.get_node("CollisionShape2D").set_rotation(angle)
 	blast.set_modulate(Color("#a334f1") if not is_ground_attack else Color.black)
@@ -158,32 +167,68 @@ func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0):
 func _on_TimerAttack_timeout():
 	$GroundAttackHitbox/CollisionShape2D.set_disabled(true)
 	attacking = true
-	match selected_attack:
-		3:
-			follow = true
-			$CollisionShape2D.set_disabled(true)
-			$TimerGroundAttack.start()
-		_:
-			$TimerDropShield.start()
-			for i in range(-1, 2):
-				if iframes:
-					break
-				$SoundBlast.play()
-				spawn_blast(get_position() + Vector2(30 * i, 30 * i), false)
-				yield(get_tree().create_timer(0.5), "timeout")
-			
-			if iframes:
-				return
+	if health < 4 and not ultra_move:
+		ultra_move = true
+	else:
+		match selected_attack:
+			3:
+				follow = true
+				$CollisionShape2D.set_disabled(true)
+				$TimerGroundAttack.start()
+			0,4:
+				$TimerDropShield.start()
+				for i in range(-1, 2):
+					if iframes:
+						break
+					$SoundBlast.play()
+					spawn_blast(get_position() + Vector2(30 * i, 30 * i), false)
+					yield(get_tree().create_timer(0.5), "timeout")
 				
-			$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
-			$TimerTeleport.start()
-			
-		#1:
-		#	follow = true
-		#2:
-		#	follow = true
-		#3:
-		#	follow = true
+				if iframes:
+					return
+					
+				$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
+				$TimerTeleport.start()
+			1,5:
+				$TimerDropShield.start()
+				for i in range(4):
+					if iframes:
+						break
+					$SoundBlast.play()
+					spawn_blast(Vector2(-6 if i % 2 == 0 else 326, rand_range(20, 160)), false, 0.0 if i % 2 == 0 else PI, false)
+					yield(get_tree().create_timer(0.5), "timeout")
+					
+				if iframes:
+					return
+					
+				$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
+				$TimerTeleport.start()
+				
+			2,6:
+				$TimerDropShield.start()
+				$SoundTeleport2.play()
+				$SoundSpell.play()
+				for _i in range(4):
+					#spawn_blast(Vector2(-6 if i % 2 == 0 else 326, rand_range(20, 160)), false, 0.0 if i % 2 == 0 else PI, false)
+					#yield(get_tree().create_timer(0.5), "timeout")
+					
+					var spike := spike_ref.instance() as Area2D
+					spike.set_position(Vector2(rand_range(48, 272), rand_range(64, 160)))
+					get_node("..").add_child(spike)
+					
+					
+				#if iframes:
+					#return
+					
+				$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
+				$TimerTeleport.start()
+				
+			#1:
+			#	follow = true
+			#2:
+			#	follow = true
+			#3:
+			#	follow = true
 	
 
 func _on_Hurtbox_body_entered(body):
