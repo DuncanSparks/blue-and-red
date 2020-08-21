@@ -72,7 +72,7 @@ func hurt(amount: int):
 	$TimerAttack.stop()
 	if health > 0:
 		$Healthbar.show()
-		#$AnimationPlayer.play("Iframes")
+		$AnimationPlayer.play("Iframes")
 		$TimerHurt.start()
 		iframes = true
 	else:
