@@ -230,8 +230,8 @@ shape = SubResource( 1 )
 
 [node name="NPCIvari" parent="." instance=ExtResource( 3 )]
 position = Vector2( 194, 56 )
+npc_color = Color( 0.513726, 1, 0.447059, 1 )
 max_talk_number = 2
-turn_to_face = true
 
 [node name="Sprite" parent="NPCIvari" index="0"]
 frames = SubResource( 2 )

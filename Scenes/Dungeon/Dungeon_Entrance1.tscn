@@ -121,7 +121,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=14]
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
 "frames": [ ExtResource( 12 ) ],
 "loop": true,
@@ -129,14 +129,13 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 8, 4 )
 
 [sub_resource type="CircleShape2D" id=15]
 radius = 24.0832
 
-[sub_resource type="Animation" id=13]
-resource_name = "Talk"
+[sub_resource type="Animation" id=16]
 length = 0.1
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -317,24 +316,23 @@ anims/Tutorial = SubResource( 12 )
 position = Vector2( -40, 107 )
 z_index = 104
 npc_name = "Sign"
-npc_color = Color( 0.513726, 1, 0.447059, 1 )
 max_talk_number = 0
 
 [node name="Sprite" parent="NPCSign" index="0"]
 position = Vector2( -8, -6 )
-frames = SubResource( 14 )
+frames = SubResource( 13 )
 animation = "idle"
 centered = false
 
 [node name="CollisionShape2D" parent="NPCSign" index="2"]
 position = Vector2( 0, 3 )
-shape = SubResource( 16 )
+shape = SubResource( 14 )
 
 [node name="CollisionShape2D" parent="NPCSign/AreaInteract" index="0"]
 shape = SubResource( 15 )
 
 [node name="AnimationPlayerTalk" parent="NPCSign" index="4"]
-anims/Talk = SubResource( 13 )
+anims/Talk = SubResource( 16 )
 
 [editable path="LoadingZone"]
 

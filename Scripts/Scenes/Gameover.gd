@@ -25,8 +25,6 @@ func _on_Timer_timeout():
 
 
 func _on_Timer2_timeout():
-	#Controller.player_transformed = false
-	#Controller.goto_scene("res://Scenes/Title.tscn", Vector2())
 	Controller.undo_fadeout()
 	Controller.restore_checkpoint()
 

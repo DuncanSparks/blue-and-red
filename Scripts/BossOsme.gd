@@ -21,6 +21,7 @@ var follow := false
 var ground_attack := false
 var drop_shield := true
 var ultra_move := false
+var ultra_shield := false
 
 var iframes := false
 
@@ -46,7 +47,7 @@ func _process(delta):
 	
 	healthbar.set_value(health)
 	
-	if in_ground:
+	if in_ground and health > 0:
 		if not ground_attack:
 			sprite.play("ground")
 	elif turn_to_face:
@@ -96,10 +97,6 @@ func teleport():
 	teleport_target = target_point.get_global_position()
 	$CollisionShape2D.set_disabled(true)
 	$Hurtbox/CollisionShape2D.set_disabled(true)
-	#$ParticlesTeleport.set_emitting(true)
-	#sprite.hide()
-	#shield.hide()
-	#$SoundTeleport.play()
 	$TimerTeleport2.start()
 	turn_to_face = false
 	
@@ -112,7 +109,29 @@ func hurt(amount: int):
 	iframes = true
 	$TimerTeleport.stop()
 	$TimerAttack.stop()
-	teleport_start()
+	if health > 0:
+		teleport_start()
+	else:
+		Controller.run_speedrun_stats = false
+		$SoundDie.play()
+		$SoundDie2.play()
+		$PartsHurt.set_one_shot(false)
+		$PartsHurt.set_emitting(true)
+		get_node("../MusicBoss").stop()
+		healthbar.hide()
+		
+		var player := get_node("../Player") as KinematicBody2D
+		player.disable_pounce(true)
+		player.stop(true)
+		if player.demon_form:
+			player.get_node("Sprite").play("sit_demon")
+		
+		player_ref.start_pounce_meter(false)
+		
+		Controller.stop_timer(true)
+		Controller.uninitialize_timer()
+		yield(get_tree().create_timer(3.0), "timeout")
+		get_node("../NPCOsme/AnimationPlayerTalk").play("Talk3")
 
 
 func _on_TimerTeleport2_timeout():
@@ -121,31 +140,27 @@ func _on_TimerTeleport2_timeout():
 	ground_attack = false
 	drop_shield = not drop_shield
 	iframes = false
-	selected_attack = int(round(rand_range(0, 6))) if attack_count > 2 else int(round(rand_range(0, 2))) if not first_attack else 0
+	selected_attack = int(round(rand_range(0, 2))) if health < 5 and not ultra_move else int(round(rand_range(0, 6))) if attack_count > 2 else int(round(rand_range(0, 2))) if not first_attack else 0
 	if first_attack:
 		first_attack = false
 		
 	in_ground = selected_attack == 3
-	if in_ground and health < 4 and not ultra_move:
-		in_ground = false
+	if health < 5 and not ultra_move:
+		ultra_shield = true
+		if in_ground:
+			in_ground = false
+		
+	if ultra_shield:	
+		$Shield2.show()
 		
 	anim_player_teleport.play("In")
-	#sprite.play("idle")
 	set_global_position(teleport_target)
-	#$SoundTeleport.play()
-	#$Healthbar.hide()
 	$CollisionShape2D.set_disabled(false)
 	$Hurtbox/CollisionShape2D.set_disabled(false)
-	#$ParticlesTeleport2.set_emitting(true)
-	#sprite.show()
 	iframes = false
 	$TimerAttack.set_wait_time(rand_range(0.78, 1.5))
 	$TimerAttack.start()
 	turn_to_face = true
-	
-	
-#func display_shield():
-	#shield.set_visible(true)
 	
 	
 func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0, homing: bool = true):
@@ -157,7 +172,7 @@ func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0, hom
 		blast.speed *= 0.5
 	blast.get_node("Sprite").set_rotation(angle)
 	blast.get_node("CollisionShape2D").set_rotation(angle)
-	blast.set_modulate(Color("#a334f1") if not is_ground_attack else Color.black)
+	blast.set_modulate(Color("#a334f1"))
 	blast.set_collision_layer_bit(5, false)
 	blast.set_collision_mask_bit(5, false)
 	blast.set_collision_layer_bit(15, true)
@@ -167,13 +182,25 @@ func spawn_blast(pos: Vector2, is_ground_attack: bool, direction: float = 0, hom
 func _on_TimerAttack_timeout():
 	$GroundAttackHitbox/CollisionShape2D.set_disabled(true)
 	attacking = true
-	if health < 4 and not ultra_move:
+	if health < 5 and not ultra_move:
 		ultra_move = true
+		get_node("../OrbBlue").spawn()
+		yield(get_tree().create_timer(0.4), "timeout")
+		get_node("../OrbBlue2").spawn()
+		yield(get_tree().create_timer(0.4), "timeout")
+		get_node("../OrbRed").spawn()
+		yield(get_tree().create_timer(0.4), "timeout")
+		get_node("../OrbRed2").spawn()
+		yield(get_tree().create_timer(0.4), "timeout")
+		
+		$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
+		$TimerTeleport.start()
 	else:
 		match selected_attack:
 			3:
 				follow = true
 				$CollisionShape2D.set_disabled(true)
+				$Hurtbox/CollisionShape2D.set_disabled(false)
 				$TimerGroundAttack.start()
 			0,4:
 				$TimerDropShield.start()
@@ -187,7 +214,7 @@ func _on_TimerAttack_timeout():
 				if iframes:
 					return
 					
-				$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
+				$TimerTeleport.set_wait_time(rand_range(1.2, 1.8))
 				$TimerTeleport.start()
 			1,5:
 				$TimerDropShield.start()
@@ -201,7 +228,7 @@ func _on_TimerAttack_timeout():
 				if iframes:
 					return
 					
-				$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
+				$TimerTeleport.set_wait_time(rand_range(1.5, 2.2))
 				$TimerTeleport.start()
 				
 			2,6:
@@ -209,31 +236,23 @@ func _on_TimerAttack_timeout():
 				$SoundTeleport2.play()
 				$SoundSpell.play()
 				for _i in range(4):
-					#spawn_blast(Vector2(-6 if i % 2 == 0 else 326, rand_range(20, 160)), false, 0.0 if i % 2 == 0 else PI, false)
-					#yield(get_tree().create_timer(0.5), "timeout")
-					
 					var spike := spike_ref.instance() as Area2D
-					spike.set_position(Vector2(rand_range(48, 272), rand_range(64, 160)))
+					spike.set_position(Vector2(rand_range(48, 272), rand_range(64, 140)))
 					get_node("..").add_child(spike)
-					
-					
-				#if iframes:
-					#return
-					
-				$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
+
+				$TimerTeleport.set_wait_time(rand_range(1.5, 2.2))
 				$TimerTeleport.start()
-				
-			#1:
-			#	follow = true
-			#2:
-			#	follow = true
-			#3:
-			#	follow = true
-	
+
 
 func _on_Hurtbox_body_entered(body):
-	if not iframes and not shielding and not in_ground and body.is_in_group("PlayerBlast"):
-		hurt(1)
+	if not iframes and not ultra_shield and body.is_in_group("PlayerBlast"):
+		if in_ground or not shielding:
+			hurt(1)
+		elif not in_ground:
+			$SoundBounce.play()
+			body.motion = body.motion.rotated(PI)
+			body.get_node("Sprite").rotation_degrees += 180
+			body.speed *= 2
 	elif not in_ground:
 		$SoundBounce.play()
 		body.motion = body.motion.rotated(PI)
@@ -242,29 +261,27 @@ func _on_Hurtbox_body_entered(body):
 		
 		
 func _on_Hurtbox_area_entered(area):
-	if not iframes and not shielding and not in_ground and area.is_in_group("PlayerPounce"):
-		hurt(2)
+	if area.is_in_group("PlayerPounce"):
+		if not iframes and not shielding and not ultra_shield and not in_ground:
+			hurt(3)
+		elif not in_ground:
+			$SoundBounce.play()
 
 
 func _on_TimerGroundAttack_timeout():
 	follow = false
 	ground_attack = true
 	$GroundAttackHitbox/CollisionShape2D.set_disabled(false)
+	$Hurtbox/CollisionShape2D.set_disabled(false)
 	$SoundTeleport2.play()
 	$SoundBlast.play()
 	spawn_blast(get_position() + Vector2(30, 0), true, 0)
 	spawn_blast(get_position() + Vector2(0, -30), true, PI / 2)
-	spawn_blast(get_position() + Vector2(-30, 30), true, PI)
+	spawn_blast(get_position() + Vector2(-30, 0), true, PI)
 	spawn_blast(get_position() + Vector2(0, 30), true, (3 * PI) / 2)
 	sprite.play("ground2")
 	$TimerTeleport.set_wait_time(rand_range(0.85, 1.85))
 	$TimerTeleport.start()
-
-
-func _on_GroundAttackHitbox_body_entered(body):
-	if body.is_in_group("Player"):
-		if not body.iframes and not body.transforming and not body.pouncing:
-			body.hurt(1)
 
 
 func _on_TimerDropShield_timeout():

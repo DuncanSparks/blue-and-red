@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/GenericScene.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/Attachments/OperateOnFlag.gd" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 32 )
@@ -15,9 +18,13 @@ extents = Vector2( 32, 8 )
 extents = Vector2( 8, 40 )
 
 [node name="Scene" type="Node2D"]
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_vertical_guides_": [ 160.0 ]
 }
+enemy_threshold = 1
+flag_override = "demon_door_10"
+flag_override_value = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1000
@@ -30,6 +37,23 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="TileMap2" type="TileMap" parent="."]
+z_index = -1000
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 512
+collision_mask = 512
+format = 1
+tile_data = PoolIntArray( 14, 18, 0, 15, 18, 0, 16, 18, 0, 65550, 18, 0, 65551, 18, 0, 65552, 18, 0, 131086, 18, 0, 131087, 18, 0, 131088, 18, 0, 196622, 19, 0, 196623, 19, 0, 196624, 19, 0, 262158, 19, 0, 262159, 19, 0, 262160, 19, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="OperateOnFlag" type="Node" parent="TileMap2" instance=ExtResource( 6 )]
+script = ExtResource( 7 )
+flag = "demon_door_10"
+value = 1
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 256, 112 )
@@ -94,6 +118,9 @@ position = Vector2( 248, 40 )
 "TeleportPoint",
 ]]
 position = Vector2( 32, 112 )
+[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
+[connection signal="enemy_threshold_reached" from="." to="." method="set_flag" binds= [ "demon_door_10", 1 ]]
+[connection signal="enemy_dead" from="EnemySpawn" to="." method="increment_enemies_defeated"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 
 [editable path="LoadingZone"]

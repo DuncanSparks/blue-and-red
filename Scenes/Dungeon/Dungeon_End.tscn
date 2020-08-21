@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=76 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Scenes/Dungeon_End.gd" type="Script" id=2]
@@ -34,6 +34,12 @@
 [ext_resource path="res://Sprites/Characters/Osme/Osme_shadow1.png" type="Texture" id=32]
 [ext_resource path="res://Sprites/Characters/Osme/Osme_shadow2.png" type="Texture" id=33]
 [ext_resource path="res://Audio/Badspell.ogg" type="AudioStream" id=34]
+[ext_resource path="res://Prefabs/OrbBlue.tscn" type="PackedScene" id=35]
+[ext_resource path="res://Audio/OsmeDie2.ogg" type="AudioStream" id=36]
+[ext_resource path="res://Audio/OsmeDie.ogg" type="AudioStream" id=37]
+[ext_resource path="res://Sprites/Characters/Player_human.png" type="Texture" id=38]
+[ext_resource path="res://Sprites/Characters/Friendly NPCs/Ivari_idle.png" type="Texture" id=39]
+[ext_resource path="res://Audio/Transform1.ogg" type="AudioStream" id=40]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -47,6 +53,11 @@ animations = [ {
 "name": "cast",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "talk",
@@ -55,11 +66,6 @@ animations = [ {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "annoyed",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle2",
 "speed": 5.0
 } ]
 
@@ -76,8 +82,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.1, 1, 2.8, 3.2, 5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0.1, 1, 2.8, 3.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "values": [ {
 "args": [ PoolStringArray( "Oh.", "It\'s you.", "Great.", "Looks like someone managed to partially break my curse.", "Remind me to slap Ivari later.", "And it looks like you\'ve gotten pretty acclimated to being a demon. I\'m impressed.", "You even managed to get past all my cohorts." ) ],
 "method": "talk_dialogue"
@@ -90,9 +96,6 @@ tracks/0/keys = {
 }, {
 "args": [ PoolStringArray( "You want to seal me away\?", "Give it a try, nerd!" ) ],
 "method": "talk_dialogue"
-}, {
-"args": [  ],
-"method": "queue_free"
 } ]
 }
 tracks/1/type = "method"
@@ -193,11 +196,14 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 3.8 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 3.8, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "initiate_healthbar"
+}, {
+"args": [  ],
+"method": "hide_npc"
 } ]
 }
 tracks/8/type = "method"
@@ -244,8 +250,8 @@ tracks/10/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-resource_name = "Talk2"
-length = 0.1
+resource_name = "Talk3"
+length = 12.0
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -253,12 +259,361 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0, 10, 11 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ PoolStringArray( "Are you kidding me\?", "I lost to a university student.", "This is not one of my better days.", "Well, good job. You sealed me away.", "You know the drill. I\'ll be back in two months, or whatever.", "LATER, you jerk!" ), true ],
+"method": "talk_dialogue"
+}, {
+"args": [ PoolStringArray( "I\'m impressed, kid.", "You managed to defeat Osme.", "Looks like it broke the curse on you, too.", "Kind of a shame.", "You looked like you were having fun scampering around as a demon.", "Maybe Osme will curse you again in two months.", "Assuming they decide to send you to defeat him again.", "We\'ll see what happens." ), true ],
+"method": "talk_dialogue"
+}, {
+"args": [  ],
+"method": "talk_show_stats"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../BossOsme:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 1.1, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1.3, 0.5 ), Vector2( 0.4, 1.4 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../BossOsme:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../BossOsme/SoundDie3")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ PoolStringArray( "Thanks for playing." ), false ],
-"method": "talk_dialogue"
+"args": [ 0.0 ],
+"method": "play"
 } ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("../SoundThunder")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 2.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../CanvasLayer/Flash:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 2.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("../AnimationPlayerScreenshake")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 2.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Screenshake", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("../BossOsme/PartsDie")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emitting", true ],
+"method": "set"
+} ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("../CanvasLayer/Flash:color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 6.2, 8.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.898039, 0.823529, 1 ), Color( 1, 0.898039, 0.823529, 1 ), Color( 1, 0.898039, 0.823529, 0 ) ]
+}
+tracks/9/type = "method"
+tracks/9/path = NodePath("../Player")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+tracks/10/type = "method"
+tracks/10/path = NodePath("../PlayerProp")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+} ]
+}
+tracks/11/type = "method"
+tracks/11/path = NodePath("../IvariProp")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+} ]
+}
+tracks/12/type = "method"
+tracks/12/path = NodePath("../BossOsme")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+tracks/13/type = "method"
+tracks/13/path = NodePath("..")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "change_npc"
+} ]
+}
+tracks/14/type = "method"
+tracks/14/path = NodePath("../MusicEnding")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/15/type = "method"
+tracks/15/path = NodePath("../TileMap2")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+
+[sub_resource type="Animation" id=32]
+resource_name = "Talk4"
+length = 2.5
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Sprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../CanvasLayer/Flash:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 1,
+"values": [  ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../SoundThunder")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("../AnimationPlayerScreenshake")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("../AnimationPlayerTeleport")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 1.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Teleport", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("../MusicBoss")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 1.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("..")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 1.3, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "initiate_healthbar"
+}, {
+"args": [  ],
+"method": "hide_npc"
+} ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath("../TimerStartBattle")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 2.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start"
+} ]
+}
+tracks/9/type = "method"
+tracks/9/path = NodePath("../TileMap2")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/10/type = "method"
+tracks/10/path = NodePath("../TileMap2")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
 }
 
 [sub_resource type="Gradient" id=5]
@@ -422,14 +777,19 @@ tracks/6/keys = {
 
 [sub_resource type="SpriteFrames" id=17]
 animations = [ {
+"frames": [ ExtResource( 24 ) ],
+"loop": true,
+"name": "idle_side",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 26 ) ],
 "loop": false,
 "name": "ground2",
 "speed": 20.0
 }, {
-"frames": [ ExtResource( 25 ) ],
+"frames": [ ExtResource( 23 ) ],
 "loop": true,
-"name": "cast_side",
+"name": "ouch_side",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 28 ) ],
@@ -437,24 +797,19 @@ animations = [ {
 "name": "ground",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 25 ) ],
 "loop": true,
-"name": "cast_center",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 23 ) ],
-"loop": true,
-"name": "ouch_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 24 ) ],
-"loop": true,
-"name": "idle_side",
+"name": "cast_side",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "idle_center",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast_center",
 "speed": 5.0
 } ]
 
@@ -482,20 +837,26 @@ shader_param/sinConst = 0.015
 shader_param/timeConst = 2.0
 shader_param/color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="RectangleShape2D" id=20]
-extents = Vector2( 15, 7 )
+[sub_resource type="ShaderMaterial" id=20]
+shader = SubResource( 18 )
+shader_param/sinConst = 0.015
+shader_param/timeConst = 2.0
+shader_param/color = Color( 0.623529, 0, 1, 1 )
 
 [sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 15, 7 )
+
+[sub_resource type="RectangleShape2D" id=22]
 extents = Vector2( 14, 28 )
 
-[sub_resource type="Gradient" id=22]
+[sub_resource type="Gradient" id=23]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=23]
-gradient = SubResource( 22 )
+[sub_resource type="GradientTexture" id=24]
+gradient = SubResource( 23 )
 
-[sub_resource type="ParticlesMaterial" id=24]
+[sub_resource type="ParticlesMaterial" id=25]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -504,9 +865,29 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 23 )
+color_ramp = SubResource( 24 )
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Gradient" id=33]
+offsets = PoolRealArray( 0, 0.506667, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=34]
+gradient = SubResource( 33 )
+
+[sub_resource type="ParticlesMaterial" id=35]
+emission_shape = 2
+emission_box_extents = Vector3( 15, 15, 15 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = -120.0
+scale = 2.0
+color_ramp = SubResource( 34 )
+
+[sub_resource type="Animation" id=26]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -639,8 +1020,32 @@ tracks/9/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath("Shield2:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.3, 0.2 ), Vector2( 0.5, 1.3 ), Vector2( 1, 1 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Shield2:self_modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=27]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -775,8 +1180,34 @@ tracks/9/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath("Shield2:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 1.3 ), Vector2( 0.3, 0.2 ) ]
+}
+tracks/11/type = "method"
+tracks/11/path = NodePath("Shield2")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=28]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:rotation_degrees")
@@ -791,7 +1222,7 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=29]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:scale")
 tracks/0/interp = 1
@@ -817,8 +1248,61 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=29]
+[sub_resource type="RectangleShape2D" id=30]
 extents = Vector2( 40, 10 )
+
+[sub_resource type="Animation" id=31]
+resource_name = "Orbs"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("OrbBlue:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 24, 56 ), Vector2( 24, 168 ), Vector2( 24, 56 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("OrbBlue2:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 296, 168 ), Vector2( 296, 56 ), Vector2( 296, 168 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("OrbRed:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 96, 40 ), Vector2( 232, 40 ), Vector2( 96, 40 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("OrbRed2:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 256, 168 ), Vector2( 56, 168 ), Vector2( 256, 168 ) ]
+}
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 2 )
@@ -871,7 +1355,8 @@ shape = SubResource( 2 )
 
 [node name="AnimationPlayerTalk" parent="NPCOsme" index="4"]
 anims/Talk = SubResource( 3 )
-anims/Talk2 = SubResource( 4 )
+anims/Talk3 = SubResource( 4 )
+anims/Talk4 = SubResource( 32 )
 
 [node name="PartsTeleport" type="Particles2D" parent="NPCOsme"]
 emitting = false
@@ -1035,9 +1520,15 @@ animation = "cast_center"
 material = SubResource( 19 )
 texture = ExtResource( 20 )
 
+[node name="Shield2" type="Sprite" parent="BossOsme"]
+visible = false
+material = SubResource( 20 )
+scale = Vector2( 0.3, 0.2 )
+texture = ExtResource( 20 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme"]
 position = Vector2( 1, 23 )
-shape = SubResource( 20 )
+shape = SubResource( 21 )
 disabled = true
 
 [node name="Hurtbox" type="Area2D" parent="BossOsme"]
@@ -1046,14 +1537,14 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/Hurtbox"]
 position = Vector2( 0, 2 )
-shape = SubResource( 21 )
+shape = SubResource( 22 )
 disabled = true
 
 [node name="GroundAttackHitbox" type="Area2D" parent="BossOsme"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/GroundAttackHitbox"]
 position = Vector2( 1, 23 )
-shape = SubResource( 20 )
+shape = SubResource( 21 )
 disabled = true
 
 [node name="PartsTeleport" type="Particles2D" parent="BossOsme"]
@@ -1076,20 +1567,25 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 24 )
+process_material = SubResource( 25 )
+
+[node name="PartsDie" type="Particles2D" parent="BossOsme"]
+emitting = false
+amount = 16
+process_material = SubResource( 35 )
 
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="BossOsme"]
 playback_speed = 5.0
-anims/In = SubResource( 25 )
-anims/Out = SubResource( 26 )
+anims/In = SubResource( 26 )
+anims/Out = SubResource( 27 )
 
 [node name="AnimationPlayerShield" type="AnimationPlayer" parent="BossOsme"]
 autoplay = "Shield"
 playback_speed = 0.03
-anims/Shield = SubResource( 27 )
+anims/Shield = SubResource( 28 )
 
 [node name="AnimationPlayerShield2" type="AnimationPlayer" parent="BossOsme"]
-"anims/Shield Fade" = SubResource( 28 )
+"anims/Shield Fade" = SubResource( 29 )
 
 [node name="SoundHurt" type="AudioStreamPlayer" parent="BossOsme"]
 stream = ExtResource( 22 )
@@ -1121,6 +1617,17 @@ pitch_scale = 3.0
 stream = ExtResource( 34 )
 volume_db = -4.0
 
+[node name="SoundDie" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 37 )
+
+[node name="SoundDie2" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 36 )
+
+[node name="SoundDie3" type="AudioStreamPlayer" parent="BossOsme"]
+stream = ExtResource( 40 )
+volume_db = -14.0
+pitch_scale = 0.42
+
 [node name="TimerTeleport" type="Timer" parent="BossOsme"]
 one_shot = true
 
@@ -1151,10 +1658,48 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 160, 200 )
-shape = SubResource( 29 )
+shape = SubResource( 30 )
+
+[node name="OrbBlue" parent="." instance=ExtResource( 35 )]
+
+[node name="Sprite" parent="OrbBlue" index="0"]
+self_modulate = Color( 0, 0.65098, 0.878431, 0 )
+
+[node name="OrbBlue2" parent="." instance=ExtResource( 35 )]
+position = Vector2( 296, 168 )
+
+[node name="Sprite" parent="OrbBlue2" index="0"]
+self_modulate = Color( 0, 0.65098, 0.878431, 0 )
+
+[node name="OrbRed" parent="." instance=ExtResource( 35 )]
+position = Vector2( 96, 40 )
+color = 1
+
+[node name="Sprite" parent="OrbRed" index="0"]
+self_modulate = Color( 1, 0.156863, 0.156863, 0 )
+
+[node name="OrbRed2" parent="." instance=ExtResource( 35 )]
+position = Vector2( 256, 168 )
+color = 1
+
+[node name="Sprite" parent="OrbRed2" index="0"]
+self_modulate = Color( 1, 0.156863, 0.156863, 0 )
+
+[node name="AnimationPlayerOrbs" type="AnimationPlayer" parent="."]
+autoplay = "Orbs"
+anims/Orbs = SubResource( 31 )
+
+[node name="PlayerProp" type="Sprite" parent="."]
+visible = false
+position = Vector2( 136, 96 )
+texture = ExtResource( 38 )
+
+[node name="IvariProp" type="Sprite" parent="."]
+visible = false
+position = Vector2( 184, 96 )
+texture = ExtResource( 39 )
 [connection signal="area_entered" from="BossOsme/Hurtbox" to="BossOsme" method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="BossOsme/Hurtbox" to="BossOsme" method="_on_Hurtbox_body_entered"]
-[connection signal="body_entered" from="BossOsme/GroundAttackHitbox" to="BossOsme" method="_on_GroundAttackHitbox_body_entered"]
 [connection signal="timeout" from="BossOsme/TimerTeleport" to="BossOsme" method="teleport_start"]
 [connection signal="timeout" from="BossOsme/TimerTeleport2" to="BossOsme" method="_on_TimerTeleport2_timeout"]
 [connection signal="timeout" from="BossOsme/TimerAttack" to="BossOsme" method="_on_TimerAttack_timeout"]
@@ -1163,3 +1708,11 @@ shape = SubResource( 29 )
 [connection signal="timeout" from="TimerStartBattle" to="BossOsme" method="initialize"]
 
 [editable path="NPCOsme"]
+
+[editable path="OrbBlue"]
+
+[editable path="OrbBlue2"]
+
+[editable path="OrbRed"]
+
+[editable path="OrbRed2"]

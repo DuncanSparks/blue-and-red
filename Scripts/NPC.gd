@@ -99,7 +99,7 @@ func talk_checkpoint():
 	
 	
 func talk_show_stats():
-	Controller.run_speedrun_stats = false
+	anim_talk.stop(false)
 	get_node("../Label").set_text("%s Enemies defeated\n%s Deaths\n%s" % [Controller.kills, Controller.deaths, Controller.get_time_string()])
 	get_node("../Label").show()
 

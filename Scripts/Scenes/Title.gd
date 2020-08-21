@@ -91,7 +91,6 @@ func _on_TweenStart_tween_all_completed():
 	Controller.time = 0.0
 	Controller.kills = 0
 	Controller.deaths = 0
-	#Controller.goto_scene("res://Scenes/Dungeon/Dungeon_Entrance1.tscn", Vector2(160, 158))
 	
 	
 func _on_TweenCredits_tween_all_completed():

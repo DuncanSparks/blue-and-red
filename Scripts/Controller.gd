@@ -40,6 +40,7 @@ const flags_initial := {
 	"demon_door_7": 0,
 	"demon_door_8": 0,
 	"demon_door_9": 0,
+	"demon_door_10": 0,
 	
 	"floorswitch_1": 0,
 	"floorswitch_2": 0,
@@ -158,6 +159,7 @@ func restore_checkpoint():
 	$MusicDemon.set_volume_db(-14)
 	get_node(checkpoint_music).play()
 	Cursor.change_mode(player_transformed)
+	change_healthbar_color(player_transformed)
 	can_pause = true
 	if flags["meet_ivari"] == 1:
 		initialize_timer()

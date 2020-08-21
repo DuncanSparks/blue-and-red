@@ -21,6 +21,7 @@ var shielding := false
 var transforming := false
 var pending_transformation := false
 var pouncing := false
+var pounce_disabled := false
 
 var stopped := false
 
@@ -91,30 +92,7 @@ func _process(_delta):
 func _physics_process(_delta):
 	if can_control:
 		move_and_slide(motion * speed)
-	
-	
-#func shield():
-#	$SoundShield.play()
-#	sprite.play("shield_human")
-#	var spr := $Shield as Sprite
-#	spr.set_self_modulate(Color(1, 1, 1, 1))
-#	spr.set_scale(Vector2(1, 1))
-#	$Shield.show()
-#	$Shield/AnimationPlayer.play("Spin")
-#	shielding = true
-#	$Shield/Timer.start()
-#	cooldown_shield = true
-#
-#
-#func shield_end():
-#	shielding = false
-#	var tween := $TweenShieldMeter as Tween
-#	var meter := $CooldownShieldMeter as TextureProgress
-#	meter.show()
-#	tween.interpolate_property(meter, "value", 4.0, 0.0, 4.0)
-#	tween.start()
-#	$TimerCooldownShield.start()
-	
+
 	
 func pounce():
 	if not can_control:
@@ -125,7 +103,6 @@ func pounce():
 		$AnimationPlayerSpeed.stop()
 		sprite.play("pounce_demon")
 		speed = 320.0
-		#motion = Vector2.RIGHT.rotated(get_global_position().direction_to(pounce_target).angle())
 		pouncing = true
 		$PounceBox/CollisionShape2D.set_disabled(false)
 		$TimerPounce.start()
@@ -238,10 +215,13 @@ func start_pounce_meter(start: bool):
 		tween.start()
 		meter.show()
 	else:
-		
 		$CooldownPounceMeter.hide()
 		$TimerCooldownPounce.stop()
 	
+
+func disable_pounce(disable: bool):
+	pounce_disabled = disable
+
 
 func finish_transformation(use_override: bool = false, override: bool = false, use_iframes: bool = false):
 	demon_form = not demon_form if not use_override else override
@@ -286,15 +266,16 @@ func _on_TimerPounce2_timeout():
 	pouncing = false
 	speed = 90.0
 	$AnimationPlayerSpeed.play("Speed Variance")
-	$TimerCooldownPounce.start()
-	var tween := $TweenShieldMeter as Tween
-	var meter := $CooldownPounceMeter as TextureProgress
-	tween.interpolate_property(meter, "value", 1.5, 0.0, 1.5)
-	tween.start()
-	meter.show()
-	if pending_transformation:
-		pending_transformation = false
-		transformation(false)
+	if not pounce_disabled:
+		$TimerCooldownPounce.start()
+		var tween := $TweenShieldMeter as Tween
+		var meter := $CooldownPounceMeter as TextureProgress
+		tween.interpolate_property(meter, "value", 1.5, 0.0, 1.5)
+		tween.start()
+		meter.show()
+		if pending_transformation:
+			pending_transformation = false
+			transformation(false)
 
 
 func _on_TimerCooldownPounce_timeout():

@@ -110,8 +110,8 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Grey_3.tscn"
 
 [node name="CollisionShape2D" parent="LoadingZone3" index="0"]
 shape = SubResource( 4 )
-[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_threshold_reached" from="." to="." method="set_flag" binds= [ "demon_door_6", 1 ]]
+[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_dead" from="EnemySpawn" to="." method="increment_enemies_defeated"]
 [connection signal="enemy_dead" from="EnemySpawn2" to="." method="increment_enemies_defeated"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]

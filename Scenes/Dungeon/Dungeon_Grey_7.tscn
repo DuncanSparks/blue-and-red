@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/GenericScene.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scripts/Attachments/OperateOnFlag.gd" type="Script" id=8]
+[ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=9]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 64, 56, 296, 56, 296, 152, 256, 152, 64, 88, 256, 168, 24, 168, 24, 88 )
@@ -54,6 +56,11 @@ tile_data = PoolIntArray( 8, 18, 0, 9, 18, 0, 10, 18, 0, 11, 18, 0, 65544, 19, 0
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="OperateOnFlag" type="Node" parent="TileMap2" instance=ExtResource( 9 )]
+script = ExtResource( 8 )
+flag = "demon_door_8"
+value = 1
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 128, 134 )
@@ -206,8 +213,8 @@ target_scene = "res://Scenes/Dungeon/Dungeon_Grey_8.tscn"
 
 [node name="CollisionShape2D" parent="LoadingZone2" index="0"]
 shape = SubResource( 4 )
-[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_threshold_reached" from="." to="." method="set_flag" binds= [ "demon_door_8", 1 ]]
+[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_dead" from="EnemySpawn2" to="TimerSpawn2" method="start"]
 [connection signal="enemy_dead" from="EnemySpawn4" to="TimerSpawn3" method="start"]
 [connection signal="enemy_dead" from="EnemySpawn6" to="TimerSpawn4" method="start"]
@@ -218,11 +225,11 @@ shape = SubResource( 4 )
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn2" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn3" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn4" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn3" to="EnemySpawn6" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn3" to="EnemySpawn5" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn9" method="spawn_enemy"]
-[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn8" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn3" to="EnemySpawn6" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn4" to="EnemySpawn7" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn8" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn4" to="EnemySpawn9" method="spawn_enemy"]
 
 [editable path="LoadingZone"]
 
