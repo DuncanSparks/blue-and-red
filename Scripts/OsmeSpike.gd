@@ -26,5 +26,5 @@ func _on_Tween_tween_all_completed():
 
 func _on_OsmeSpike_body_entered(body):
 	if body.is_in_group("Player"):
-		if not body.iframes and not body.transforming and not body.pouncing:
+		if not body.iframes and not body.transforming and not body.pouncing and not body.stopped:
 			body.hurt(1)

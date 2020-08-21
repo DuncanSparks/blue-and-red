@@ -48,9 +48,9 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "cast",
+"name": "talk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
@@ -58,9 +58,9 @@ animations = [ {
 "name": "idle2",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 7 ) ],
+"frames": [ ExtResource( 8 ) ],
 "loop": true,
-"name": "talk",
+"name": "cast",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -475,7 +475,7 @@ tracks/15/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=5]
 resource_name = "Talk4"
 length = 2.5
 tracks/0/type = "method"
@@ -616,36 +616,36 @@ tracks/10/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=6]
 offsets = PoolRealArray( 0, 0.489583, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
 
-[sub_resource type="Curve" id=7]
+[sub_resource type="Curve" id=8]
 max_value = 2.0
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 2 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
 
-[sub_resource type="ParticlesMaterial" id=9]
+[sub_resource type="ParticlesMaterial" id=10]
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale_curve = SubResource( 8 )
-color_ramp = SubResource( 6 )
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=11]
 offsets = PoolRealArray( 0, 0.572917, 0.994792 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
 
-[sub_resource type="ParticlesMaterial" id=12]
+[sub_resource type="ParticlesMaterial" id=13]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -655,16 +655,16 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
 scale_random = 0.5
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 12 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 11, 6 )
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=15]
 size = 8
 font_data = ExtResource( 11 )
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -679,7 +679,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ), Vector2( 2, 2 ), Vector2( 0, 0 ), Vector2( -2, 0 ), Vector2( -2, 2 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 tracks/0/type = "value"
 tracks/0/path = NodePath("NPCOsme/Sprite:scale")
 tracks/0/interp = 1
@@ -775,11 +775,26 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="SpriteFrames" id=17]
+[sub_resource type="SpriteFrames" id=18]
 animations = [ {
 "frames": [ ExtResource( 24 ) ],
 "loop": true,
 "name": "idle_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "idle_center",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "cast_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast_center",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 26 ) ],
@@ -796,24 +811,9 @@ animations = [ {
 "loop": true,
 "name": "ground",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 25 ) ],
-"loop": true,
-"name": "cast_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "idle_center",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "cast_center",
-"speed": 5.0
 } ]
 
-[sub_resource type="Shader" id=18]
+[sub_resource type="Shader" id=19]
 code = "shader_type canvas_item;
 
 uniform float sinConst = 0.2;
@@ -831,32 +831,32 @@ void fragment() {
 "
 custom_defines = ""
 
-[sub_resource type="ShaderMaterial" id=19]
-shader = SubResource( 18 )
+[sub_resource type="ShaderMaterial" id=20]
+shader = SubResource( 19 )
 shader_param/sinConst = 0.015
 shader_param/timeConst = 2.0
 shader_param/color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="ShaderMaterial" id=20]
-shader = SubResource( 18 )
+[sub_resource type="ShaderMaterial" id=21]
+shader = SubResource( 19 )
 shader_param/sinConst = 0.015
 shader_param/timeConst = 2.0
 shader_param/color = Color( 0.623529, 0, 1, 1 )
 
-[sub_resource type="RectangleShape2D" id=21]
+[sub_resource type="RectangleShape2D" id=22]
 extents = Vector2( 15, 7 )
 
-[sub_resource type="RectangleShape2D" id=22]
+[sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 14, 28 )
 
-[sub_resource type="Gradient" id=23]
+[sub_resource type="Gradient" id=24]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=24]
-gradient = SubResource( 23 )
+[sub_resource type="GradientTexture" id=25]
+gradient = SubResource( 24 )
 
-[sub_resource type="ParticlesMaterial" id=25]
+[sub_resource type="ParticlesMaterial" id=26]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -865,16 +865,16 @@ initial_velocity_random = 0.55
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-color_ramp = SubResource( 24 )
+color_ramp = SubResource( 25 )
 
-[sub_resource type="Gradient" id=33]
+[sub_resource type="Gradient" id=27]
 offsets = PoolRealArray( 0, 0.506667, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=34]
-gradient = SubResource( 33 )
+[sub_resource type="GradientTexture" id=28]
+gradient = SubResource( 27 )
 
-[sub_resource type="ParticlesMaterial" id=35]
+[sub_resource type="ParticlesMaterial" id=29]
 emission_shape = 2
 emission_box_extents = Vector3( 15, 15, 15 )
 flag_disable_z = true
@@ -885,9 +885,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 radial_accel = -120.0
 scale = 2.0
-color_ramp = SubResource( 34 )
+color_ramp = SubResource( 28 )
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=30]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -1045,7 +1045,7 @@ tracks/11/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=31]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -1207,7 +1207,7 @@ tracks/11/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=32]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:rotation_degrees")
@@ -1222,7 +1222,7 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=33]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shield:scale")
 tracks/0/interp = 1
@@ -1248,11 +1248,10 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=30]
+[sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 40, 10 )
 
-[sub_resource type="Animation" id=31]
-resource_name = "Orbs"
+[sub_resource type="Animation" id=35]
 length = 4.0
 loop = true
 tracks/0/type = "value"
@@ -1356,14 +1355,14 @@ shape = SubResource( 2 )
 [node name="AnimationPlayerTalk" parent="NPCOsme" index="4"]
 anims/Talk = SubResource( 3 )
 anims/Talk3 = SubResource( 4 )
-anims/Talk4 = SubResource( 32 )
+anims/Talk4 = SubResource( 5 )
 
 [node name="PartsTeleport" type="Particles2D" parent="NPCOsme"]
 emitting = false
 amount = 3
 lifetime = 0.5
 one_shot = true
-process_material = SubResource( 9 )
+process_material = SubResource( 10 )
 texture = ExtResource( 17 )
 
 [node name="PartsTeleport2" type="Particles2D" parent="NPCOsme"]
@@ -1371,7 +1370,7 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 12 )
+process_material = SubResource( 13 )
 
 [node name="Column" type="StaticBody2D" parent="."]
 position = Vector2( 72, 32 )
@@ -1385,7 +1384,7 @@ texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column"]
 position = Vector2( 0, 23 )
-shape = SubResource( 13 )
+shape = SubResource( 14 )
 
 [node name="Column2" type="StaticBody2D" parent="."]
 position = Vector2( 256, 32 )
@@ -1399,7 +1398,7 @@ texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Column2"]
 position = Vector2( 0, 23 )
-shape = SubResource( 13 )
+shape = SubResource( 14 )
 
 [node name="EnemySpawn" parent="." instance=ExtResource( 10 )]
 position = Vector2( 288, 24 )
@@ -1435,7 +1434,7 @@ margin_left = 32.0
 margin_top = 136.0
 margin_right = 288.0
 margin_bottom = 170.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0, 1, 0.67451, 1 )
 text = "x Enemies defeated
 x Deaths
@@ -1447,11 +1446,11 @@ __meta__ = {
 
 [node name="AnimationPlayerScreenshake" type="AnimationPlayer" parent="."]
 playback_speed = 4.0
-anims/Screenshake = SubResource( 15 )
+anims/Screenshake = SubResource( 16 )
 
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="."]
 playback_speed = 5.0
-anims/Teleport = SubResource( 16 )
+anims/Teleport = SubResource( 17 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 4
@@ -1513,22 +1512,25 @@ __meta__ = {
 }
 
 [node name="Sprite" type="AnimatedSprite" parent="BossOsme"]
-frames = SubResource( 17 )
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.3, 0.2 )
+frames = SubResource( 18 )
 animation = "cast_center"
 
 [node name="Shield" type="Sprite" parent="BossOsme"]
-material = SubResource( 19 )
+material = SubResource( 20 )
+scale = Vector2( 0.3, 0.2 )
 texture = ExtResource( 20 )
 
 [node name="Shield2" type="Sprite" parent="BossOsme"]
 visible = false
-material = SubResource( 20 )
+material = SubResource( 21 )
 scale = Vector2( 0.3, 0.2 )
 texture = ExtResource( 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme"]
 position = Vector2( 1, 23 )
-shape = SubResource( 21 )
+shape = SubResource( 22 )
 disabled = true
 
 [node name="Hurtbox" type="Area2D" parent="BossOsme"]
@@ -1537,14 +1539,14 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/Hurtbox"]
 position = Vector2( 0, 2 )
-shape = SubResource( 22 )
+shape = SubResource( 23 )
 disabled = true
 
 [node name="GroundAttackHitbox" type="Area2D" parent="BossOsme"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossOsme/GroundAttackHitbox"]
 position = Vector2( 1, 23 )
-shape = SubResource( 21 )
+shape = SubResource( 22 )
 disabled = true
 
 [node name="PartsTeleport" type="Particles2D" parent="BossOsme"]
@@ -1552,7 +1554,7 @@ emitting = false
 amount = 3
 lifetime = 0.5
 one_shot = true
-process_material = SubResource( 9 )
+process_material = SubResource( 10 )
 texture = ExtResource( 17 )
 
 [node name="PartsTeleport2" type="Particles2D" parent="BossOsme"]
@@ -1560,32 +1562,32 @@ emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 12 )
+process_material = SubResource( 13 )
 
 [node name="PartsHurt" type="Particles2D" parent="BossOsme"]
 emitting = false
 amount = 32
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 25 )
+process_material = SubResource( 26 )
 
 [node name="PartsDie" type="Particles2D" parent="BossOsme"]
 emitting = false
 amount = 16
-process_material = SubResource( 35 )
+process_material = SubResource( 29 )
 
 [node name="AnimationPlayerTeleport" type="AnimationPlayer" parent="BossOsme"]
 playback_speed = 5.0
-anims/In = SubResource( 26 )
-anims/Out = SubResource( 27 )
+anims/In = SubResource( 30 )
+anims/Out = SubResource( 31 )
 
 [node name="AnimationPlayerShield" type="AnimationPlayer" parent="BossOsme"]
 autoplay = "Shield"
 playback_speed = 0.03
-anims/Shield = SubResource( 28 )
+anims/Shield = SubResource( 32 )
 
 [node name="AnimationPlayerShield2" type="AnimationPlayer" parent="BossOsme"]
-"anims/Shield Fade" = SubResource( 29 )
+"anims/Shield Fade" = SubResource( 33 )
 
 [node name="SoundHurt" type="AudioStreamPlayer" parent="BossOsme"]
 stream = ExtResource( 22 )
@@ -1658,7 +1660,7 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 160, 200 )
-shape = SubResource( 30 )
+shape = SubResource( 34 )
 
 [node name="OrbBlue" parent="." instance=ExtResource( 35 )]
 
@@ -1687,7 +1689,7 @@ self_modulate = Color( 1, 0.156863, 0.156863, 0 )
 
 [node name="AnimationPlayerOrbs" type="AnimationPlayer" parent="."]
 autoplay = "Orbs"
-anims/Orbs = SubResource( 31 )
+anims/Orbs = SubResource( 35 )
 
 [node name="PlayerProp" type="Sprite" parent="."]
 visible = false

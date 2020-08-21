@@ -257,6 +257,12 @@ func stop_timer(stop: bool, change_mode: int = -1):
 	
 	if flags["meet_ivari"] == 1:
 		timer_active = not stop
+		
+		
+func stop_timer_end():
+	timer_transform.set_paused(true)
+	transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
+	timer_active = false
 	
 	
 func change_healthbar_color(demon: bool):

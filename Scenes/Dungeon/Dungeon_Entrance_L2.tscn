@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Scripts/GenericScene.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scripts/Attachments/OperateOnFlag.gd" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 32 )
@@ -50,8 +49,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="OperateOnFlag" type="Node" parent="TileMap2" instance=ExtResource( 6 )]
-script = ExtResource( 7 )
+[node name="OperateOnFlag" parent="TileMap2" instance=ExtResource( 6 )]
 flag = "demon_door_10"
 value = 1
 
@@ -112,14 +110,9 @@ position = Vector2( 208, 96 )
 [node name="Teleport5" type="Position2D" parent="." groups=[
 "TeleportPoint",
 ]]
-position = Vector2( 248, 40 )
-
-[node name="Teleport6" type="Position2D" parent="." groups=[
-"TeleportPoint",
-]]
 position = Vector2( 32, 112 )
-[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_threshold_reached" from="." to="." method="set_flag" binds= [ "demon_door_10", 1 ]]
+[connection signal="enemy_threshold_reached" from="." to="TileMap2" method="queue_free"]
 [connection signal="enemy_dead" from="EnemySpawn" to="." method="increment_enemies_defeated"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 

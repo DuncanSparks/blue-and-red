@@ -182,7 +182,7 @@ func play_footstep_sound(base_pitch: float = 1.0):
 
 
 func _on_Hurtbox_body_entered(body):
-	if not iframes and not transforming and not pouncing:
+	if not iframes and not transforming and not pouncing and not stopped:
 		hurt()
 
 
