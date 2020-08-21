@@ -43,7 +43,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1.2, 3, 8, 9.5, 9.6, 11, 11.5, 11.9, 12, 12.1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
-"args": [ PoolStringArray( "Um... hello.", "You\'re a sprightly little demon, aren\'t you\?", "What do you want\?" ) ],
+"args": [ PoolStringArray( "Um... hello.", "What do you want\?" ) ],
 "method": "talk_dialogue"
 }, {
 "args": [ PoolStringArray( "Hm... demons don\'t sit like that.", "And you look a bit spooked, the way your tail\'s twitching.", "You must be that student who got assigned to seal away Osme again.", "Osme turned you into a demon, didn\'t he\? That\'s a new one.", "That\'s pretty rotten luck.", "Yep. That sucks.", "Really too bad." ) ],
@@ -230,7 +230,6 @@ shape = SubResource( 1 )
 
 [node name="NPCIvari" parent="." instance=ExtResource( 3 )]
 position = Vector2( 194, 56 )
-npc_color = Color( 0.513726, 1, 0.447059, 1 )
 max_talk_number = 2
 
 [node name="Sprite" parent="NPCIvari" index="0"]

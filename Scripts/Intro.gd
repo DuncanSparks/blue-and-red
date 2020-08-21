@@ -75,8 +75,10 @@ func _on_TimerText_timeout():
 func _on_TimerEnd_timeout():
 	Controller.get_node("MusicHuman").play()
 	Controller.can_pause = true
-	Controller.run_speedrun_stats = true
-	Controller.speedrun_timer.show()
+	if Controller.speedrun_mode:
+		Controller.run_speedrun_stats = true
+		Controller.speedrun_timer.show()
+		
 	Controller.healthbar.show()
 	Controller.stone1.show()
 	Controller.stone2.show()

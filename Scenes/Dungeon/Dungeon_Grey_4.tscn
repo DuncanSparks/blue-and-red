@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Resources/Tilesets/Tileset_Main.tres" type="TileSet" id=1]
 [ext_resource path="res://Prefabs/LoadingZone.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Enemies/EnemySpawn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/GenericScene.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/Attachments/OperateOnFlag.gd" type="Script" id=6]
 [ext_resource path="res://Prefabs/OperateOnFlag.tscn" type="PackedScene" id=7]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -52,8 +51,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="OperateOnFlag" type="Node" parent="TileMap2" instance=ExtResource( 7 )]
-script = ExtResource( 6 )
+[node name="OperateOnFlag" parent="TileMap2" instance=ExtResource( 7 )]
 flag = "demon_door_9"
 value = 1
 
@@ -109,8 +107,8 @@ shape = SubResource( 3 )
 [connection signal="enemy_dead" from="EnemySpawn" to="." method="increment_enemies_defeated"]
 [connection signal="enemy_dead" from="EnemySpawn2" to="." method="increment_enemies_defeated"]
 [connection signal="enemy_dead" from="EnemySpawn3" to="." method="increment_enemies_defeated"]
-[connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn" to="EnemySpawn2" method="spawn_enemy"]
+[connection signal="timeout" from="TimerSpawn" to="EnemySpawn" method="spawn_enemy"]
 [connection signal="timeout" from="TimerSpawn2" to="EnemySpawn3" method="spawn_enemy"]
 
 [editable path="LoadingZone"]

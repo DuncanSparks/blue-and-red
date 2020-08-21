@@ -128,6 +128,7 @@ func hurt(amount: int):
 		
 		player_ref.start_pounce_meter(false)
 		
+		Controller.game_ended = true
 		Controller.stop_timer_end()
 		Controller.uninitialize_timer()
 		yield(get_tree().create_timer(3.0), "timeout")

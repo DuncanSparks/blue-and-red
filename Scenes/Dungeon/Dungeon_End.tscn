@@ -58,14 +58,14 @@ animations = [ {
 "name": "idle2",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "cast",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "annoyed",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "cast",
 "speed": 5.0
 } ]
 
@@ -787,20 +787,10 @@ animations = [ {
 "name": "idle_center",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 25 ) ],
-"loop": true,
-"name": "cast_side",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "cast_center",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 26 ) ],
-"loop": false,
-"name": "ground2",
-"speed": 20.0
 }, {
 "frames": [ ExtResource( 23 ) ],
 "loop": true,
@@ -811,6 +801,16 @@ animations = [ {
 "loop": true,
 "name": "ground",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "cast_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 26 ) ],
+"loop": false,
+"name": "ground2",
+"speed": 20.0
 } ]
 
 [sub_resource type="Shader" id=19]

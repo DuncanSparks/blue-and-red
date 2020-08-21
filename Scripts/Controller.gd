@@ -25,7 +25,10 @@ var player_health: int = 5
 var menu_open := false
 var can_pause := false
 
+var speedrun_mode := false
 var run_speedrun_stats := false
+
+var game_ended := false
 
 const flags_initial := {
 	"game_start": 0,
@@ -105,6 +108,7 @@ func _ready():
 func _process(delta):
 	Cursor.set_cursor_position(get_global_mouse_position())
 	healthbar.set_value(player_health)
+	#speedrun_timer.set_visible(speedrun_mode)
 	
 	stone1.set_texture(stone_found_texture_1 if flags["stone_blue"] == 1 else stone_not_found_texture_1)
 	stone2.set_texture(stone_found_texture_2 if flags["stone_purple"] == 1 else stone_not_found_texture_2)
@@ -284,20 +288,22 @@ func play_sound_oneshot(sound: AudioStream, pitch: float = 1.0, volume: float = 
 func dialogue(text: Array, name_: String, color: Color, show_name: bool = true):
 	var dlg := dialogue_ref.instance()
 	get_tree().get_root().add_child(dlg)
+	dlg.set_box_texture(int(not show_name))
 	dlg.start_dialogue(text, name_, color, show_name)
 	yield(dlg, "dialogue_finished")
 	emit_signal("dialogue_finished")
 
 
 func _on_TimerTransform_timeout():
-	timer_transform.stop()
-	player_transformed = not player_transformed
-	$SoundTick.play()
-	$SoundTransform.play()
-	$SoundBell.play()
-	transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
-	player_ref.transformation(player_transformed)
-	$TimerPostTransform.start()
+	if not game_ended:
+		timer_transform.stop()
+		player_transformed = not player_transformed
+		$SoundTick.play()
+		$SoundTransform.play()
+		$SoundBell.play()
+		transform_meter.set_progress_texture(meter_texture_2 if player_transformed else meter_texture_1)
+		player_ref.transformation(player_transformed)
+		$TimerPostTransform.start()
 
 
 func _on_Clock_value_changed(value):

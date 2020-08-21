@@ -15,6 +15,11 @@ func _ready():
 	tween.start()
 	
 	
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("sys_pause"):
+		_on_Button_pressed()
+	
+	
 func hover():
 	if not but1.disabled:
 		Controller.play_sound_oneshot(hover_sound, rand_range(0.95, 1.05), -20)
@@ -76,7 +81,8 @@ func _on_Tween3_tween_all_completed():
 	get_tree().set_pause(false)
 	Controller.menu_open = false
 	Controller.stop_timer(false)
-	Controller.run_speedrun_stats = true
+	if Controller.speedrun_mode:
+		Controller.run_speedrun_stats = true
 	queue_free()
 
 

@@ -9,6 +9,7 @@ var exited_credits := false
 onready var but1 := $HBoxContainer/Button as TextureButton
 onready var but2 := $HBoxContainer/Button2 as TextureButton
 onready var but3 := $HBoxContainer/Button3 as TextureButton
+onready var but4 := $Button4 as TextureButton
 
 
 func _ready():
@@ -22,6 +23,9 @@ func _ready():
 	Controller.stone1.hide()
 	Controller.stone2.hide()
 	Controller.stone3.hide()
+	
+	if Controller.speedrun_mode:
+		but4.get_node("Label").set_text("On")
 
 
 func _process(delta):
@@ -47,6 +51,7 @@ func _on_Button_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
+		but4.set_disabled(true)
 	
 	
 func _on_Button2_pressed():
@@ -59,6 +64,7 @@ func _on_Button2_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
+		but4.set_disabled(true)
 
 
 func _on_Button3_pressed():
@@ -70,12 +76,25 @@ func _on_Button3_pressed():
 		but1.set_disabled(true)
 		but2.set_disabled(true)
 		but3.set_disabled(true)
+		but4.set_disabled(true)
+		
+		
+func _on_Button4_pressed():
+	if not but4.disabled:
+		$SoundClick.play()
+		if Controller.speedrun_mode:
+			Controller.speedrun_mode = false
+			but4.get_node("Label").set_text("Off")
+		else:
+			Controller.speedrun_mode = true
+			but4.get_node("Label").set_text("On")
 		
 		
 func _on_TweenIntro_tween_all_completed():
 	but1.set_disabled(false)
 	but2.set_disabled(false)
 	but3.set_disabled(false)
+	but4.set_disabled(false)
 	
 	
 func _on_TweenStart_tween_all_completed():
@@ -102,6 +121,7 @@ func _on_TweenCredits_tween_all_completed():
 		but1.set_disabled(false)
 		but2.set_disabled(false)
 		but3.set_disabled(false)
+		but4.set_disabled(false)
 	
 
 func _on_TweenExit_tween_all_completed():

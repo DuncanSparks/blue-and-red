@@ -3,6 +3,8 @@ extends Control
 signal dialogue_finished
 
 export(AudioStream) var text_sound: AudioStream
+export(Texture) var box_texture_1: Texture
+export(Texture) var box_texture_2: Texture
 
 const regex_pat := "\\[.*?\\]"
 var regex := RegEx.new()
@@ -21,7 +23,7 @@ func _ready():
 	
 	
 func _process(delta):
-	if Input.is_action_just_pressed("sys_interact"):
+	if Input.is_action_just_pressed("sys_interact") or Input.is_action_just_pressed("attack"):
 		if allow_advance:
 			if dialogue_page < len(dialogue) - 1:
 				dialogue_page += 1
@@ -50,6 +52,14 @@ func start_dialogue(text_input: Array, name: String, name_color: Color, show_nam
 	
 func strip(string: String):
 	return regex.sub(string, "", true)
+	
+	
+func set_box_texture(texture: int):
+	match texture:
+		0:
+			$CanvasLayer/Box.set_texture(box_texture_1)
+		1:
+			$CanvasLayer/Box.set_texture(box_texture_2)
 
 
 func _on_TimerText_timeout():
